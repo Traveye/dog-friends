@@ -39,7 +39,7 @@ Below is an ERD of our database schema and table relationships. We used MongoDB 
 
 
 Below is a list of our API routes and their corresponding controller methods.
-
+<!-- 
 | Route | HTTP Verb | Description |
 | ----- | --------- | ----------- |
 | `/api/users` | `GET` | Get all users |
@@ -60,7 +60,7 @@ Below is a list of our API routes and their corresponding controller methods.
 | `/api/journals` | `POST` | Create a new trip journal |
 | `/api/journals/:id` | `GET` | Get a trip journal by id |
 | `/api/journals/:id` | `PUT` | Update a trip journal by id |
-| `/api/journals/:id` | `DELETE` | Delete a trip journal by id |
+| `/api/journals/:id` | `DELETE` | Delete a trip journal by id | -->
 
 ## New libraries/NPM Packages
 
