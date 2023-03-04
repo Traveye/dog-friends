@@ -1,0 +1,80 @@
+[
+  {
+    "userName": "bfd2023",
+    "password": "password123",
+    "location": "San Jose, CA",
+    "dogs": ["2"]
+  },
+  {
+    "userName": "sb2023",
+    "password": "password123",
+    "location": "Morongo Valley, CA",
+    "dogs": ["3", "4"]
+  },
+  {
+    "userName": "dt2023",
+    "password": "password123",
+    "location": "Santa Monica, CA",
+    "dogs": ["5"]
+  },
+  {
+    "userName": "mb2023",
+    "password": "password123",
+    "location": "Poulsbo, WA",
+    "dogs": ["1"]
+  },
+  {
+    "userName": "Yippy12",
+    "password": "password123",
+    "location": "San Jose, CA",
+    "dogs": ["6"]
+  },
+  {
+    "userName": "Jenn51",
+    "password": "password123",
+    "location": "San Jose, CA",
+    "dogs": ["7"]
+  },
+  {
+    "userName": "Dalton70",
+    "password": "password123",
+    "location": "Santa Monica, CA",
+    "dogs": ["8"]
+  },
+  {
+    "userName": "Tyler50",
+    "password": "password123",
+    "location": "Santa Monica, CA",
+    "dogs": ["9"]
+  },
+  {
+    "userName": "demo1",
+    "password": "password123",
+    "location": "Santa Monica, CA",
+    "dogs": ["10"]
+  },
+  {
+    "userName": "Jeff8",
+    "password": "password123",
+    "location": "Poulsbo, WA",
+    "dogs": ["11"]
+  },
+  {
+    "userName": "Frank",
+    "password": "password123",
+    "location": "Poulsbo, WA",
+    "dogs": ["12"]
+  },
+  {
+    "userName": "Medemo",
+    "password": "password123",
+    "location": "Santa Monica, CA",
+    "dogs": ["13"]
+  },
+  {
+    "userName": "BeautyNula",
+    "password": "password123",
+    "location": "New York, NY",
+    "dogs": []
+  }
+]

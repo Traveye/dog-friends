@@ -1,0 +1,122 @@
+[
+  {
+    "dogName": "Hiccup",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677897337/Screenshot_20221005-190041_Instagram_1_ylcgst.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20230214_190021_eyadyu.jpg",
+    "bio": "Hiccup is a good boy and really loves to run!",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20230127_194424_kpyyqs.jpg", ""],
+    "playStyle": "Running",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Mocha",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/IMG_4360_as9eze.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/IMG_1859_m0qgrv.jpg",
+    "bio": "Mocha is a good girl, she likes to run and will get away so we need to play in a place that has a fence!",
+    "pictures": [""],
+    "playStyle": "Craziness",
+    "breed": "Maltese"
+  },
+  {
+    "dogName": "Kipo",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230217_160203114.MP_ncag5t.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230301_042358358_eskten.jpg",
+    "bio": "Kipo has a brother named Scooby they are great together but are always down to play with others",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230218_181552301_thosfq.jpg"],
+    "playStyle": "Running",
+    "breed": "Golden Retriever"
+  },
+  {
+    "dogName": "Scooby",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230217_160203114.MP_ncag5t.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/DSC_0368_eijyua.jpg",
+    "bio": "Scoody is a good boy. He has a new sister Kipo that is keeping him busy but he is always down to play with others!",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/PXL_20221225_160849312_wan2lk.jpg", "https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/PXL_20221226_050030547_rhs3nl.jpg", "https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230216_200933640.MP_hpqtbc.jpg", "https://res.cloudinary.com/datl67gp3/image/upload/v1677896585/PXL_20230205_003118856_wsjfal.jpg"],
+    "playStyle": "Running",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "The Italian",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/IMG_5034_teojbe.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/69005959397__ADB99198-F010-46AB-A62B-488DBA353726_1_pbfbil.heic",
+    "bio": "Italy is a good girl and she loves to roll around with other dogs. She is small and like to play hard so I want her to play with other small rambunctious dogs!",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/IMG_5522_alx2oo.heic"],
+    "playStyle": "Wrestling",
+    "breed": "Italian Grey Hound"
+  },
+  {
+    "dogName": "Hicarue",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677897330/IMG_9173_i56ds6.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677897329/IMG_9194_fhnztf.jpg",
+    "bio": "A very playful guy that can play hard but also be very gentle",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896576/20221027_194452_tjj24c.jpg"],
+    "playStyle": "Wrestling",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Buddy",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/Hiccup_staying_with_Katie_D._2_sug0rv.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20221220_074543_efgz15.jpg",
+    "bio": "Loves to be outside all the time. Rain, Sun, Snow; doesn't matter.",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896575/20221018_173519_0_t4hjvo.jpg", "https://res.cloudinary.com/datl67gp3/image/upload/v1677896573/20210808_163859_hzd4ov.jpg"],
+    "playStyle": "Tug-a-war",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Bubbu-ka-chue",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20221227_170719_guzznm.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896574/20221018_172341_eyeyxu.jpg",
+    "bio": "Gentle guy. Can really play with anyone at their level.",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896584/Hiccup_staying_with_Katie_D._u50zi5.jpg"],
+    "playStyle": "Any",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Thor",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896574/20221018_170501_fhsnh1.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896574/20221018_170516_pfk3au.jpg",
+    "bio": "Thor is a giant observer! He likes to play sometimes but also just mainly likes to watch the show.",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896575/20221018_174208_kgmpo1.jpg"],
+    "playStyle": "companionship",
+    "breed": "Great Pyrenees"
+  },
+  {
+    "dogName": "Jello",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896573/20220119_205449_qxgakr.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896573/20220923_082713_hfpqzo.jpg",
+    "bio": "Always on the go looking for friends to go places with. Love going out and being on the go.",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896572/20210807_203132_rngyzn.jpg", "https://res.cloudinary.com/datl67gp3/image/upload/v1677896572/20210808_164001_wgexcq.jpg"],
+    "playStyle": "Walking",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Jables",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896570/20161112_090530_gxu0if.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896570/20201201_192902_bsl5fb.jpg",
+    "bio": "Seeking all water dogs. Splashing, running in and out, shaking on the humans you name it if it's a water activity Jables is your doggy pal!",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896570/20150414_113707_cpf9va.jpg"],
+    "playStyle": "Swimming",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Rocket",
+    "familyPhoto":"https://res.cloudinary.com/datl67gp3/image/upload/v1677896571/20210707_140530_dxbd3s.jpg",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896571/20201108_150707_oshloq.jpg",
+    "bio": "Very mello will chase ball but really likes to just sniff and hang.",
+    "pictures": ["https://res.cloudinary.com/datl67gp3/image/upload/v1677896571/20210101_081438_gwvjgs.jpg"],
+    "playStyle": "Sniffing",
+    "breed": "Shepard Mix"
+  },
+  {
+    "dogName": "Pepi",
+    "familyPhoto":"",
+    "dogProfilePhoto": "https://res.cloudinary.com/datl67gp3/image/upload/v1677896571/20220723_102359_gtq3jv.jpg",
+    "bio": "More engergy then Pepi knows what to do with",
+    "pictures": [""],
+    "playStyle": "mutual play",
+    "breed": "Husky"
+  }
+
+  
+]
+
