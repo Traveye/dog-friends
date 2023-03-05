@@ -4,18 +4,21 @@
   "description": "",
   "main": "server.js",
   "directories": {
-    "test": "tests"
+    "test": "tests jest"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^29.4.3",
     "apollo-server-core": "^3.6.2",
-    "apollo-server-express": "^3.6.2"
-  }
+    "apollo-server-express": "^3.6.2",
+    "jest": "^29.4.3"
+  },
+  "testMatch": [
+    "tests/[].test.js"
+  ]
 }
