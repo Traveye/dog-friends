@@ -7,7 +7,7 @@ describe('User model', () => {
         expect(user).toHaveProperty('username');
         expect(user).toHaveProperty('password');
         expect(user).toHaveProperty('location');
-        expect(user).toHaveProperty('dog reference');
+        expect(user).toHaveProperty('dogReference');
     });
 
     //test thhe username is required validation
