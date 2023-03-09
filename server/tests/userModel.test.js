@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Dog = require('../models/Dog')
 
 describe('User model', () => {
     //test that the user model has the expected fields
@@ -7,19 +8,19 @@ describe('User model', () => {
         expect(user).toHaveProperty('username');
         expect(user).toHaveProperty('password');
         expect(user).toHaveProperty('location');
-        expect(user).toHaveProperty('dog reference');
+        expect(user).toHaveProperty('dogReference');
     });
 
     //test thhe username is required validation
     it('should throw an error if a username is not provided', async () => {
-        await expect(User.create({ password: 'password123', location: 'New York', dogReference: 'goldenretriever' })).rejects.toThrow('Username is required');
+        await expect(User.create({ password: 'Password1!', location: 'New York' })).rejects.toThrow('Username is required');
     });
 
     //test the username is unique validation
     it('should throw an error when a non-unique username is used to create a user', async () => {
-        await User.create({ username: 'johndoe', password: 'password123', location: 'New York', dogReference: 'goldenretriever' });
+        await User.create({ username: 'johndoe', password: 'Password1!', location: 'New York' });
 
-        await expect(User.create({ username: 'johndoe', password: 'password456', location: 'Los Angeles', dogReference: 'labrador' })).rejects.toThrow('Username must be unique');
+        await expect(User.create({ username: 'johndoe', password: 'Password1!', location: 'Los Angeles' })).rejects.toThrow('Username must be unique');
     });
 
     //test the password is required validation
@@ -41,7 +42,7 @@ describe('User model', () => {
     //need test for webtoken generation - not sure what library being used.
     // will be usin jsonwebtoken
     it('should generate a webtoken', async () => {
-        const user = await User.create({ username: 'johndoe', password: 'password123', location: 'New York', dogReference: 'goldenretriever' });
+        const user = await User.create({ username: 'johndoe', password: 'Password1!', location: 'New York', dogReference: 'goldenretriever' });
         const token = user.generateAuthToken();
         expect(token).not.toBeNull();
     });
