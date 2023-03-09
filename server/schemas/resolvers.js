@@ -1,4 +1,6 @@
 const { User, Dog } = require('../models');
+// const { AuthenticationError } = require('apollo-server-express');
+// const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -7,10 +9,10 @@ const resolvers = {
     },
 
     user: async (parent, {userId}) => {
-      return User.findOne({_id: userId});
+      return User.findOne({_id: userId}).populate('dog');
     },
 
-    dogs: async () => {
+    dogs: async (parent, {}) => {
       return Dog.find()
     },
 
