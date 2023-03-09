@@ -83,13 +83,26 @@ const resolvers = {
       return User.findOneAndDelete({ _id: userId });
     },
 
-    deleteDog: async (parent, { dogId }) => {
-      return Dog.findOneAndDelete({ _id: dogId });
-    },
+    deleteDog: async (parent, { dogId }, context) => {
+      if (context.user) {
+        const dog = await Dog.findOneAndDelete({
+          _id: dogId,
+          dogHuman: context.user.username,
+        });
 
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { dogs: dog._id } }
+        );
+
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 
   },
  
 };
+
 
 module.exports = resolvers;

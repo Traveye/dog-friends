@@ -19,12 +19,14 @@ type Auth {
 type Query {
   user: [User]
   dog: [Dog]
+  me: User
 }
 
 
 type Dog {
    _id: ID
    name: String
+   dogHuman: String!
    bio: String
    playstyle: String
    media: [media]
