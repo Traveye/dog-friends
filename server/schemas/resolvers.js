@@ -74,13 +74,20 @@ const resolvers = {
 
     
     updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
-      const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement }, { new: true });
-      return updatedDog;
+      if (context.user) {
+        const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement }, { new: true });
+        return updatedDog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
-    deleteUser: async (parent, { userId }) => {
-      return User.findOneAndDelete({ _id: userId });
+    deleteUser: async (parent, { userId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndDelete({ _id: userId });
+        return user;
+      }
+    throw new AuthenticationError('You need to be logged in!');
     },
 
     deleteDog: async (parent, { dogId }, context) => {
