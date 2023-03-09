@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon",
+    "seed": "node seeders/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +25,8 @@
   },
   "testMatch": [
     "tests/[].test.js"
-  ]
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
 }
