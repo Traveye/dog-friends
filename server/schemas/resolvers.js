@@ -19,12 +19,51 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, { username, password, location, dog, photos }) => {
-      return  User.create({ username, password, location, dog, photos }) ;
+    addUser: async (parent, { username, password, location, dog, media }) => {
+      const user = await User.create({ username, password, location, dog, media }) 
+      const token = signToken(user);
+      return { token, user };
     },
 
-    addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
-      return  User.create({ id, dogName, bio, playStyle, breed, endorsement }) ;
+    login: async (parent, { userName, password }) => {
+      const user = await User.findOne({ userName });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }, context) => {
+      if (context.user) {
+        const dog = await Dog.create({
+          id,
+          dogName,
+          bio,
+          playStyle, 
+          breed,
+          endorsement, 
+          media,
+          dogHuman: context.user.username,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { dogs: dog._id } }
+        );
+
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 

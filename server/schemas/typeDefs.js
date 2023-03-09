@@ -11,6 +11,11 @@ type User {
   dog: [Dog]
 }
 
+type Auth {
+  token: ID
+  user: User
+}
+
 type Query {
   user: [User]
   dog: [Dog]
@@ -26,7 +31,8 @@ type Dog {
  }
 
  type Mutation {
-  addUser(userName: String!, password: String!, location: String!): User
+  addUser(userName: String!, password: String!, location: String!): Auth
+  login(userName: String!, password: String!): Auth
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
 `
