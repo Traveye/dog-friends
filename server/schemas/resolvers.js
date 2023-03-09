@@ -1,6 +1,6 @@
 const { User, Dog } = require('../models');
-// const { AuthenticationError } = require('apollo-server-express');
-// const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -21,8 +21,8 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (parent, { username, password, location, dog, media }) => {
-      const user = await User.create({ username, password, location, dog, media }) 
+    addUser: async (parent, { username, password, location, dog }) => {
+      const user = await User.create({ username, password, location, dog}) 
       const token = signToken(user);
       return { token, user };
     },
@@ -45,30 +45,18 @@ const resolvers = {
       return { token, user };
     },
 
-    logout: async (parent, { userName}, context) => {
-      if (!context.user) {
-        throw new AuthenticationError('You are already logged out');
-      }
-      
-      if (context.user) {
-      const user = await User.findOne({ userName });
-      const token = signToken(user);
-      const removedToken = await User.findOneAndDelete({token})
-    }
-    return { user, removedToken};
-  },
-
     addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }, context) => {
       if (context.user) {
+
         const dog = await Dog.create({
-          id,
+          _id,
           dogName,
           bio,
           playStyle, 
           breed,
           endorsement, 
           media,
-          dogHuman: context.user.username,
+          user: context.user._id,
         });
 
         await User.findOneAndUpdate(
@@ -85,10 +73,10 @@ const resolvers = {
       if (context.user) {
         const media = await Media.create({
           id,
-          photo,
-          banner,
-          dogProfile: context.dog.name, 
-          carousel
+          content,
+          isBanner,
+          isProfile 
+       
         });
 
         await Dog.findOneAndUpdate(
@@ -111,17 +99,17 @@ const resolvers = {
     },
  
     
-    updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
+    updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }) => {
       if (context.user) {
-        const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement }, { new: true });
+        const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement, media }, { new: true });
         return updatedDog;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateMedia: async (parent, {  id, photo, banner, dogProfile, carousel}) => {
+    updateMedia: async (parent, {  id, content, isBanner, isProfile}) => {
       if (context.user.dog) {
-        const updatedMedia = await Media.findByIdAndUpdate(id, { id, photo, banner, dogProfile, carousel }, { new: true });
+        const updatedMedia = await Media.findByIdAndUpdate(id, { id, content, isBanner, isProfile}, { new: true });
         return updatedMedia;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -140,7 +128,7 @@ const resolvers = {
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
           _id: dogId,
-          dogHuman: context.user.username,
+          user: context.user._id,
         });
 
         await User.findOneAndUpdate(

@@ -9,7 +9,7 @@ const dogSchema = new Schema({
       type: String,
       required: [true, 'Bio is required'],
    },
-   play_style: {
+   playStyle: {
       type: String,
       required: [true, 'Play style is required'],
    },

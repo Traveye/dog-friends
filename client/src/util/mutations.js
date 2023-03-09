@@ -15,6 +15,7 @@ export const ADD_USER = gql`
           playStyle
           breed 
           endorsement
+          media
         } 
       }
       
@@ -23,32 +24,35 @@ export const ADD_USER = gql`
 `
 
 export const ADD_DOG = gql`
-  mutation addDog($id: ID!, $Name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean) {
-    addDog(id: ID!, name: $name, bio: $bio, playStyle: $playstyle, breed: $breed, endorsement: $endorsement) {
+  mutation addDog($id: ID!, $Name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean, media: $media) {
+    addDog(id: ID!, name: $name, bio: $bio, playStyle: $playStyle, breed: $breed, endorsement: $endorsement, media: $media) {
       _id
       name
       bio
       playStyle
       breed 
       endorsement
+      user{
+        _id
+      }
       media {
         _id
-        photo
-        banner
-        dogProfile
-        carousel
+        content
+        isBanner
+        isProfile
+
       }
     }
   }
 `
 export const ADD_MEDIA = gql`
-  mutation updateDog($dogId: ID!, $photo: String, $banner: Boolean, $dogProfile: Boolean, $carousel: Boolean) {
-    updateDog(dogId: $dogId, photo: $photo, banner: $banner, dogProfile: $dogProfile, carousel: $carousel) {
+  mutation updateDog($dogId: ID!, $content: String, $banner: Boolean, $isProfile: Boolean) {
+    updateDog(dogId: $dogId, content: $content, isBanner: $isBanner, isProfile: $isProfile ) {
       _id
-      photo
-      banner
-      dogProfile
-      carousel
+      content
+      isBanner
+      isProfile
+    
     }
   }
 `
@@ -65,22 +69,9 @@ export const LOGIN_USER = gql`
   }
 `;
 
-
-export const LOGOUT_USER = gql`
-  mutation logout($userName: String!, $password: String!) {
-    logout(userName: $userName, password: $password) {
-      token
-      profile {
-        _id
-        userName
-      }
-    }
-  }
-`;
-
 export const UPDATE_DOG = gql`
-  mutation updateUser($userName: String!, $password: String!, $location: String!) {
-    updateDog(name: $name, bio: $bio, playStyle: $playstyle, breed: $breed, endorsement: $endorsement) {
+  mutation updateDog($name: name, $bio: bio, $playStyle: playStyle, $breed: breed, $endorsement: endorsement) {
+    updateDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed, endorsement: $endorsement) {
       _id
       name
       bio
@@ -89,22 +80,21 @@ export const UPDATE_DOG = gql`
       endorsement
       media {
         _id
-        photo
-        banner
-        dogProfile
-        carousel
+        content
+        isBanner
+        isProfile
+
       }
     }
   }
 `
 export const UPDATE_MEDIA = gql`
-  mutation updateDog($name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean) {
-    updateMedia(dogId: $dogId, photo: $photo, banner: $banner, dogProfile: $dogProfile, carousel: $carousel) {
+  mutation updateMedia(($dogId: dogId, $content: content, $isBanner: isBanner, $isProfile: isProfile) {
+    updateMedia(dogId: $dogId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
       _id
-      photo
-      banner
-      dogProfile
-      carousel
+      content
+      isBanner
+      isProfile
     }
   }
 `
@@ -141,10 +131,10 @@ export const REMOVE_DOG = gql`
       endorsement
       media {
         _id
-        photo
-        banner
-        dogProfile
-        carousel
+        content
+        isBanner
+        isProfile
+
       }
     }
   }
@@ -171,13 +161,12 @@ export const REMOVE_USER = gql`
 `
 
 export const REMOVE_MEDIA = gql`
-  mutation removeMedia($photo: String!) {
-    removeMedia(photo: $photo) {
+  mutation removeMedia($content: String!) {
+    removeMedia(content: $content) {
       _id
-      photo
-      banner
-      dogProfile
-      carousel
+      content
+      isBanner
+      isProfile
     }
   }
 `

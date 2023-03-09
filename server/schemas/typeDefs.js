@@ -25,7 +25,8 @@ type Dog {
   _id: ID
   name: String
   bio: String
-  playstyle: String
+  playStyle: String
+  user: ID!
   media: [media]
 }
 
@@ -39,7 +40,6 @@ type Query {
   login(userName: String!, password: String!): Auth
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
-  logout((userName: String!): Auth
 `
 
 module.exports = typeDefs;
