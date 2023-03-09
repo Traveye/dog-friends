@@ -29,7 +29,6 @@ type Dog {
   addUser(userName: String!, password: String!, location: String!): User
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
-}
 `
 
 module.exports = typeDefs;
