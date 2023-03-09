@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Dog = require('../models/Dog')
 
 describe('User model', () => {
     //test that the user model has the expected fields
