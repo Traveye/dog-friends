@@ -11,7 +11,13 @@ export const QUERY_USERS = gql`
             _id
         }
         dog {
-            
+            bio
+            dog_name
+            play_style
+            breed
+            userReference{
+                _id
+            }
         }
     }
   }
@@ -31,4 +37,3 @@ export const QUERY_USER = gql`
     }
 `;
 
-export const QUERY_DOGS = gql``;
