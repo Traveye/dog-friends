@@ -43,6 +43,19 @@ const resolvers = {
       return { token, user };
     },
 
+    logout: async (parent, { userName}, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You are already logged out');
+      }
+      
+      if (context.user) {
+      const user = await User.findOne({ userName });
+      const token = signToken(user);
+      const removedToken = await User.findOneAndDelete({token})
+    }
+    return { user, removedToken};
+  },
+
     addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }, context) => {
       if (context.user) {
         const dog = await Dog.create({
@@ -68,10 +81,13 @@ const resolvers = {
 
 
     updateUser: async (parent, { id, userName, password, location, dog }) => {
-      const updatedUser = await User.findByIdAndUpdate(id, { userName, password, location, dog }, { new: true });
-      return updatedUser;
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(id, { userName, password, location, dog }, { new: true });
+        return updatedUser;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-
+ 
     
     updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
       if (context.user) {

@@ -37,6 +37,7 @@ type Dog {
   login(userName: String!, password: String!): Auth
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
+  logout((userName: String!): Auth
 `
 
 module.exports = typeDefs;
