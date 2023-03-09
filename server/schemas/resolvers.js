@@ -79,6 +79,26 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
+    addMedia: async (parent, { id, photo, banner, dogProfile, carousel}, context) => {
+      if (context.user) {
+        const media = await Media.create({
+          id,
+          photo,
+          banner,
+          dogProfile: context.dog.name, 
+          carousel
+        });
+
+        await Dog.findOneAndUpdate(
+          { _id: context.dog._id },
+          { $addToSet: { medias: media._id } }
+        );
+
+        return media;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
 
     updateUser: async (parent, { id, userName, password, location, dog }) => {
       if (context.user) {
@@ -93,6 +113,14 @@ const resolvers = {
       if (context.user) {
         const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement }, { new: true });
         return updatedDog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateMedia: async (parent, {  id, photo, banner, dogProfile, carousel}) => {
+      if (context.user.dog) {
+        const updatedMedia = await Media.findByIdAndUpdate(id, { id, photo, banner, dogProfile, carousel }, { new: true });
+        return updatedMedia;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

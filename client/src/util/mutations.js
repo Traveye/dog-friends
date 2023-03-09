@@ -79,7 +79,7 @@ export const LOGOUT_USER = gql`
 `;
 
 export const UPDATE_DOG = gql`
-  mutation updateDog( $name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean) {
+  mutation updateUser($userName: String!, $password: String!, $location: String!) {
     updateDog(name: $name, bio: $bio, playStyle: $playstyle, breed: $breed, endorsement: $endorsement) {
       _id
       name
@@ -98,7 +98,7 @@ export const UPDATE_DOG = gql`
   }
 `
 export const UPDATE_MEDIA = gql`
-  mutation updateMedia($dogId: ID!, $photo: String, $banner: Boolean, $dogProfile: Boolean, $carousel: Boolean) {
+  mutation updateDog($name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean) {
     updateMedia(dogId: $dogId, photo: $photo, banner: $banner, dogProfile: $dogProfile, carousel: $carousel) {
       _id
       photo
