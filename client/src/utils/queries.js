@@ -10,6 +10,9 @@ export const QUERY_USERS = gql`
         dogReference{
             _id
         }
+        dog {
+            
+        }
     }
   }
 `;
@@ -27,3 +30,5 @@ export const QUERY_USER = gql`
         }
     }
 `;
+
+export const QUERY_DOGS = gql``;
