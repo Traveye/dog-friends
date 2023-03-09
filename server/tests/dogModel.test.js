@@ -4,11 +4,11 @@ describe('Dog model', () => {
   // Test that the Dog model has the expected fields
   it('should have the following attributes', () => {
     const dog = new Dog();
-    expect(dog).toHaveProperty('family_photo');
-    expect(dog).toHaveProperty('dogs_photo');
-    expect(dog).toHaveProperty('bio');
     expect(dog).toHaveProperty('dog_name');
+    expect(dog).toHaveProperty('bio');
+    expect(dog).toHaveProperty('dogs_photo');
     expect(dog).toHaveProperty('pictures_or_videos');
+    expect(dog).toHaveProperty('family_photo');
     expect(dog).toHaveProperty('play_style');
   });
 
@@ -23,7 +23,7 @@ describe('Dog model', () => {
   });
 
   // Test that the Play style attribute is required
-  it('should throw an error if Play style is not provided', async () => {
+  it('should throw an error if Playstyle is not provided', async () => {
     await expect(Dog.create({ bio: 'A friendly dog', dog_name: 'Max' })).rejects.toThrow('Play style is required');
   });
 });

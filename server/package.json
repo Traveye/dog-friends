@@ -7,16 +7,18 @@
     "test": "tests jest"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-core": "^3.6.2",
+    "express": "^4.17.2",
     "apollo-server-express": "^3.6.2",
-    "jest": "^29.4.3"
+    "apollo-server-core": "^3.6.2",
+    "jest": "^29.4.3",
+    "mongoose": "^6.1.8"
   },
   "testMatch": [
     "tests/[].test.js"
