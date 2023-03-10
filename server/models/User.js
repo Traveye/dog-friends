@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
   const isPassword = function(password){
-    const regex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+    console.log(password)
+    const regex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
+    console.log(regex.test(password))
       return regex.test(password);
   }
 
@@ -16,8 +18,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        // minLength: 6,
-         validate: [isPassword]
+        validate: {
+            validator: isPassword,
+            message: "Password must include at least one number, one upcase letter, one lowercase letter, one special character ( !@#$%^&*(?) ) and be at least 6 characters in length. "
+        } 
     },
     location:{
         type: String,
