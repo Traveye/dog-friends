@@ -3,27 +3,28 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
 type User {
   _id: ID
-  userName: String!
+  username: String!
   password: String!
   location: String!
-  dog: [Dog]
+  dogReference: [Dog]
 }
 
 
 type Auth {
-  token: ID
+  token: ID!
   user: User
 }
 
 
 
 type Dog {
-  _id: ID
-  name: String
-  bio: String
-  playStyle: String
+  _id: ID!
+  name: String!
+  breed: String!
+  bio: String!
+  playStyle: String!
   media: [ID!]
-  user: ID!
+  userReference: ID!
   endorsements: [Endorsement]
 }
 
@@ -34,9 +35,9 @@ type Endorsement {
 
 type Media {
   _id: ID!
-  photo: String!
-  banner: Boolean
-  dogProfile: Boolean
+  content: String!
+  isBanner: Boolean
+  isProfile: Boolean
 }
 
 type Query {
@@ -48,16 +49,16 @@ type Query {
 }
 
 type Mutation {
-  addUser(userName: String!, password: String!, location: String!): Auth
-  login(userName: String!, password: String!): Auth
-  updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
-  deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
+  addUser(username: String!, password: String!, location: String!): Auth
+  login(username: String!, password: String!): Auth
+  updateUser(id: ID!, username: String, password: String, location: String, dogReference: ID): User
+  deleteUser(id: ID!, username: String, password: String, location: String, dogReference: ID): User
   
-  addDog(name: String!, bio: String!, playStyle: String!, media: [ID!], endorsements: [Endorsement]): Dog
-  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, media: [ID!], endorsements: [Endorsement]): Dog
+  addDog(name: String!, bio: String!, playStyle: String!, breed: String!, media: [ID!], endorsements: [Endorsement]): Dog
+  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, breed: String!, media: [ID!], endorsements: [Endorsement]): Dog
   deleteDog(dogId: ID!): Dog
   
-  addMedia(id: ID!, photo: String!, banner: Boolean, dogProfile: Boolean): Media
+  addMedia(id: ID!, content: String!, isBanner: Boolean, isProfile: Boolean): Media
 
   updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
 `
