@@ -15,25 +15,20 @@ type Auth {
   user: User
 }
 
-type Query {
-  user: [User]
-  dog: [Dog]
-  me: User
-}
 
 
 type Dog {
   _id: ID
-  dog_name: String
+  name: String
   bio: String
-  play_style: String
+  playStyle: String
   media: [ID!]
   user: ID!
   endorsements: [Endorsement]
 }
 
 type Endorsement {
-  play_style: String
+  playStyle: String
   counter: Int
 }
 
@@ -44,17 +39,24 @@ type Media {
   dogProfile: Boolean
 }
 
+type Query {
+  users: [User]
+  user(userId: ID!): User
+  dogs: [Dog]
+  dog(dogId: ID!): Dog
+  getDogMedia: [Media]
+}
 
-  type Mutation {
+type Mutation {
   addUser(userName: String!, password: String!, location: String!): Auth
   login(userName: String!, password: String!): Auth
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
-
-  addDog(dog_name: String!, bio: String!, play_style: String!, media: [ID!], endorsements: [EndorsementInput!]): Dog
-  updateDog(dogId: ID!, dog_name: String, bio: String, play_style: String, media: [ID!], endorsements: [EndorsementInput!]): Dog
+  
+  addDog(name: String!, bio: String!, playStyle: String!, media: [ID!], endorsements: [Endorsement]): Dog
+  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, media: [ID!], endorsements: [Endorsement]): Dog
   deleteDog(dogId: ID!): Dog
-
+  
   addMedia(id: ID!, photo: String!, banner: Boolean, dogProfile: Boolean): Media
 
   updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
