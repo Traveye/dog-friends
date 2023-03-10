@@ -9,21 +9,28 @@ const resolvers = {
       return User.find().populate('dog');
     },
 
-    user: async (parent, {userId}) => {
-      return User.findOne({_id: userId}).populate('dog');
+    user: async (parent, { userId }) => {
+      return User.findOne({ _id: userId }).populate('dog');
     },
 
-    dogs: async (parent, {}) => {
+    dogs: async (parent, { }) => {
       return Dog.find()
     },
 
-    dog: async (parent, {dogId}) => {
-      return Dog.findOne({_id: dogId});
+    dog: async (parent, { dogId }) => {
+      return Dog.findOne({ _id: dogId });
+    },
+    getDogMedia: async (parent, args, context) => {
+      if (context.user) {
+        const dog = await Dog.findById(context.dog._id).populate('media');
+        return dog.media;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
   Mutation: {
     addUser: async (parent, { username, password, location, dog }) => {
-      const user = await User.create({ username, password, location, dog}) 
+      const user = await User.create({ username, password, location, dog })
       const token = signToken(user);
       return { token, user };
     },
@@ -34,7 +41,7 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
-
+      
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
@@ -53,9 +60,9 @@ const resolvers = {
           _id,
           dogName,
           bio,
-          playStyle, 
+          playStyle,
           breed,
-          endorsement, 
+          endorsement,
           media,
           user: context.user._id,
         });
@@ -70,14 +77,15 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addMedia: async (parent, { id, photo, banner, dogProfile, carousel}, context) => {
+
+    addMedia: async (parent, { id, photo, banner, dogProfile }, context) => {
       if (context.user) {
         const media = await Media.create({
           id,
           content,
           isBanner,
-          isProfile 
-       
+          isProfile
+
         });
 
         await Dog.findOneAndUpdate(
@@ -98,8 +106,8 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
- 
-    
+
+
     updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }) => {
       if (context.user) {
         const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement, media }, { new: true });
@@ -108,9 +116,9 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    updateMedia: async (parent, {  id, content, isBanner, isProfile}) => {
+    updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
       if (context.user.dog) {
-        const updatedMedia = await Media.findByIdAndUpdate(id, { id, content, isBanner, isProfile}, { new: true });
+        const updatedMedia = await Media.findByIdAndUpdate(id, { id, content, isBanner, isProfile }, { new: true });
         return updatedMedia;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -122,7 +130,7 @@ const resolvers = {
         const user = await User.findOneAndDelete({ _id: userId });
         return user;
       }
-    throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     deleteDog: async (parent, { dogId }, context) => {
@@ -142,8 +150,18 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
+    updateEndorsementCounter: async (_, { dogId, playStyle, increment }, context) => {
+      if (context.user) {
+        const update = increment ? { $inc: { [`endorsements.${playStyle}`]: 1 } }
+          : { $inc: { [`endorsements.${playStyle}`]: -1 } };
+        const dog = await Dog.findOneAndUpdate({ _id: dogId, user: context.user._id }, update, { new: true });
+        if (!dog) throw new UserInputError('Dog not found');
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   },
- 
+
 };
 
 

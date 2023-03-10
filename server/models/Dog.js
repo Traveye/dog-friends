@@ -8,7 +8,7 @@ const endorsementsSchema = new Schema({
 })
 
 const dogSchema = new Schema({
-   dog_name: {
+   name: {
       type: String,
       required: [true, 'Dog name is required'],
    },

@@ -15,11 +15,6 @@ type Auth {
   user: User
 }
 
-type Query {
-  user: [User]
-  dog: [Dog]
-  me: User
-}
 
 
 type Dog {
@@ -27,16 +22,44 @@ type Dog {
   name: String
   bio: String
   playStyle: String
+  media: [ID!]
   user: ID!
-  media: [media]
+  endorsements: [Endorsement]
 }
 
+type Endorsement {
+  playStyle: String
+  counter: Int
+}
 
-  type Mutation {
+type Media {
+  _id: ID!
+  photo: String!
+  banner: Boolean
+  dogProfile: Boolean
+}
+
+type Query {
+  users: [User]
+  user(userId: ID!): User
+  dogs: [Dog]
+  dog(dogId: ID!): Dog
+  getDogMedia: [Media]
+}
+
+type Mutation {
   addUser(userName: String!, password: String!, location: String!): Auth
   login(userName: String!, password: String!): Auth
   updateUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
   deleteUser(id: ID!, userName: String, password: String, location: String, dog: ID): User
+  
+  addDog(name: String!, bio: String!, playStyle: String!, media: [ID!], endorsements: [Endorsement]): Dog
+  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, media: [ID!], endorsements: [Endorsement]): Dog
+  deleteDog(dogId: ID!): Dog
+  
+  addMedia(id: ID!, photo: String!, banner: Boolean, dogProfile: Boolean): Media
+
+  updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
 `
 
 module.exports = typeDefs;
