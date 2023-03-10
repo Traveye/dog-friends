@@ -1,5 +1,5 @@
-import Dog from './Dog';
-import User from './User';
-import Media from './Media';
+const Dog = require('./Dog');
+const User = require('./User');
+const Media = require('./Media');
 
-module.exports = {Dog, User, Media}
+module.exports = { Dog, User, Media }
