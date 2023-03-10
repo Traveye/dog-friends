@@ -12,7 +12,7 @@ const dogs = await Dog.insertMany(dogData);
 
 for (let i = 0; i < userData.length; i++) {
   const user = new User(userData[i]);
-  user.dogs = dogs.filter(dog => userData[i].dogs.includes(dog._id.toString())).map(dog => dog._id);
+  user.dogs = dogs.filter(dog => userData[i].dogs.includes(dogReference._id.toString())).map(dogReference => dog._id);
   await user.save();
 }
 
