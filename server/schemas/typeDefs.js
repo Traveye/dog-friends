@@ -9,6 +9,7 @@ type User {
   dog: [Dog]
 }
 
+
 type Auth {
   token: ID
   user: User
@@ -30,10 +31,6 @@ type Dog {
   media: [media]
 }
 
-type Query {
-  user: [User]
-  dog: [Dog]
-} 
 
   type Mutation {
   addUser(userName: String!, password: String!, location: String!): Auth
