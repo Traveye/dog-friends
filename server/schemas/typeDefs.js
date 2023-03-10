@@ -61,6 +61,8 @@ type Mutation {
   addMedia(id: ID!, content: String!, isBanner: Boolean, isProfile: Boolean): Media
 
   updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
+  updateMedia(id: ID!, content: String, isBanner: Boolean, isProfile: Boolean): Media
+}
 `
 
 module.exports = typeDefs;
