@@ -55,7 +55,7 @@ type Mutation {
   deleteUser(id: ID!, username: String, password: String, location: String, dogReference: ID): User
   
   addDog(name: String!, bio: String!, playStyle: String!, breed: String!, media: [ID!], endorsements: String): Dog
-  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, breed: String!, media: [ID!], endorsements: String): Dog
+  updateDog(dogId: ID!, name: String, bio: String, playStyle: String, breed: String, media: [ID!], endorsements: String): Dog
   deleteDog(dogId: ID!): Dog
   
   addMedia(id: ID!, content: String!, isBanner: Boolean, isProfile: Boolean): Media
