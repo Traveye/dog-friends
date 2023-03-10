@@ -9,7 +9,7 @@ const resolvers = {
       return User.find().populate('dog');
     },
 
-    user: async (parent, { userIgitd }) => {
+    user: async (parent, { userId }) => {
       return User.findOne({ _id: userId }).populate('dog');
     },
 
