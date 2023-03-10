@@ -1,4 +1,7 @@
 const { User, Dog } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
+
 
 const resolvers = {
   Query: {
@@ -6,51 +9,160 @@ const resolvers = {
       return User.find().populate('dog');
     },
 
-    user: async (parent, {userId}) => {
-      return User.findOne({_id: userId});
+    user: async (parent, { userId }) => {
+      return User.findOne({ _id: userId }).populate('dog');
     },
 
-    dogs: async () => {
+    dogs: async (parent, { }) => {
       return Dog.find()
     },
 
-    dog: async (parent, {dogId}) => {
-      return Dog.findOne({_id: dogId});
+    dog: async (parent, { dogId }) => {
+      return Dog.findOne({ _id: dogId });
+    },
+    getDogMedia: async (parent, args, context) => {
+      if (context.user) {
+        const dog = await Dog.findById(context.dog._id).populate('media');
+        return dog.media;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
   Mutation: {
-    addUser: async (parent, { username, password, location, dog, photos }) => {
-      return  User.create({ username, password, location, dog, photos }) ;
+    addUser: async (parent, { username, password, location, dog }) => {
+      const user = await User.create({ username, password, location, dog })
+      const token = signToken(user);
+      return { token, user };
     },
 
-    addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
-      return  User.create({ id, dogName, bio, playStyle, breed, endorsement }) ;
+    login: async (parent, { userName, password }) => {
+      const user = await User.findOne({ userName });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }, context) => {
+      if (context.user) {
+
+        const dog = await Dog.create({
+          _id,
+          dogName,
+          bio,
+          playStyle,
+          breed,
+          endorsement,
+          media,
+          user: context.user._id,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { dogs: dog._id } }
+        );
+
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+
+    addMedia: async (parent, { id, photo, banner, dogProfile }, context) => {
+      if (context.user) {
+        const media = await Media.create({
+          id,
+          content,
+          isBanner,
+          isProfile
+
+        });
+
+        await Dog.findOneAndUpdate(
+          { _id: context.dog._id },
+          { $addToSet: { medias: media._id } }
+        );
+
+        return media;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
     updateUser: async (parent, { id, userName, password, location, dog }) => {
-      const updatedUser = await User.findByIdAndUpdate(id, { userName, password, location, dog }, { new: true });
-      return updatedUser;
-    },
-
-    
-    updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement }) => {
-      const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement }, { new: true });
-      return updatedDog;
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(id, { userName, password, location, dog }, { new: true });
+        return updatedUser;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
-    deleteUser: async (parent, { userId }) => {
-      return User.findOneAndDelete({ _id: userId });
+    updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }) => {
+      if (context.user) {
+        const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement, media }, { new: true });
+        return updatedDog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
-    deleteDog: async (parent, { dogId }) => {
-      return Dog.findOneAndDelete({ _id: dogId });
+    updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
+      if (context.user.dog) {
+        const updatedMedia = await Media.findByIdAndUpdate(id, { id, content, isBanner, isProfile }, { new: true });
+        return updatedMedia;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
 
+    deleteUser: async (parent, { userId }, context) => {
+      if (context.user) {
+        const user = await User.findOneAndDelete({ _id: userId });
+        return user;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    deleteDog: async (parent, { dogId }, context) => {
+      if (context.user) {
+        const dog = await Dog.findOneAndDelete({
+          _id: dogId,
+          user: context.user._id,
+        });
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { dogs: dog._id } }
+        );
+
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    updateEndorsementCounter: async (_, { dogId, playStyle, increment }, context) => {
+      if (context.user) {
+        const update = increment ? { $inc: { [`endorsements.${playStyle}`]: 1 } }
+          : { $inc: { [`endorsements.${playStyle}`]: -1 } };
+        const dog = await Dog.findOneAndUpdate({ _id: dogId, user: context.user._id }, update, { new: true });
+        if (!dog) throw new UserInputError('Dog not found');
+        return dog;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   },
- 
+
 };
+
 
 module.exports = resolvers;

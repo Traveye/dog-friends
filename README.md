@@ -1,4 +1,8 @@
 # dog-friends
+![badmath](https://img.shields.io/badge/Built%20With-MongoDB-brightgreen)
+![badmath](https://img.shields.io/badge/Built%20With-React-blue)
+![badmath](https://img.shields.io/badge/Built%20With-JavaScript-ff69b4)
+![badmath](https://img.shields.io/badge/Built%20With-CSS-red)
 
 ## Table of Contents
 
