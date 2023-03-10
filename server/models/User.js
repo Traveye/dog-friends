@@ -1,25 +1,23 @@
 const { Schema, model } = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-
-// const isPassword = function(password){
-    const regex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]$/;
-//     return regex.test(password);
-// }
+  const isPassword = function(password){
+    const regex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
+      return regex.test(password);
+  }
 
 const userSchema = new Schema({
     //? unique username can be validated on client side
     username:{
         type: String,
-        required: [true,'Username is required'],
+        required: true,
         trim: true,
         unique: true,
     },
     password:{
         type: String,
-        required:[ true,'Password is required'],
+        required: true,
         trim: true,
-        minLength:[ 6, 'Password must be 6 characters or more'],
-        validate: [regex, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character']
+        // minLength: 6,
+         validate: [isPassword]
     },
     location:{
         type: String,
@@ -27,7 +25,7 @@ const userSchema = new Schema({
         trim: true
     },
     dogReference:[
-        { type : Schema.Types.String,
+        { type : Schema.Types.ObjectId,
             ref : 'Dog'}         
         ],
     // media:[{
@@ -36,7 +34,7 @@ const userSchema = new Schema({
     // }]
 });
 
-userSchema.plugin(uniqueValidator, {message: 'Username must be unique'});
+
 
 const User = model('User', userSchema);
 

@@ -30,7 +30,7 @@ const dogSchema = new Schema({
       ref: 'User'
    }],
    media: [{
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.String,
       ref: 'Media'
    }],
    endorsements: [{
