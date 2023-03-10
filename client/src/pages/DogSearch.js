@@ -1,3 +1,13 @@
+
+// only so that you can see all the 
+
+//leaflet to render map
+//! Queries
+// get all dogs by location or all- 
+
+//! Mutation 
+
+
 import React, { useState } from "react";
 import { useLazyQuery } from "@apollo/react-hooks";
 

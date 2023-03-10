@@ -33,7 +33,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider>
+    <ApolloProvider client={client}>
       <Router>
         <Routes>
             <Route 
@@ -41,7 +41,7 @@ function App() {
                 element={<Landing />}
               />
             <Route 
-                path="/dashboard" 
+                path="/dashboard/:userID" 
                 element={<Dashboard />}
               />
             <Route 
@@ -49,7 +49,7 @@ function App() {
                 element={<DogSearch />}
               />            
               <Route 
-              path="/dogProfile" 
+              path="/dogProfile/:dogID" 
               element={<DogProfile />}
             />
         </Routes>
