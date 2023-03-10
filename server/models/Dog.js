@@ -1,5 +1,12 @@
 const { Schema, model } = require('mongoose');
 
+const endorsementsSchema = new Schema({
+   play_style:{
+      type: String
+   },
+   counter: Number
+})
+
 const dogSchema = new Schema({
    dog_name: {
       type: String,
@@ -18,7 +25,9 @@ const dogSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Media'
    }],
-   endorsements: [endorsements]
+   endorsements: [{
+      endorsementsSchema
+   }]
 });
 
 const Dog = model('Dog', dogSchema);
