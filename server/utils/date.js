@@ -1,11 +1,20 @@
 //this function will convert the date.now to a string formated to mm/dd/yy at hh:mm
-
-export default function dateToString(timestamp) {
-    const newDate = new Date(timestamp);
-    const month = newDate.getMonth() + 1;
-    const day = newDate.getDate();
-    const year = newDate.getFullYear();
-    const hour = newDate.getHours();
-    const minutes = newDate.getMinutes();
-    return `${month}/${day}/${year} at ${hour}:${minutes}`;
+function dateToString(timestamp) {
+  const date = new Date(timestamp);
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true
+  };
+  const formattedDate = date.toLocaleString(undefined, options);
+  
+  return formattedDate;
 }
+  
+
+  
+  

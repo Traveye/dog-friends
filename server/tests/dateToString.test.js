@@ -1,8 +1,8 @@
 const dateToString = require('../utils/date');
 
-descibe("dateToString", () => {
-    it ("should return a string", () => {
-        const result = dateToString(1646947126241);
-        expect(result).toBe("3/9/2023 at 18:52");
-    })
-});
+test('dateToString returns a formatted date string', () => {
+    const timestamp = 1646914497000;
+    const expected = '3/9/2022 at 23:21';
+    const result = dateToString(timestamp);
+    expect(result).toBe(expected);
+  });
