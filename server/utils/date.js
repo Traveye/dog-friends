@@ -15,6 +15,7 @@ function dateToString(timestamp) {
   return formattedDate;
 }
   
+module.exports = dateToString;
 
   
   
