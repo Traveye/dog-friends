@@ -70,7 +70,7 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    addMedia: async (parent, { id, photo, banner, dogProfile, carousel}, context) => {
+    addMedia: async (parent, { id, photo, banner, dogProfile}, context) => {
       if (context.user) {
         const media = await Media.create({
           id,
@@ -141,7 +141,32 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    
+    updateEndorsementCounter: async (_, { dogId, playStyle, increment }) => {
+      try {
+        // Find the dog with the given ID
+        const dog = await Dog.findById(dogId);
 
+        // Find the endorsement with the given play style
+        const endorsement = dog.endorsements.find(e => e.play_style === playStyle);
+
+        // If the endorsement exists, update the counter
+        if (endorsement) {
+          endorsement.counter += increment;
+        } else {
+          // Otherwise, create a new endorsement
+          dog.endorsements.push(new Endorsement({ play_style: playStyle, counter: increment }));
+        }
+
+        // Save the updated dog object
+        await dog.save();
+        // Return the updated dog object
+        return dog;
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error updating endorsement counter');
+      }
+    },
   },
  
 };
