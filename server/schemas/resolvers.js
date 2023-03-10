@@ -1,4 +1,4 @@
-const { User, Dog } = require('../models');
+const { User, Dog, Media } = require('../models/index');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -6,11 +6,11 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('dog');
+      return User.find().populate('Dog');
     },
 
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }).populate('dog');
+      return User.findOne({ _id: userId }).populate('Dog');
     },
 
     dogs: async (parent, { }) => {
@@ -28,15 +28,16 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
   },
+  //? removed doge
   Mutation: {
-    addUser: async (parent, { username, password, location, dog }) => {
-      const user = await User.create({ username, password, location, dog })
+    addUser: async (parent, { username, password, location }) => {
+      const user = await User.create({ username, password, location })
       const token = signToken(user);
       return { token, user };
     },
 
-    login: async (parent, { userName, password }) => {
-      const user = await User.findOne({ userName });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
@@ -53,18 +54,18 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }, context) => {
+    addDog: async (parent, { _id, name, bio, playStyle, breed, endorsement, media }, context) => {
       if (context.user) {
 
         const dog = await Dog.create({
           _id,
-          dogName,
+          name,
           bio,
           playStyle,
           breed,
           endorsement,
           media,
-          user: context.user._id,
+          userReference: context.user._id,
         });
 
         await User.findOneAndUpdate(
@@ -78,7 +79,7 @@ const resolvers = {
     },
 
 
-    addMedia: async (parent, { id, photo, banner, dogProfile }, context) => {
+    addMedia: async (parent, { id, content, isBanner, isProfile }, context) => {
       if (context.user) {
         const media = await Media.create({
           id,
@@ -90,7 +91,7 @@ const resolvers = {
 
         await Dog.findOneAndUpdate(
           { _id: context.dog._id },
-          { $addToSet: { medias: media._id } }
+          { $addToSet: { media: media._id } }
         );
 
         return media;
@@ -99,18 +100,18 @@ const resolvers = {
     },
 
 
-    updateUser: async (parent, { id, userName, password, location, dog }) => {
+    updateUser: async (parent, { id, username, password, location, dogReference }) => {
       if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(id, { userName, password, location, dog }, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(id, { username, password, location, dogReference }, { new: true });
         return updatedUser;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
 
 
-    updateDog: async (parent, { id, dogName, bio, playStyle, breed, endorsement, media }) => {
+    updateDog: async (parent, { id, name, bio, playStyle, breed, endorsement, media }) => {
       if (context.user) {
-        const updatedDog = await Dog.findByIdAndUpdate(id, { id, dogName, bio, playStyle, breed, endorsement, media }, { new: true });
+        const updatedDog = await Dog.findByIdAndUpdate(id, { id, name, bio, playStyle, breed, endorsement, media }, { new: true });
         return updatedDog;
       }
       throw new AuthenticationError('You need to be logged in!');
@@ -137,12 +138,12 @@ const resolvers = {
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
           _id: dogId,
-          user: context.user._id,
+          // user: context.user._id,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { dogs: dog._id } }
+          { $pull: { dogReference: dog._id } }
         );
 
         return dog;

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USERS = gql`
-  query getUsers {
+  query users {
     users {
         _id
         username
@@ -12,8 +12,8 @@ export const QUERY_USERS = gql`
         }
         dog {
             bio
-            dog_name
-            play_style
+            name
+            playStyle
             breed
             userReference{
                 _id
@@ -24,7 +24,7 @@ export const QUERY_USERS = gql`
 `;
 
 export const QUERY_USER = gql`
-    query getUser($userId: ID!) {
+    query user($userId: ID!) {
         user(userId: $userId) {
             _id
             username
