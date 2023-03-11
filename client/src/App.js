@@ -7,8 +7,8 @@ import { setContext } from '@apollo/client/link/context';
 
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
-import DogSearch from './components/DogSearch';
-import DogProfile from './components/DogProfile';
+// import DogSearch from './components/DogSearch';
+// import DogProfile from './components/DogProfile';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -44,14 +44,14 @@ function App() {
                 path="/dashboard/:userID" 
                 element={<Dashboard />}
               />
-            <Route 
+            {/* <Route 
                 path="/dogSearch" 
                 element={<DogSearch />}
               />            
               <Route 
               path="/dogProfile/:dogID" 
               element={<DogProfile />}
-            />
+            /> */}
         </Routes>
       </Router>
     </ApolloProvider>
