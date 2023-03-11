@@ -79,7 +79,6 @@ export const UPDATE_USER = gql`
 mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $location: String) {
   updateUser(id: $updateUserId, username: $username, password: $password, location: $location) {
     _id
-    username
   }
 }
 `
