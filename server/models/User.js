@@ -38,6 +38,16 @@ const userSchema = new Schema({
     // }]
 });
 
+userSchema.pre('remove', async function (next) {
+    try {
+      // Delete all dogs associated with this user
+      await mongoose.model('Dog').deleteMany({ _id: { $in: this.dogs } });
+      next();
+    } catch (error) {
+      next(error);
+    }
+  });
+
 
 
 const User = model('User', userSchema);

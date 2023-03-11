@@ -36,6 +36,8 @@ mutation AddMedia($addMediaId: ID!, $content: String!, $isBanner: Boolean, $isPr
   addMedia(id: $addMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
     _id
     content
+    isBanner
+    isProfile
   }
 }
 `
@@ -46,7 +48,6 @@ mutation Mutation($username: String!, $password: String!) {
     token
     user {
       _id
-      username
     }
   }
 }
@@ -85,8 +86,7 @@ mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $l
 export const REMOVE_DOG = gql`
 mutation DeleteDog($dogId: ID!) {
   deleteDog(dogId: $dogId) {
-    _id
-    userReference
+    success
   }
 }
 `
@@ -94,7 +94,7 @@ mutation DeleteDog($dogId: ID!) {
 export const REMOVE_USER = gql`
 mutation DeleteUser($deleteUserId: ID!) {
   deleteUser(id: $deleteUserId) {
-    _id
+    success
   }
 }
 `
@@ -112,15 +112,12 @@ mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
 }
 `
 
-/*
+
 export const REMOVE_MEDIA = gql`
   mutation removeMedia($content: String!) {
     removeMedia(content: $content) {
-      _id
-      content
-      isBanner
-      isProfile
+    success
     }
   }
 `
-*/
+
