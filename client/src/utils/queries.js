@@ -44,4 +44,21 @@ export const GET_DOG = gql`
   }
 `;
 
+//! Queries
+// get all dogs by location or all-
 
+export const GET_DOGS = gql`
+  query Dogs {
+    dogs {
+      _id
+      bio
+      breed
+      endorsements {
+        counter
+        playStyle
+      }
+      media
+      name
+    }
+  }
+`;
