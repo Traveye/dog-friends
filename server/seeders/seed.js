@@ -19,6 +19,7 @@ db.once('open', async () => {
   for (newDog of dogs) {
     const tempUser = users[Math.floor(Math.random() * users.length)];
     tempUser.dogReference.push(newDog._id);
+    newDog.userReference.push(tempUser._id);
     await tempUser.save();
     
     console.log(tempUser);
@@ -28,6 +29,7 @@ db.once('open', async () => {
 
     tempMedia.dogs.push(newDog._id);
     await tempMedia.save();
+    console.log(newDog)
   }
 
   // // Create dog documents with corresponding media references

@@ -21,7 +21,7 @@ const typeDefs = gql`
     bio: String!
     playStyle: String!
     media: [ID!]
-    userReference: ID!
+    userReference: [User]
     endorsements: [Endorsement]
   }
 
