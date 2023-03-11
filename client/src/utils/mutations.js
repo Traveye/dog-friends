@@ -1,156 +1,121 @@
 import { gql } from '@apollo/client';
 
+//User SignUp
 export const ADD_USER = gql`
-mutation addUser($password: String!, $location: String!, $username: String!) {
-  addUser(password: $password, location: $location, username: $username) {
+mutation AddUser($username: String!, $password: String!, $location: String!) {
+  addUser(username: $username, password: $password, location: $location) {
+    token
     user {
+      _id
       username
-      password
-      location
     }
   }
 }
 `
 
+//User Add Dog
 export const ADD_DOG = gql`
-  mutation addDog($id: ID!, $Name: String, $bio: String, $playStyle: String, $breed: String, $endorsement: Boolean, media: $media) {
-    addDog(id: ID!, name: $name, bio: $bio, playStyle: $playStyle, breed: $breed, endorsement: $endorsement, media: $media) {
-      _id
-      name
-      bio
+mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: String!) {
+  addDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed) {
+    _id
+    bio
+    breed
+    name
+    playStyle
+    endorsements {
       playStyle
-      breed 
-      endorsement
-      user{
-        _id
-      }
-      media {
-    
+      counter
     }
+    media
+    userReference
   }
+}
 `
 export const ADD_MEDIA = gql`
-  mutation updateDog($dogId: ID!, $content: String, $banner: Boolean, $isProfile: Boolean) {
-    updateDog(dogId: $dogId, content: $content, isBanner: $isBanner, isProfile: $isProfile ) {
-      _id
-      content
-      isBanner
-      isProfile
-    
-    }
+mutation AddMedia($addMediaId: ID!, $content: String!, $isBanner: Boolean, $isProfile: Boolean) {
+  addMedia(id: $addMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
+    _id
+    content
+    isBanner
+    isProfile
   }
+}
 `
 
 export const LOGIN_USER = gql`
-  mutation login($userName: String!, $password: String!) {
-    login(userName: $userName, password: $password) {
-      token
-      profile {
-        _id
-        userName
-      }
+mutation Mutation($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
+    token
+    user {
+      _id
     }
   }
+}
 `;
 
 export const UPDATE_DOG = gql`
-  mutation updateDog($name: name, $bio: bio, $playStyle: playStyle, $breed: breed, $endorsement: endorsement) {
-    updateDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed, endorsement: $endorsement) {
-      _id
-      name
-      bio
-      playStyle
-      breed 
-      endorsement
-      media {
-        _id
-        content
-        isBanner
-        isProfile
-
-      }
-    }
+mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String, $breed: String, $media: [ID!]) {
+  updateDog(name: $name, dogId: $dogId, bio: $bio, playStyle: $playStyle, breed: $breed, media: $media) {
+    bio
+    breed
+    media
+    name
+    playStyle
   }
+}
 `
 export const UPDATE_MEDIA = gql`
-  mutation updateMedia(($dogId: dogId, $content: content, $isBanner: isBanner, $isProfile: isProfile) {
-    updateMedia(dogId: $dogId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
-      _id
-      content
-      isBanner
-      isProfile
-    }
+mutation UpdateMedia($updateMediaId: ID!, $content: String, $isBanner: Boolean, $isProfile: Boolean) {
+  updateMedia(id: $updateMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
+    _id
+    content
+    isBanner
+    isProfile
   }
+}
 `
 
 export const UPDATE_USER = gql`
-  mutation updateUser($userName: String!, $password: String!, $location: String!) {
-    updateUser(userName: $userName, password: $password, location: $location) {
-      token{
-        _id
-        userName
-        password
-        location
-        dog {
-          _id
-          name
-          bio
-          playStyle
-          breed 
-          endorsement
-        } 
-      }
-      
-    }
+mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $location: String) {
+  updateUser(id: $updateUserId, username: $username, password: $password, location: $location) {
+    _id
   }
+}
 `
 export const REMOVE_DOG = gql`
-  mutation removeDog($name: String! ) {
-    removeDog(name: $name) {
-      _id
-      name
-      bio
-      playStyle
-      breed 
-      endorsement
-      media {
-        _id
-        content
-        isBanner
-        isProfile
-
-      }
-    }
+mutation DeleteDog($dogId: ID!) {
+  deleteDog(dogId: $dogId) {
+    success
   }
+}
 `
 
 export const REMOVE_USER = gql`
-  mutation removeUser($userName: String!) {
-    removeUser(userName: $userName) {
-      token{
-        _id
-        userName
-        password
-        location
-        dog {
-          _id
-          name
-          bio
-          playStyle
-          breed 
-          endorsement
-        } 
+mutation DeleteUser($deleteUserId: ID!) {
+  deleteUser(id: $deleteUserId) {
+    success
+  }
+}
+`
+
+export const UPDATE_ENDORSEMENT = gql`
+mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
+  updateEndorsementCounter(dogId: $dogId, playStyle: $playStyle, increment: $increment) {
+    _id
+    name
+    endorsements {
+      playStyle
+      counter
     }
   }
+}
 `
+
 
 export const REMOVE_MEDIA = gql`
   mutation removeMedia($content: String!) {
     removeMedia(content: $content) {
-      _id
-      content
-      isBanner
-      isProfile
+    success
     }
   }
 `
