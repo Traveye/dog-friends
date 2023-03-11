@@ -1,80 +1,80 @@
 [
   {
     "username": "bfd2023",
-    "password": "password123",
+    "password": "Password!123",
     "location": "San Jose, CA",
-    "dogReference": ["2"]
+    "dogs": []
   },
   {
     "username": "sb2023",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Morongo Valley, CA",
-    "dogReference": ["3", "4"]
+    "dogs": []
   },
   {
     "username": "dt2023",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Santa Monica, CA",
-    "dogReference": ["5"]
+    "dogs": []
   },
   {
     "username": "mb2023",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Poulsbo, WA",
-    "dogReference": ["1"]
+    "dogs": []
   },
   {
     "username": "Yippy12",
-    "password": "password123",
+    "password": "Password!123",
     "location": "San Jose, CA",
-    "dogReference": ["6"]
+    "dogs": []
   },
   {
     "username": "Jenn51",
-    "password": "password123",
+    "password": "Password!123",
     "location": "San Jose, CA",
-    "dogReference": ["7"]
+    "dogs": []
   },
   {
     "username": "Dalton70",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Santa Monica, CA",
-    "dogReference": ["8"]
+    "dogs": []
   },
   {
     "username": "Tyler50",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Santa Monica, CA",
-    "dogReference": ["9"]
+    "dogs": []
   },
   {
     "username": "demo1",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Santa Monica, CA",
-    "dogReference": ["10"]
+    "dogs": []
   },
   {
     "username": "Jeff8",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Poulsbo, WA",
-    "dogReference": ["11"]
+    "dogs": []
   },
   {
     "username": "Frank",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Poulsbo, WA",
-    "dogReference": ["12"]
+    "dogs": []
   },
   {
     "username": "Medemo",
-    "password": "password123",
+    "password": "Password!123",
     "location": "Santa Monica, CA",
-    "dogReference": ["13"]
+    "dogs": []
   },
   {
     "username": "BeautyNula",
-    "password": "password123",
+    "password": "Password!123",
     "location": "New York, NY",
-    "dogReference": []
+    "dogs": []
   }
 ]

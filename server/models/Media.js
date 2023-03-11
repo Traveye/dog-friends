@@ -12,7 +12,11 @@ const mediaSchema = new Schema({
    isProfile: {
       type: Boolean,
       default: false
-   }
+   },
+   dogs:[{
+      type: Schema.Types.ObjectId,
+      ref:'Dog'
+   }]
 });
 
 const Media = model('Media', mediaSchema);
