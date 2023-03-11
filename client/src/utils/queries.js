@@ -23,3 +23,25 @@ export const GET_USER = gql`
   }
 `;
 
+//! Queries
+//git single dog return all fields
+// get single dog the user nd all dogs associated with that dog
+export const GET_DOG = gql`
+  query Dog($dogId: ID!) {
+    dog(dogId: $dogId) {
+      _id
+      bio
+      breed
+      endorsements {
+        playStyle
+        counter
+      }
+      media
+      name
+      playStyle
+      userReference
+    }
+  }
+`;
+
+
