@@ -29,8 +29,8 @@ const userSchema = new Schema({
         trim: true
     },
     dogReference:[
-        { type : Schema.Types.ObjectId,
-            ref : 'Dog'}         
+        { type: Schema.Types.ObjectId,
+            ref: 'Dog'}         
         ],
     // media:[{
     //     type: Schema.Types.ObjectId,
