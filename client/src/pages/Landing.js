@@ -7,6 +7,7 @@ import SignupModal from '../components/LoginSignup/SignupModal';
 // signup === addUser username/password/location 
 
 function Landing() {
+
   const[showSignup, setShowSignup] = useState(false)
   const[showLogin, setShowLogin] = useState(false)
 
@@ -25,7 +26,7 @@ function Landing() {
   }
   return (
     <div>
-
+      <h1>HOWLER</h1>
     <button onClick={handleLogin}>LogIn</button>
     {showLogin && (
       <LoginModal onClose={handleCloseLogin}/>
