@@ -1,39 +1,25 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-export const QUERY_USERS = gql`
-  query users {
-    users {
+//! Queries
+// me === getUserByID username/media/all dogs that belong to that user
+
+export const GET_USER = gql`
+  query User($userId: ID!) {
+    user(userId: $userId) {
+      username
+      dogReference {
         _id
-        username
-        password
-        location
-        dogReference{
-            _id
+        bio
+        breed
+        endorsements {
+          counter
+          playStyle
         }
-        dog {
-            bio
-            name
-            playStyle
-            breed
-            userReference{
-                _id
-            }
-        }
+        media
+        name
+        playStyle
+      }
     }
   }
-`;
-
-export const QUERY_USER = gql`
-    query user($userId: ID!) {
-        user(userId: $userId) {
-            _id
-            username
-            password
-            location
-            dogReference{
-                _id
-            }
-        }
-    }
 `;
 
