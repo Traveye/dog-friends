@@ -31,8 +31,11 @@ const resolvers = {
   //? removed doge
   Mutation: {
     addUser: async (parent, { username, password, location }) => {
+      console.log(username, password, location)
       const user = await User.create({ username, password, location })
+      console.log(user)
       const token = signToken(user);
+      console.log(token)
       return { token, user };
     },
 
@@ -54,23 +57,23 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { _id, name, bio, playStyle, breed, endorsement, media }, context) => {
+    addDog: async (parent, { name, bio, playStyle, breed }, context) => {
       if (context.user) {
+      console.log(`these are variables ${name}, ${bio}, ${playStyle}, ${breed}`)
 
         const dog = await Dog.create({
-          _id,
           name,
           bio,
           playStyle,
           breed,
-          endorsement,
-          media,
-          userReference: context.user._id,
+          // endorsements,
+          // media,
+          // userReference: context.user._id,
         });
-
+        console.log(`what is ${dog}?`)
         await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { dogs: dog._id } }
+          { _id: '640cc6687d0e64d184cb55ea' },
+          { $addToSet: { dogReference: dog._id } }
         );
 
         return dog;

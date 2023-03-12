@@ -7,27 +7,35 @@ import Auth from '../../utils/auth';
 
 function SignupModal() {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
+  const [location, setLocation] = useState('');
   const [password, setPassword] = useState('');
   const [addUser, { error }] = useMutation(ADD_USER);
+  // console.log(username, email, address, password)
 
+console.log("error", error)
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log("j", e)
     try {
+      console.log("in try")
       const { data } = await addUser({
-        variables: { username, email, address, password },
+        variables: { 
+          username: username, 
+          location: location, 
+          password: password },
       });
+      console.log("data", data)
       Auth.login(data.addUser.token);
       Swal({
         title: 'Signup successful!',
         icon: 'success',
       });
-    } catch (e) {
+    } catch (err) {
+      console.log("catch err", err)
       Swal({
         title: 'Error!',
-        text: e.message,
+        text: err.message,
         icon: 'error',
       });
     }
@@ -42,11 +50,8 @@ function SignupModal() {
         <label htmlFor="username" >User Name:</label>
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
 
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-
         <label htmlFor="address">Address:</label>
-        <input type="text" id="address" name="address"  value={address} onChange={(e) => setAddress(e.target.value)}/>
+        <input type="text" id="location" name="location"  value={location} onChange={(e) => setLocation(e.target.value)}/>
 
         <label htmlFor="password">Password:</label>
         <input type="text" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
