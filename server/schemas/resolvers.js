@@ -57,22 +57,22 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { name, bio, playStyle, breed, endorsement, media }, context) => {
-      console.log('this is addDog')
+    addDog: async (parent, { name, bio, playStyle, breed }, context) => {
       if (context.user) {
+      console.log(`these are variables ${name}, ${bio}, ${playStyle}, ${breed}`)
 
         const dog = await Dog.create({
           name,
           bio,
           playStyle,
           breed,
-          endorsement,
-          media,
-          userReference: context.user._id,
+          // endorsements,
+          // media,
+          // userReference: context.user._id,
         });
         console.log(`what is ${dog}?`)
         await User.findOneAndUpdate(
-          { _id: context.user._id },
+          { _id: '640cc6687d0e64d184cb55ea' },
           { $addToSet: { dogReference: dog._id } }
         );
 

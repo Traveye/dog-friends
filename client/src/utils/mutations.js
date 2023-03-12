@@ -18,16 +18,11 @@ mutation AddUser($username: String!, $password: String!, $location: String!) {
 export const ADD_DOG = gql`
 mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: String!) {
   addDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed) {
-    bio
-    breed
     name
+    bio
     playStyle
-    endorsements {
-      playStyle
-      counter
-    }
-    media
-    userReference
+    breed
+
   }
 }
 `

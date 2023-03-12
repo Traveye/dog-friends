@@ -14,14 +14,17 @@ const CreateDogForm = ({ userID }) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try{
-             await addDog({
-                variables: {  name: dogForm.name, bio: dogForm.bio, breed: dogForm.breed, playStyle: dogForm.playStyle}
-            });
-            // setDog('');
+            console.log(dogForm.playStyle)
             
+             await addDog({
+                variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
+            });
+            console.log('this is after addDog')
+            //  setDog('');
 
         } catch (error) {
-            console.log(error)
+            console.log('this is catch block')
+            console.error(error)
         }
     };
 

@@ -66,12 +66,9 @@ function Dashboard () {
 
     const user = currentUser;
     const dog = currentUser.dogReference;
-
-
-     if (Auth.loggedIn() && Auth.getProfile().data._id === userID) {
-         return <Navigate to={`/Dashboard/${userID} `}/>;
-       }
-
+    const handleLogout = () => {
+        Auth.logout();
+    }
 
     if (loading) {
        return <div className="loading">Loading...</div>
@@ -79,9 +76,10 @@ function Dashboard () {
         return (
     <div  className="container">
         <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
+        {Auth.loggedIn()? (
+            <>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
-       
-       {/*this is modal*/}
+       <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <CreateDogForm userID={userID}/>
         </div>
@@ -94,10 +92,16 @@ function Dashboard () {
         <p>This is me!: {dog.media}</p>
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
         </div>))}</div>
-        
+            <button>this is button</button>
+        </>
+        </>
+        ):(
+            <Navigate to= "/login"/>
+        )}
 
     </div>
-    )
-};
+    
+    );
+}
 
 export default Dashboard;
