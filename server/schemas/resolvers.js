@@ -31,8 +31,11 @@ const resolvers = {
   //? removed doge
   Mutation: {
     addUser: async (parent, { username, password, location }) => {
+      console.log(username, password, location)
       const user = await User.create({ username, password, location })
+      console.log(user)
       const token = signToken(user);
+      console.log(token)
       return { token, user };
     },
 

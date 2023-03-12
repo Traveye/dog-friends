@@ -19,6 +19,7 @@
   "dependencies": {
     "graphql": "^15.5.0",
     "mongoose-unique-validator": "^3.1.0",
-    "optional-require": "^1.0.3"
+    "optional-require": "^1.0.3",
+    "reactstrap": "^9.1.6"
   }
 }
