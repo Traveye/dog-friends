@@ -5,7 +5,7 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import { QUERY_DOGS } from "../utils/queries";
 import { Marker, Popup } from "react-leaflet";
 
-export default function DogMap = () => {
+export default function DogMap() {
     //this is to keep track of the search input
     const [search, setSearch] = useState("");
     //this is to keep track of the search results
@@ -44,12 +44,27 @@ export default function DogMap = () => {
             );
         });
     };
-    //this is to render the popup on the map
-    const renderPopup = () => {};
+
     //don't need to render map as that will be handled by map.js
     return (
-
+        <div>
+            <form onSubmit={handleFormSubmit}>
+                <input  type="text" name="search" onChange={handleInputChange} />
+                <button type="submit">Search</button>
+            </form>
+            {renderSearchResults()}
+            {renderMarkers()}
+        </div>
     );
 
 
 };
+
+
+// this page needs to render a map with leaflet all the dogs in the database will be pins on the map -- need to get location information from the database and render it on the map
+// should call car component and render it on the map
+// should have a search bar that allows you to search by location and render the dogs in that location on the map
+// should have a filter that allows you to search by breed and render the dogs of that breed on the map
+// should have a filter that allows you to search by play style and render the dogs of that play style on the map
+// should have a filter that allows you to search by age and render the dogs of that age on the map
+// should have a filter that allows you to search by size and render the dogs of that size on the map
