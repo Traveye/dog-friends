@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import { Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css";
+import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 
 export default function DogMap() {
     //this is to keep track of the search input
@@ -12,6 +15,9 @@ export default function DogMap() {
     const [searchResults, setSearchResults] = useState([]);
     //this is to return the dogs from the database
     const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
+    // this 
+    const [geocoder, setGeocoder] = useState(null);
+
     //this is to handle the search input
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -31,6 +37,7 @@ export default function DogMap() {
 
     useEffect(() => {
         renderSearchResults(data);
+        console.log(data);
     }, [data]);
     
     //this is to render the markers on the map

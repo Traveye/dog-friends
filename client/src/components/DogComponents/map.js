@@ -1,9 +1,12 @@
 // this is the leaflet map component
 // the main responsibility of the "map" component is to render the map and handle interactions with it, such as adding markers or changing the view.
-import { MapContainer, TileLayer,} from "react-leaflet";
+import { MapContainer, TileLayer, } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
+  
+
 export function RenderMap() {
+
     return (
         <MapContainer
         center={[51.505, -0.09]}
@@ -15,6 +18,7 @@ export function RenderMap() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+    
         
         </MapContainer>
     );

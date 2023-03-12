@@ -80,6 +80,9 @@ export const GET_DOGS = gql`
       }
       media
       name
+      userReference {
+        location
+      }
     }
   }
 `;
