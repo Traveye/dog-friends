@@ -2,7 +2,7 @@
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { QUERY_DOGS } from "../utils/queries";
+import { GET_DOGS } from "../../utils/queries";
 import { Marker, Popup } from "react-leaflet";
 
 export default function DogMap() {
@@ -11,7 +11,7 @@ export default function DogMap() {
     //this is to keep track of the search results
     const [searchResults, setSearchResults] = useState([]);
     //this is to return the dogs from the database
-    const [getDogs, { loading, data }] = useLazyQuery(QUERY_DOGS);
+    const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
     //this is to handle the search input
     const handleInputChange = (event) => {
         const { name, value } = event.target;

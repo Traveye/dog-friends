@@ -44,11 +44,11 @@ function App() {
                 path="/dashboard/:userID" 
                 element={<Dashboard />}
               />
-            {/* <Route 
+            <Route 
                 path="/dogSearch" 
                 element={<DogSearch />}
               />            
-              <Route 
+             {/*  <Route 
               path="/dogProfile/:dogID" 
               element={<DogProfile />}
             /> */}
