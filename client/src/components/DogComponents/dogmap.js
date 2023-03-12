@@ -45,20 +45,23 @@ export default function DogMap({ geocoder }) {
     getDogs({ variables: { search: search } });
   };
   //this is to modify the data received from the database and set the search results
-  const getSearchResults = (data) => {
+useEffect(() => {
+  const getSearchResults = async (data) => {
     if (data) {
       const dogs = data.dogs;
-      //this is to take the data and obtian the long / lat needed for the markers from the location date in userReference using geocoder
-      dogs.map((dog) => {
-        geocoder.geocode(dog.userReference.location, (results) => {
-          dog.location = results[0].center;
-          console.log(dog.location);
-          return dog.location
-        });
-      });
+      for (let dog of dogs) {
+        const results = await geocoder.geocode(dog.userReference.location);
+        dog.location = results[0].center;
+        console.log(dog.location);
+      }
       setSearchResults(dogs);
     }
   };
+  getSearchResults(data);
+}, [data, geocoder]);
+
+  
+  
 
   //this is to render the markers on the map
   const renderMarkers = () => {
