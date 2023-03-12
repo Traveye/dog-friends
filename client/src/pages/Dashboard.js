@@ -22,6 +22,7 @@ function Dashboard () {
 
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
+    //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
 
@@ -46,6 +47,7 @@ function Dashboard () {
      };
     },[data, userID]);
 
+    //this is for modal
     useEffect( () => {
         const handleOutsideClick = (event) => {
             console.log(modalRef.current);
@@ -79,7 +81,7 @@ function Dashboard () {
         <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        
-       
+       {/*this is modal*/}
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <CreateDogForm userID={userID}/>
         </div>
