@@ -6,6 +6,7 @@ import SignupModal from '../components/LoginSignup/SignupModal';
 //! Mutations
 // signup === addUser username/password/location 
 
+
 function Landing() {
 
   const[showSignup, setShowSignup] = useState(false)
@@ -40,3 +41,4 @@ function Landing() {
 }
 
 export default Landing;
+
