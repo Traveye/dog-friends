@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import LoginModal from '../components/LoginSignup/LoginModal';
 import SignupModal from '../components/LoginSignup/SignupModal';
+import "../components/DogComponents/createDogForm.css"
+
 
 
 function Landing() {
+
+  const modalRef = useRef();
+  const backdropRef = useRef();
 
   const[showSignup, setShowSignup] = useState(false)
   const[showLogin, setShowLogin] = useState(false)
@@ -25,13 +30,21 @@ function Landing() {
     <div>
       <h1>HOWLER</h1>
     <button onClick={handleLogin}>LogIn</button>
-    {showLogin && (
+    {showLogin && (<> <div className="modal-backdrop" ref={backdropRef}>
+    <div className="modal-content" ref={modalRef}>
       <LoginModal onClose={handleCloseLogin}/>
-    )}
+      </div>
+        </div>
+        </>)}
+
+
     <button onClick={handleSignup}>Signup</button>
-    {showSignup && (
+    {showSignup && (<> <div className="modal-backdrop" ref={backdropRef}>
+    <div className="modal-content" ref={modalRef}>
       <SignupModal onClose={handleCloseSignup}/>
-    )}
+      </div>
+        </div>
+        </>)}
     </div>
   )
 }
