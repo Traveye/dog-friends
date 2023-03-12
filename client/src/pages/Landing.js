@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import LoginModal from '../components/LoginSignup/LoginModal';
 import SignupModal from '../components/LoginSignup/SignupModal';
-//! Queries
-// login === getUser 
-//! Mutations
-// signup === addUser username/password/location 
 
 function Landing() {
 
