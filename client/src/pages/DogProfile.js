@@ -11,7 +11,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_DOG, UPDATE_ENDORSEMENT } from '../utils/queries';
+import { GET_DOG } from '../utils/queries';
+import { UPDATE_ENDORSEMENT } from '../utils/mutations';
 
 function DogProfile() {
   const { dogId } = useParams();

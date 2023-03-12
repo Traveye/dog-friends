@@ -1,7 +1,7 @@
 // this coponent's responsibility is to query all the dogs from the database and provide markers for the map based on the data received. it will be passed to the map component as a prop.
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/client";
 import { QUERY_DOGS } from "../utils/queries";
 import { Marker, Popup } from "react-leaflet";
 
@@ -23,11 +23,16 @@ export default function DogMap() {
         getDogs({ variables: { search: search } });
     };
     //this is to render the search results to the leaflet map
-    const renderSearchResults = () => {
+    const renderSearchResults = (data) => {
         if (data) {
             setSearchResults(data.dogs);
         }
     };
+
+    useEffect(() => {
+        renderSearchResults(data);
+    }, [data]);
+    
     //this is to render the markers on the map
     const renderMarkers = () => {
         return searchResults.map((dog) => {

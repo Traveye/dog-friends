@@ -9,7 +9,7 @@
 
 
 import React from "react";
-import renderMap from "../components/DogComponents/map";
+import { RenderMap } from "../components/DogComponents/map";
 import DogMap from "../components/DogComponents/dogmap";
 
 
@@ -19,8 +19,10 @@ import DogMap from "../components/DogComponents/dogmap";
 const DogSearch = () => {
     return (
         <div>
-            <renderMap />
+            <RenderMap />
             <DogMap />
         </div>
     );
 };
+
+export default DogSearch;

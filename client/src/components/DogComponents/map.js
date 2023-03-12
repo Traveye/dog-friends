@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer,} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-export default function renderMap() {
+export function RenderMap() {
     return (
         <MapContainer
         center={[51.505, -0.09]}

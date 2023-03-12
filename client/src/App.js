@@ -7,8 +7,8 @@ import { setContext } from '@apollo/client/link/context';
 
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
-import DogSearch from './components/DogSearch';
-import DogProfile from './components/DogProfile';
+import DogSearch from './pages/DogSearch';
+import DogProfile from './pages/DogProfile';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
