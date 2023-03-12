@@ -6,7 +6,7 @@ import Auth from '../../utils/auth';
 
 
 
-function LoginModal(props) {
+function LoginModal() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { err }] = useMutation(LOGIN_USER);
@@ -34,10 +34,10 @@ function LoginModal(props) {
     <div className="modal">
       <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>
-        <label>User Name:</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <label htmlFor="username">User Name:</label>
+        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+        <label htmlFor="password">Password:</label>
+        <input type="text" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         <button type="submit">
           Login
         </button>
