@@ -13,12 +13,17 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_DOG, UPDATE_ENDORSEMENT } from '../utils/queries';
 
+import Endorsements from '../components/Endorsements';
+import DogInfo from '../components/DogInfo';
+// import OtherDogs from '../components/OtherDogs';
+
+
 function DogProfile() {
   const { dogId } = useParams();
 
   // Fetch dog data from server
   const { loading, error, data } = useQuery(GET_DOG, {
-    variables: { dogId },
+    dogId: { dogId },
   });
 
   // Update endorsement mutation
@@ -27,7 +32,7 @@ function DogProfile() {
   // Handle endorsement button click
   const handleEndorsement = async () => {
     try {
-      await updateEndorsement({ variables: { dogId } });
+      await updateEndorsement({ dogId: { dogId } });
     } catch (error) {
       console.log(error);
     }
@@ -41,24 +46,21 @@ function DogProfile() {
     return <div>Error: {error.message}</div>;
   }
 
-  const { dog, user } = data;
+  const { dog } = data;
 
   return (
     <div>
-      <h1>{dog.name}'s Profile</h1>
-      <p>{dog.bio}</p>
+      <div>
+        <DogInfo dog={ dog } />
+      </div>
 
-      <h2>Owned by {user.username}</h2>
+      <div>
+        <Endorsements dog={ dog } handleEndorsement={handleEndorsement} />
+      </div>
 
-      <h3>Endorsements: {dog.endorsements}</h3>
-      <button onClick={handleEndorsement}>Endorse {dog.name}</button>
-
-      <h3>Other dogs owned by {user.username}:</h3>
-      {/* <ul>
-        {otherDogs.map((otherDog) => (
-          <li key={otherDog.id}>{otherDog.name}</li>
-        ))}
-      </ul> */}
+      {/* <div>
+        <OtherDogs user={user} />
+      </div> */}
     </div>
   );
 }
