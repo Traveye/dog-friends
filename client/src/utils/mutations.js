@@ -8,6 +8,8 @@ mutation AddUser($username: String!, $password: String!, $location: String!) {
     user {
       _id
       username
+      password
+      location
     }
   }
 }
@@ -17,17 +19,11 @@ mutation AddUser($username: String!, $password: String!, $location: String!) {
 export const ADD_DOG = gql`
 mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: String!) {
   addDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed) {
-    _id
-    bio
-    breed
     name
+    bio
     playStyle
-    endorsements {
-      playStyle
-      counter
-    }
-    media
-    userReference
+    breed
+
   }
 }
 `
@@ -85,7 +81,7 @@ mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $l
 export const REMOVE_DOG = gql`
 mutation DeleteDog($dogId: ID!) {
   deleteDog(dogId: $dogId) {
-    success
+    _id
   }
 }
 `
@@ -93,7 +89,7 @@ mutation DeleteDog($dogId: ID!) {
 export const REMOVE_USER = gql`
 mutation DeleteUser($deleteUserId: ID!) {
   deleteUser(id: $deleteUserId) {
-    success
+    _id
   }
 }
 `

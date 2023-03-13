@@ -18,6 +18,7 @@ const resolvers = {
     },
 
     dog: async (parent, { dogId }) => {
+      console.log("resolve, resolve, resolve")
       return Dog.findOne({ _id: dogId }).populate('userReference');
     },
     getDogMedia: async (parent, args, context) => {
@@ -38,39 +39,38 @@ const resolvers = {
 
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
-      console.log(user)
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
-      
-      // const correctPw = await user.isCorrectPassword(password);
 
-      // if (!correctPw) {
-      //   throw new AuthenticationError('Incorrect credentials');
-      // }
+      const correctPw = await user.isCorrectPassword(password);
+      console.log("====", correctPw)
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
 
       const token = signToken(user);
 
       return { token, user };
     },
 
-    addDog: async (parent, { _id, name, bio, playStyle, breed, endorsement, media }, context) => {
+    addDog: async (parent, { name, bio, playStyle, breed }, context) => {
+      console.log("first")
       if (context.user) {
+      console.log(`these are variables ${name}, ${bio}, ${playStyle}, ${breed}`)
 
         const dog = await Dog.create({
-          _id,
           name,
           bio,
           playStyle,
           breed,
-          endorsement,
-          media,
-          userReference: context.user._id,
+          // endorsements,
+          // media,
+          // userReference: context.user._id,
         });
-
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { dogs: dog._id } }
+          { $addToSet: { dogReference: dog._id } },
         );
 
         return dog;
@@ -134,7 +134,9 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    deleteDog: async (parent, { dogId }, context) => {
+    deleteDog: async (parent,  {dogId} , context) => {
+      console.log(context)
+      console.log('we in resolvers baby')
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
           _id: dogId,

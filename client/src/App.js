@@ -48,10 +48,10 @@ function App() {
                 path="/dogSearch" 
                 element={<DogSearch />}
               />            
-             {/*  <Route 
+              <Route 
               path="/dogProfile/:dogID" 
               element={<DogProfile />}
-            /> */}
+            />
         </Routes>
       </Router>
     </ApolloProvider>
