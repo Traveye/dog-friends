@@ -22,6 +22,7 @@ function Dashboard () {
 
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
+    const [showUpdateForm, setShowUpdateForm]=useState(false)
     //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
@@ -81,11 +82,16 @@ function Dashboard () {
         console.error(error);
     }
     }
+
     const user = currentUser;
     const dog = currentUser.dogReference;
-    const handleLogout = () => {
-        Auth.logout();
-    }
+    const handleUpdateForm = () => {
+        setShowUpdateForm(true)
+    };
+    const handleCloseUpdateForm = () => {
+        let userForUpdateForm = currentUser
+       setShowUpdateForm(false);
+     }
 
     if (loading) {
        return <div className="loading">Loading...</div>
@@ -95,8 +101,13 @@ function Dashboard () {
         <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
         {Auth.loggedIn()? (
             <>
-            <button className="update" onClick={()=> removeUser(userID)}>Remove User</button>
-            <button className="update" onClick={()=> updateUser(userID)}>Update User</button>
+            <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
+            <button className="update" onClick={handleUpdateForm}>Update User</button>
+            {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
+        <div className="modal-content" ref={modalRef}> <UdpdateUserForm userID={userID}/>
+        </div>
+        </div>
+        </>)}
             <button className="delete" onClick={()=> removeUser(userID)}>Delete Dashboard</button>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
