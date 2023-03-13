@@ -5,38 +5,28 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useLazyQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
+import 'leaflet/dist/leaflet.css';
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 
-const useGeocoder = (geocoder) => {
-  const map = useMap();
-
-    useEffect(() => {
-    const control = L.Control.geocoder({
-      defaultMarkGeocode: false,
-      geocoder: geocoder,
-    }).addTo(map);
-
-    return () => {
-      control.removeFrom(map);
-    };
-  }, [map, geocoder]);
-};
-
 function DogMap() {
-  //this is to keep track of 
-  const [search, setSearch] = useState("");
+    return (
+      <MapContainer center={[34.0195, -118.4912]} zoom={13} scrollWheelZoom={false} style={{ width: "80%", height: "400px" }}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[34.0195, -118.4912]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    );
+  }
+  
 
-  const [searchResults, setSearchResults] = useState([]);
-
-  const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
-
-  const geocoder = L.Control.Geocoder.nominatim();
-
-
-}
-
-export { RenderMap };
+export { DogMap };
 
 // this page needs to render a map with leaflet all the dogs in the database will be pins on the map -- need to get location information from the database and render it on the map
 // should call car component and render it on the map
@@ -45,3 +35,25 @@ export { RenderMap };
 // should have a filter that allows you to search by play style and render the dogs of that play style on the map
 // should have a filter that allows you to search by age and render the dogs of that age on the map
 // should have a filter that allows you to search by size and render the dogs of that size on the map
+
+// {/* <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
+// <TileLayer
+//     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// />
+// {dogs.map((dog) => (
+//     <Marker
+//     key={dog._id}
+//     position={[dog.location.latitude, dog.location.longitude]}
+//     icon={icon}
+//     >
+//     <Popup>
+//         <h2>{dog.name}</h2>
+//         <p>{dog.breed}</p>
+//         <p>{dog.age}</p>
+//         <p>{dog.size}</p>
+//         <p>{dog.playStyle}</p>
+//     </Popup>
+//     </Marker>
+// ))}
+// </MapContainer> */}

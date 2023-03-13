@@ -9,14 +9,14 @@
 
 
 import React from "react";
-import { RenderMap } from "../components/DogComponents/dogmap";
+import { DogMap } from "../components/DogComponents/dogmap";
 
 
 
 const DogSearch = () => {
     return (
         <div>
-            <RenderMap />
+            <DogMap />
         </div>
     );
 };
