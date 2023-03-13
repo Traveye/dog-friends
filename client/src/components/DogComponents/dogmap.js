@@ -20,8 +20,11 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// on load we wan to query all the dogs from the database and render as markers on the map
-// if user searches by location, we want to query all the dogs from the database that are in that location and render as markers on the map
+//on load all dogs queired and added to the map as markers // doing this now
+// this will require query to db and geocoding location to lat and long
+// when user is logged in, map will auto zoom to their location
+// user will also be able to search for a location and the map will zoom to that location
+
 
 function DogMap() {
   //this will be the query to get all the dogs from the database on load
@@ -41,48 +44,15 @@ function DogMap() {
   const handleSearch = async (event) => {
     event.preventDefault();
     console.log(search);
-    // //this will be the query to get all the dogs from the database that are in the location that the user searched for
-    // const { data } = await getDogs({
 
-    // });
+    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
+    const geocodeResponse = await axios.get(geocodeUrl);
+    const { center } = geocodeResponse.data.features[0];
+
+
   };
 
-  //this is a wrapper for the leaflet geocoder
-  function Geocoder() {
-    const map = useMap();
-  
-    useEffect(() => {
-      var geocoder = L.Control.Geocoder.nominatim();
-      if (typeof URLSearchParams !== "undefined" && location.search) {
-        // parse /?geocoder=nominatim from URL
-        var params = new URLSearchParams(location.search);
-        var geocoderString = params.get("geocoder");
-        if (geocoderString && L.Control.Geocoder[geocoderString]) {
-          geocoder = L.Control.Geocoder[geocoderString]();
-        } else if (geocoderString) {
-          console.warn("Unsupported geocoder", geocoderString);
-        }
-      }
-  
-      L.Control.geocoder({
-        query: "",
-        placeholder: "Search here...",
-        defaultMarkGeocode: false,
-        geocoder
-      })
-        .on("markgeocode", function (e) {
-          var latlng = e.geocode.center;
-          L.marker(latlng, { icon })
-            .addTo(map)
-            .bindPopup(e.geocode.name)
-            .openPopup();
-          map.fitBounds(e.geocode.bbox);
-        })
-        .addTo(map);
-    }, []);
-  
-    return null;
-  }
+
 
   return (
     <div>
@@ -96,7 +66,6 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Geocoder />
         <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
