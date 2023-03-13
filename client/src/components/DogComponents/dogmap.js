@@ -7,9 +7,6 @@ import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-
-
-
 // this is to fix the default icon issue with leaflet
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
@@ -41,44 +38,37 @@ function DogMap() {
 
   // this will handle initial load of the map w/ all dogs and geocoding
   const geocodeAddress = async (address) => {
-    const MAPBOX_TOKEN = "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+    const MAPBOX_TOKEN =
+      "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
     // process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-    const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`);
-    const data = await response.json(); 
+    const response = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`
+    );
+    const data = await response.json();
     const [longitude, latitude] = data.features[0].center;
     return { longitude, latitude };
-  }
+  };
 
   useEffect(() => {
     if (data) {
       const geocodeDogs = async () => {
-        const geocodedDogsData = await Promise.all(data.dogs.map(async (dog) => {
-          const location = await geocodeAddress(dog.userReference.location);
-          return { ...dog, location };
-        }));
+        const geocodedDogsData = await Promise.all(
+          data.dogs.map(async (dog) => {
+            const location = await geocodeAddress(dog.userReference.location);
+            return { ...dog, location };
+          })
+        );
         console.log(geocodedDogsData);
         setDogs(geocodedDogsData);
-      }
+      };
       geocodeDogs();
     }
-  }, [data])
-  
-  
+  }, [data]);
 
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
     event.preventDefault();
-  
-
-    // const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
-    // const geocodeResponse = await axios.get(geocodeUrl);
-    // const { center } = geocodeResponse.data.features[0];
-
-
   };
-
-
-
 
   return (
     <div>
@@ -92,11 +82,21 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {/* {dogs.map((dog) => (
+          <Marker
+            key={dog._id}
+            position={[dog.location.latitude, dog.location.longitude]}
+            icon={icon}
+          >
+            <Popup>
+              <h2>{dog.name}</h2>
+              <p>{dog.breed}</p>
+              <p>{dog.age}</p>
+              <p>{dog.size}</p>
+              <p>{dog.playStyle}</p>
+            </Popup>
+          </Marker>
+        ))} */}
       </MapContainer>
       {/* //   this will be the search bar */}
       <form onSubmit={handleSearch}>
