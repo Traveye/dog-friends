@@ -1,4 +1,4 @@
-import Swal from ''
+import Swal from 'sweetalert'
 
 export default function OtherDogs({ user, otherDogs }) {
    const handleOwnerClick = () => {
@@ -15,12 +15,12 @@ export default function OtherDogs({ user, otherDogs }) {
  
    return (
      <div>
-       <h3 onClick={handleOwnerClick}>Other dogs owned by {user.username}:</h3>
+       {/* <h3 onClick={handleOwnerClick}>Other dogs owned by {user.username}:</h3>
        <ul>
          {otherDogs.map((otherDog) => (
            <li key={otherDog.id}>{otherDog.name}</li>
          ))}
-       </ul>
+       </ul> */}
      </div>
    );
  }
