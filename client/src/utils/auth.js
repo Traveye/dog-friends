@@ -30,7 +30,7 @@ class AuthService {
   }
 
   login(idToken) {
-    console.log('hitting login client auth')
+    
     localStorage.setItem('id_token', idToken);
     
   }
