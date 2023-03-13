@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose  } = require('mongoose');
+const bcrypt = require('bcrypt');
   const isPassword = function(password){
     console.log(password)
     const regex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
@@ -47,6 +48,21 @@ userSchema.pre('remove', async function (next) {
       next(error);
     }
   });
+
+  userSchema.pre('save', async function(next) {
+    if (this.isNew || this.isModified('password')) {
+      const saltRounds = 10;
+      this.password = await bcrypt.hash(this.password, saltRounds);
+    }
+  
+    next();
+  });
+
+  userSchema.methods.isCorrectPassword = async function(password) {
+    console.log(password)
+    console.log( this.password)
+    return await bcrypt.compare(password, this.password);
+  }; 
 
 
 

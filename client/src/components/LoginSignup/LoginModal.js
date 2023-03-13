@@ -31,7 +31,7 @@ function LoginModal() {
 
     } catch (err) {
       console.error(err);
-      Swal.fire('Oops!', 'Something went wrong!', 'error');
+      Swal('Oops!', 'Something went wrong!', 'error');
     }
   };
   
