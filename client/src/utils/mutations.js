@@ -80,7 +80,7 @@ mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $l
 export const REMOVE_DOG = gql`
 mutation DeleteDog($dogId: ID!) {
   deleteDog(dogId: $dogId) {
-    success
+    _id
   }
 }
 `
@@ -88,7 +88,7 @@ mutation DeleteDog($dogId: ID!) {
 export const REMOVE_USER = gql`
 mutation DeleteUser($deleteUserId: ID!) {
   deleteUser(id: $deleteUserId) {
-    success
+    _id
   }
 }
 `

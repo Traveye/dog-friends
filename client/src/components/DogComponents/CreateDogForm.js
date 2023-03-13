@@ -20,7 +20,7 @@ const CreateDogForm = ({ userID }) => {
                 variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
             });
             console.log('this is after addDog')
-            //  setDog('');
+             setDog({name:'', bio:'', breed:'', playStyle:''});
 
         } catch (error) {
             console.log('this is catch block')
