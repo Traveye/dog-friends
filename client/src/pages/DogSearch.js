@@ -10,19 +10,18 @@
 
 import React from "react";
 import { RenderMap } from "../components/DogComponents/map";
-import DogMap from "../components/DogComponents/dogmap";
+import L from "leaflet";
+import "leaflet-control-geocoder/dist/Control.Geocoder.css";
+import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 
 
-
-
-//this needs to take the renderMap and dogMap components and render them on the page
 const DogSearch = () => {
     return (
         <div>
             <RenderMap />
-            <DogMap />
         </div>
     );
 };
 
 export default DogSearch;
+

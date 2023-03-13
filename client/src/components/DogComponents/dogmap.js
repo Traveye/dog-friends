@@ -1,69 +1,62 @@
 // this coponent's responsibility is to query all the dogs from the database and provide markers for the map based on the data received. it will be passed to the map component as a prop.
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect } from "react";
-import { useMap } from "react-leaflet";
+import { MapContainer, useMap } from "react-leaflet";
 import { useLazyQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import { Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 
 const useGeocoder = (geocoder) => {
-    const map = useMap();
-  
-    React.useEffect(() => {
-      const control = L.Control.geocoder({
-        defaultMarkGeocode: false,
-        geocoder: geocoder,
-      }).addTo(map);
-  
-      return () => {
-        control.removeFrom(map);
-      };
-    }, [map, geocoder]);
-  };
+  const map = useMap();
+
+  React.useEffect(() => {
+    const control = L.Control.geocoder({
+      defaultMarkGeocode: false,
+      geocoder: geocoder,
+    }).addTo(map);
+
+    return () => {
+      control.removeFrom(map);
+    };
+  }, [map, geocoder]);
+};
 
 
-export default function DogMap({ geocoder }) {
-  //this is to keep track of the search input
+function DogMap() {
   const [search, setSearch] = useState("");
-  //this is to keep track of the search results
   const [searchResults, setSearchResults] = useState([]);
-  //this is to return the dogs from the database
   const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
-  
+  const geocoder = L.Control.Geocoder.nominatim();
 
-  //this is to handle the search input
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setSearch({ ...search, [name]: value });
   };
-  //this is to handle the search submit
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     getDogs({ variables: { search: search } });
   };
-  //this is to modify the data received from the database and set the search results
-useEffect(() => {
-  const getSearchResults = async (data) => {
-    if (data) {
-      const dogs = data.dogs;
-      for (let dog of dogs) {
-        const results = await geocoder.geocode(dog.userReference.location);
-        dog.location = results[0].center;
-        console.log(dog.location);
+
+  useEffect(() => {
+    const getSearchResults = async (data) => {
+      if (data) {
+        const dogs = data.dogs;
+        for (let dog of dogs) {
+          const results = await geocoder.geocode(dog.userReference.location);
+          dog.location = results[0].center;
+          console.log(dog.location);
+        }
+        setSearchResults(dogs);
       }
-      setSearchResults(dogs);
-    }
-  };
-  getSearchResults(data);
-}, [data, geocoder]);
+    };
+    getSearchResults(data);
+  }, [data, geocoder]);
 
-  
-  
-
-  //this is to render the markers on the map
   const renderMarkers = () => {
     return searchResults.map((dog) => {
       return (
@@ -80,7 +73,6 @@ useEffect(() => {
     });
   };
 
-  //don't need to render map as that will be handled by map.js
   return (
     <div>
       <form onSubmit={handleFormSubmit}>
@@ -91,6 +83,26 @@ useEffect(() => {
     </div>
   );
 }
+
+function RenderMap() {
+  return (
+    <MapContainer
+      center={[51.505, -0.09]}
+      zoom={13}
+      scrollWheelZoom={false}
+      style={{ height: "100vh", width: "100%" }}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <DogMap />
+    </MapContainer>
+  );
+}
+
+export { RenderMap };
+
 
 // this page needs to render a map with leaflet all the dogs in the database will be pins on the map -- need to get location information from the database and render it on the map
 // should call car component and render it on the map
