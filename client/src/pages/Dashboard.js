@@ -16,6 +16,8 @@ import { UPDATE_USER, REMOVE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MED
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
+import UpdateUserForm from '../DogComponents/UpdateDogForm';
+
 
 function Dashboard () {
     const { userID } = useParams();
@@ -104,7 +106,7 @@ function Dashboard () {
             <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
             <button className="update" onClick={handleUpdateForm}>Update User</button>
             {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <UdpdateUserForm userID={userID}/>
+        <div className="modal-content" ref={modalRef}> <UpdateUserForm userID={userID}/>
         </div>
         </div>
         </>)}
