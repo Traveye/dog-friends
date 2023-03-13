@@ -82,7 +82,7 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* {dogs.map((dog) => (
+        {dogs.map((dog) => (
           <Marker
             key={dog._id}
             position={[dog.location.latitude, dog.location.longitude]}
@@ -91,12 +91,9 @@ function DogMap() {
             <Popup>
               <h2>{dog.name}</h2>
               <p>{dog.breed}</p>
-              <p>{dog.age}</p>
-              <p>{dog.size}</p>
-              <p>{dog.playStyle}</p>
             </Popup>
           </Marker>
-        ))} */}
+        ))}
       </MapContainer>
       {/* //   this will be the search bar */}
       <form onSubmit={handleSearch}>
