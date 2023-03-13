@@ -14,10 +14,10 @@ db.once('open', async () => {
   await User.deleteMany({});
   await Media.deleteMany({});
 
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hashedPassword = await bcrypt.hash('Password!123', salt);
-  userData.forEach(user => user.password = hashedPassword);
+  // const saltRounds = 10;
+  // const salt = await bcrypt.genSalt(saltRounds);
+  // const hashedPassword = await bcrypt.hash('Password!123', salt);
+  // userData.forEach(user => user.password = hashedPassword);
 
   const users = await User.insertMany(userData);
   const dogs = await Dog.insertMany(dogData);
