@@ -9,10 +9,8 @@
 
 
 import React from "react";
-import { RenderMap } from "../components/DogComponents/map";
-import L from "leaflet";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import { RenderMap } from "../components/DogComponents/dogmap";
+
 
 
 const DogSearch = () => {
