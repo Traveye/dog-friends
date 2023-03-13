@@ -6,6 +6,7 @@ mutation AddUser($username: String!, $password: String!, $location: String!) {
   addUser(username: $username, password: $password, location: $location) {
     token
     user {
+      _id
       username
       password
       location

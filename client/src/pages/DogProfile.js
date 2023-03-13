@@ -8,18 +8,37 @@
 
 // MVP drop down with owner and other dogs at bottom of the page
 
-import React from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_DOG, UPDATE_ENDORSEMENT } from '../utils/queries';
+import { GET_DOG } from '../utils/queries';
+import { UPDATE_ENDORSEMENT } from '../utils/mutations';
+
+import Endorsements from '../components/DogComponents/Endorsements';
+import DogHero from '../components/DogComponents/DogHero';
+import DogMedia from '../components/DogComponents/DogMedia';
+import OtherDogs from '../components/DogComponents/OtherDogs';
+
+import Auth from '../utils/auth';
+
 
 function DogProfile() {
   const { dogId } = useParams();
+  const [currentDog, setCurrentDog] = useState({});
 
   // Fetch dog data from server
-  const { loading, error, data } = useQuery(GET_DOG, {
-    variables: { dogId },
+  const { loading, data } = useQuery(GET_DOG, {
+    variables: { dogId: dogId },
   });
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      const { dog } = data ?? {};
+      setCurrentDog(dog);
+    }
+  }, [data, dogId, setCurrentDog]);
 
   // Update endorsement mutation
   const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
@@ -37,28 +56,27 @@ function DogProfile() {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const { dog, user } = data;
 
   return (
     <div>
-      <h1>{dog.name}'s Profile</h1>
-      <p>{dog.bio}</p>
 
-      <h2>Owned by {user.username}</h2>
+      <div>
+        <DogHero dog={ currentDog } />
+      </div>
+      <h2>{currentDog.name}</h2>
+      <div>
+        <Endorsements dog={ currentDog } handleEndorsement={handleEndorsement} />
+      </div>
+      <div>
+        <p>
+          { currentDog.bio }
+        </p>
+      </div>
+      <DogMedia dogPhotos={ currentDog.media } />
 
-      <h3>Endorsements: {dog.endorsements}</h3>
-      <button onClick={handleEndorsement}>Endorse {dog.name}</button>
-
-      <h3>Other dogs owned by {user.username}:</h3>
-      {/* <ul>
-        {otherDogs.map((otherDog) => (
-          <li key={otherDog.id}>{otherDog.name}</li>
-        ))}
-      </ul> */}
+      <div>
+        <OtherDogs user={currentDog.userRef} />
+      </div>
     </div>
   );
 }
