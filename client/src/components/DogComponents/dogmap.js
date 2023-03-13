@@ -38,9 +38,11 @@ function DogMap() {
 
   // this will handle initial load of the map w/ all dogs and geocoding
   const geocodeAddress = async (address) => {
+    console.log("this is whats passed " + address)
     const MAPBOX_TOKEN =
       "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
     // process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+    console.log()
     const response = await fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`
     );
@@ -52,11 +54,13 @@ function DogMap() {
 
   useEffect(() => {
     if (data) {
+      console.log(data)
       const geocodeDogs = async () => {
         const geocodedDogsData = await Promise.all(
           data.dogs.map(async (dog) => {
-            const location = await geocodeAddress(dog.userReference.location);
-            // console.log("this is the location: ", location);
+            console.log(dog.userReference[0].location)
+            const location = await geocodeAddress(dog.userReference[0].location);
+            console.log("this is the return from geocodeaddress: ", location);
             return { ...dog, location };
           })
         );

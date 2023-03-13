@@ -41,26 +41,6 @@ const dogSchema = new Schema({
    }]
 });
 
-dogSchema.pre('save', async function (next) {
-   const dog = this;
-   if (!dog.isModified('location')) {
-     return next();
-   }
- 
-   try {
-     const response = await fetch(
-       `https://api.mapbox.com/geocoding/v5/mapbox.places/${dog.location}.json?access_token=${MAPBOX_TOKEN}`
-     );
-     const data = await response.json();
-     const [longitude, latitude] = data.features[0].center;
- 
-     dog.longitude = longitude;
-     dog.latitude = latitude;
-     next();
-   } catch (error) {
-     next(error);
-   }
- });
 
 const Dog = model('Dog', dogSchema);
 
