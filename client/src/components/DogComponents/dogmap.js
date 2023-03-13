@@ -2,12 +2,13 @@
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+
+
+
 
 // this is to fix the default icon issue with leaflet
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -24,13 +25,11 @@ L.Marker.prototype.options.icon = DefaultIcon;
 // this will require query to db and geocoding location to lat and long
 // when user is logged in, map will auto zoom to their location
 // user will also be able to search for a location and the map will zoom to that location
-
+//dogs.userReference.location
 
 function DogMap() {
   //this will be the query to get all the dogs from the database on load
-//   const { loading, data } = useQuery(GET_DOGS); ?? maynot do this
-  //this will be the query to get all the dogs from the database
-  const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
+  const { loading, data } = useQuery(GET_DOGS);
   //this will be the state that tracks the search input
   const [search, setSearch] = useState("");
   //this will be the state that tracks the filter input
@@ -40,17 +39,44 @@ function DogMap() {
   //this will be the state that tracks the location of the map
   const [position, setPosition] = useState([34.0195, -118.4912]);
 
+  // this will handle initial load of the map w/ all dogs and geocoding
+  const geocodeAddress = async (address) => {
+    const MAPBOX_TOKEN = "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+    // process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+    const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`);
+    const data = await response.json(); 
+    const [longitude, latitude] = data.features[0].center;
+    return { longitude, latitude };
+  }
+
+  useEffect(() => {
+    if (data) {
+      const geocodeDogs = async () => {
+        const geocodedDogsData = await Promise.all(data.dogs.map(async (dog) => {
+          const location = await geocodeAddress(dog.userReference.location);
+          return { ...dog, location };
+        }));
+        console.log(geocodedDogsData);
+        setDogs(geocodedDogsData);
+      }
+      geocodeDogs();
+    }
+  }, [data])
+  
+  
+
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
     event.preventDefault();
-    console.log(search);
+  
 
-    const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
-    const geocodeResponse = await axios.get(geocodeUrl);
-    const { center } = geocodeResponse.data.features[0];
+    // const geocodeUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
+    // const geocodeResponse = await axios.get(geocodeUrl);
+    // const { center } = geocodeResponse.data.features[0];
 
 
   };
+
 
 
 
