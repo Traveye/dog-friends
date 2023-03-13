@@ -63,11 +63,12 @@ function DogProfile() {
       <div>
         <DogHero dog={ currentDog } />
       </div>
-      <h2>{currentDog.name}</h2>
       <div>
+      <h2>{currentDog.name}</h2>
         <Endorsements dog={ currentDog } handleEndorsement={handleEndorsement} />
       </div>
       <div>
+        <h3>{ currentDog.playStyle }</h3>
         <p>
           { currentDog.bio }
         </p>
