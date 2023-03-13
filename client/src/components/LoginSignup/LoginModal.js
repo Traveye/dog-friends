@@ -26,8 +26,9 @@ function LoginModal() {
       // console.log("userID",userID)
       Auth.login(token);
 
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
+      Swal('Oops!', 'Something went wrong!', 'error');
 
     }
   };
