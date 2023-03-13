@@ -18,6 +18,7 @@ const resolvers = {
     },
 
     dog: async (parent, { dogId }) => {
+      console.log("resolve, resolve, resolve")
       return Dog.findOne({ _id: dogId }).populate('userReference');
     },
     getDogMedia: async (parent, args, context) => {
