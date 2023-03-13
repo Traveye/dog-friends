@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { GET_USER, UPDATE_USER } from '../../utils/mutations';
+import { UPDATE_USER } from '../../utils/mutations';
+import { GET_USER } from '../../utils/queries';
 
 function updateUserForm({ userID }) {
   const [username, setUsername] = useState('');

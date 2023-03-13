@@ -16,7 +16,7 @@ import { UPDATE_USER, REMOVE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MED
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
-import UpdateUserForm from '../DogComponents/UpdateDogForm';
+import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
 
 
 function Dashboard () {
