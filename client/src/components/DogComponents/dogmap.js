@@ -46,6 +46,7 @@ function DogMap() {
     );
     const data = await response.json();
     const [longitude, latitude] = data.features[0].center;
+    console.log("this is the location: ", longitude, latitude)
     return { longitude, latitude };
   };
 
@@ -55,10 +56,11 @@ function DogMap() {
         const geocodedDogsData = await Promise.all(
           data.dogs.map(async (dog) => {
             const location = await geocodeAddress(dog.userReference.location);
+            // console.log("this is the location: ", location);
             return { ...dog, location };
           })
         );
-        console.log(geocodedDogsData);
+        // console.log(geocodedDogsData);
         setDogs(geocodedDogsData);
       };
       geocodeDogs();
@@ -82,18 +84,24 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {dogs.map((dog) => (
-          <Marker
-            key={dog._id}
-            position={[dog.location.latitude, dog.location.longitude]}
-            icon={icon}
-          >
-            <Popup>
-              <h2>{dog.name}</h2>
-              <p>{dog.breed}</p>
-            </Popup>
-          </Marker>
-        ))}
+        {dogs.map((dog) => {
+          const { location, name, breed } = dog;
+          console.log(location); // check the location object
+          console.log(name, breed); // check the name and breed values
+            return (
+            <Marker
+              key={dog._id}
+              position={[location.latitude, location.longitude]}
+              // icon={icon}
+              
+            >
+              <Popup>
+                <h2>{name}</h2>
+                <p>{breed}</p>
+              </Popup>
+            </Marker>
+            );
+        })}
       </MapContainer>
       {/* //   this will be the search bar */}
       <form onSubmit={handleSearch}>
