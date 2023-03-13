@@ -5,26 +5,63 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import { useLazyQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// on load we wan to query all the dogs from the database and render as markers on the map
+// if user searches by location, we want to query all the dogs from the database that are in that location and render as markers on the map
+
 function DogMap() {
-    return (
-      <MapContainer center={[34.0195, -118.4912]} zoom={13} scrollWheelZoom={false} style={{ width: "80%", height: "400px" }}>
+    //this will be the query to get all the dogs from the database
+    const [getDogs, { loading, data }] = useLazyQuery(GET_DOGS);
+    //this will be the state that tracks the search input
+    const [search, setSearch] = useState("");
+    //this will be the state that tracks the filter input
+    const [filter, setFilter] = useState("");
+    //this will be the state that tracks the dogs that are rendered on the map
+    const [dogs, setDogs] = useState([]);
+    //this will be the state that tracks the location of the map
+    const [position, setPosition] = useState([34.0195, -118.4912]);
+
+
+  return (
+    <div>
+      <MapContainer
+        center={position}
+        zoom={13}
+        scrollWheelZoom={false}
+        style={{ width: "80%", height: "400px" }}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[34.0195, -118.4912]}>
+        <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
       </MapContainer>
-    );
-  }
-  
+      {/* //   this will be the search bar */}
+      <input type="text" placeholder="Search by location" />
+      <button>Search </button>
+
+        {/* //   this will be the filter bar */}
+
+    </div>
+  );
+}
 
 export { DogMap };
 
