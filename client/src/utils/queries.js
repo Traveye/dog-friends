@@ -52,16 +52,15 @@ query Query($dogId: ID!) {
   dog(dogId: $dogId) {
     _id
     name
-    bio
     breed
     playStyle
+    bio
     endorsements {
       counter
       playStyle
     }
     media
     userReference {
-      _id
       username
     }
   }
