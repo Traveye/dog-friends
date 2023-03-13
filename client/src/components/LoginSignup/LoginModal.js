@@ -11,7 +11,7 @@ function LoginModal() {
   const [password, setPassword] = useState('');
   const [login, { err }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
-  
+  console.log("login", login)
   const handleFormSubmit  = async (e) => {
     e.preventDefault();
    
@@ -22,7 +22,8 @@ function LoginModal() {
 
       const token = mutationResponse.data.login.token;
       const userID = mutationResponse.data.login.user._id;
-      console.log(userID)
+      console.log("token",token)
+      console.log("userID",userID)
       Auth.login(token);
    
       navigate(`/dashboard/${userID}`);

@@ -58,6 +58,7 @@ const resolvers = {
     },
 
     addDog: async (parent, { name, bio, playStyle, breed }, context) => {
+      console.log("first")
       if (context.user) {
       console.log(`these are variables ${name}, ${bio}, ${playStyle}, ${breed}`)
 
@@ -72,7 +73,7 @@ const resolvers = {
         });
         console.log(`what is ${dog}?`)
         await User.findOneAndUpdate(
-          { _id: '640cc6687d0e64d184cb55ea' },
+          { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
 

@@ -5,6 +5,7 @@ const expiration = '2h';
 
 module.exports = {
   authMiddleware: function ({ req }) {
+    console.log("-------", req)
     let token = req.body.token || req.query.token || req.headers.authorization;
 
     if (req.headers.authorization) {
@@ -21,7 +22,7 @@ module.exports = {
     } catch {
       console.log('Invalid token');
     }
-
+console.log("++++++++++ ", req)
     return req;
   },
   signToken: function ({ userName, _id }) {
