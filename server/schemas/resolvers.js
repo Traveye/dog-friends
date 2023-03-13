@@ -19,7 +19,7 @@ const resolvers = {
 
     dog: async (parent, { dogId }) => {
       console.log("resolve, resolve, resolve")
-      return Dog.findOne({ _id: dogId }).populate('userReference');
+      return Dog.findOne({ _id: dogId }).populate('userReference').populate('media');
     },
     getDogMedia: async (parent, args, context) => {
       if (context.user) {

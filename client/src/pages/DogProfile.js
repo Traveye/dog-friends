@@ -31,7 +31,7 @@ function DogProfile() {
     variables: { dogId: dogId },
   });
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (data) {
@@ -56,10 +56,11 @@ function DogProfile() {
     return <div>Loading...</div>;
   }
 
+  console.log(currentDog)
+
 
   return (
     <div>
-
       <div>
         <DogHero dog={ currentDog } />
       </div>

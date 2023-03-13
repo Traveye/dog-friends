@@ -20,7 +20,7 @@ const typeDefs = gql`
     breed: String!
     bio: String!
     playStyle: String!
-    media: [ID!]
+    media: [Media]
     userReference: [User]
     endorsements: [Endorsement]
   }
