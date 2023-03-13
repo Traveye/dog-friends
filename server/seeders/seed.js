@@ -16,12 +16,10 @@ db.once('open', async () => {
 
   const saltRounds = 10;
   const salt = await bcrypt.genSalt(saltRounds);
-  const hashedPassword = userData.password ? await bcrypt.hash(userData.password, salt) : undefined;
-  if (hashedPassword) {
-    userData.password = hashedPassword;
-  }
+  const hashedPassword = await bcrypt.hash('Password!123', salt);
+  userData.forEach(user => user.password = hashedPassword);
 
-  const users = await User.insertMany(hashedPassword);
+  const users = await User.insertMany(userData);
   const dogs = await Dog.insertMany(dogData);
   const medias = await Media.insertMany(mediaData);
 
