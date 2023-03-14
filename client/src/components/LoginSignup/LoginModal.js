@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext  } from 'react';
 import Swal from 'sweetalert'
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
-
+import {UserContext} from '../../utils/UserContext'
 
 function LoginModal() {
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { error }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
-  // console.log("login", login)
+  const [loggedInUser, setLoggedInUser] = useState("")
+  const userContext = useContext(UserContext);
+
+
   const handleFormSubmit  = async (e) => {
     e.preventDefault();
 
@@ -25,6 +29,7 @@ function LoginModal() {
       // console.log("token",token)
       // console.log("userID",userID)
       Auth.login(token);
+      userContext.setLoggedInUser(userID);
       navigate(`/dashboard/${userID}`);
     } catch (err) {
       console.error(err);
@@ -53,5 +58,3 @@ function LoginModal() {
 }
 export default LoginModal
 
-
-// not checking password issue in the resolvers
