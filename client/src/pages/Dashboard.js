@@ -16,12 +16,15 @@ import { UPDATE_USER, REMOVE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MED
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
+import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
+
 
 function Dashboard () {
     const { userID } = useParams();
 
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
+    const [showUpdateForm, setShowUpdateForm]=useState(false)
     //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
@@ -40,18 +43,17 @@ function Dashboard () {
     const { loading, data } = useQuery(GET_USERS);
     
     
+    
     useEffect( () => {
      if (data) {
         const user = data.users.find((user) => user._id === userID);
         setCurrentUser(user);
      };
     },[data, userID]);
-
     //this is for modal
+    console.log(data); 
     useEffect( () => {
         const handleOutsideClick = (event) => {
-            console.log(modalRef.current);
-            console.log(event.target);
             if (
                 (modalRef.current && !modalRef.current.contains(event.target)) || (backdropRef.current && !backdropRef.current.contains(event.target))){
                 setShowCreateDogForm(false);
@@ -64,11 +66,34 @@ function Dashboard () {
         };
     }, [showCreateDogForm]);
 
+    const deleteDog = async (dogId) => {
+        console.log('we clicking baby')
+        console.log(dogId)
+        try {
+            console.log('this is the try hard')
+            await removeDog({variables: {dogId}});
+            console.log('returned from server')
+            const updatedUser = {
+                ...currentUser,
+                dogReference: currentUser.dogReference.filter(dog => dog._id !== dogId)
+            };
+            setCurrentUser(updatedUser);
+        }
+     catch (error){
+        console.log('this is the catch block')
+        console.error(error);
+    }
+    }
+
     const user = currentUser;
     const dog = currentUser.dogReference;
-    const handleLogout = () => {
-        Auth.logout();
-    }
+    const handleUpdateForm = () => {
+        setShowUpdateForm(true)
+    };
+    const handleCloseUpdateForm = () => {
+        let userForUpdateForm = currentUser
+       setShowUpdateForm(false);
+     }
 
     if (loading) {
        return <div className="loading">Loading...</div>
@@ -78,6 +103,14 @@ function Dashboard () {
         <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
         {Auth.loggedIn()? (
             <>
+            <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
+            <button className="update" onClick={handleUpdateForm}>Update User</button>
+            {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
+        <div className="modal-content" ref={modalRef}> <UpdateUserForm userID={userID}/>
+        </div>
+        </div>
+        </>)}
+            <button className="delete" onClick={()=> removeUser(userID)}>Delete Dashboard</button>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
@@ -91,8 +124,8 @@ function Dashboard () {
         <p>I love {dog.playStyle}</p>
         <p>This is me!: {dog.media}</p>
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
+            <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
         </div>))}</div>
-            <button>this is button</button>
         </>
         </>
         ):(

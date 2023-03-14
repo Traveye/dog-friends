@@ -32,17 +32,13 @@ const resolvers = {
   //? removed doge
   Mutation: {
     addUser: async (parent, { username, password, location }) => {
-      console.log(username, password, location)
       const user = await User.create({ username, password, location })
-      console.log(user)
       const token = signToken(user);
-      console.log(token)
       return { token, user };
     },
 
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
-      console.log(user)
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
@@ -72,10 +68,9 @@ const resolvers = {
           // media,
           // userReference: context.user._id,
         });
-        console.log(`what is ${dog}?`)
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { dogReference: dog._id } }
+          { $addToSet: { dogReference: dog._id } },
         );
 
         return dog;
@@ -139,7 +134,9 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    deleteDog: async (parent, { dogId }, context) => {
+    deleteDog: async (parent,  {dogId} , context) => {
+      console.log(context)
+      console.log('we in resolvers baby')
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
           _id: dogId,
