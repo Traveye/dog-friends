@@ -14,6 +14,8 @@ import iconShadow from "leaflet/dist/images/marker-shadow.png";
 let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
+  iconSize: [25, 41], // specify the size of the icon image
+  iconAnchor: [12, 41] // specify the anchor point of the icon image
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
@@ -34,7 +36,7 @@ function DogMap() {
   //this will be the state that tracks the dogs that are rendered on the map
   const [dogs, setDogs] = useState([]);
   //this will be the state that tracks the location of the map
-  const [position, setPosition] = useState([34.0195, -118.4912]);
+  // const [position, setPosition] = useState([34.0195, -118.4912]);
 
   useEffect(() => {
     if (data){
@@ -52,7 +54,7 @@ function DogMap() {
   return (
     <div>
       <MapContainer
-        center={position}
+        center={[34.0195, -118.4912]}
         zoom={13}
         scrollWheelZoom={false}
         style={{ width: "80%", height: "400px" }}
@@ -61,14 +63,16 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {/* <Marker position={[34.0195, -118.4912]}>
+
+        </Marker> */}
         {dogs.map((dog) => {
           const { location, name, breed } = dog;
-          console.log(location); // check the location object
-          console.log(name, breed); // check the name and breed values
             return (
             <Marker
               key={dog._id}
-              position={[location[0], location[1]]}              
+              position={[location[1], location[0]]} 
+              icon={DefaultIcon}
             >
               <Popup>
                 <h2>{name}</h2>
