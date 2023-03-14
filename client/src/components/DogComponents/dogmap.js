@@ -86,7 +86,7 @@ function DogMap() {
         center={[34.0195, -118.4912]}
         zoom={7}
         scrollWheelZoom={false}
-        style={{ width: "80%", height: "400px" }}
+        style={{ width: "50%", height: "80vh" }}
         ref={mapJump}
       >
         <TileLayer
