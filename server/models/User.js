@@ -42,6 +42,7 @@ const userSchema = new Schema({
   // }]
 });
 
+
 userSchema.pre('remove', async function (next) {
   try {
     // Delete all dogs associated with this user
