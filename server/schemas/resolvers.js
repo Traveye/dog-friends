@@ -69,9 +69,7 @@ const resolvers = {
           bio,
           playStyle,
           breed,
-          // endorsements,
-          // media,
-          // userReference: context.user._id,
+          userReference: context.user._id,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
