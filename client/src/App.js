@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard';
 import DogSearch from './pages/DogSearch';
 import DogProfile from './pages/DogProfile';
 
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -42,7 +43,7 @@ function App() {
     }
   });
 
-const myImage = cld.image('PXL_20230218_181552301_thosfq'); 
+const myImage = cld.image('IMG_5034_teojbe'); 
 myImage.resize(fill().width(250).height(250));
   return (
     <ApolloProvider client={client}>
@@ -66,10 +67,7 @@ myImage.resize(fill().width(250).height(250));
             />
         </Routes>
       </Router>
-      <div>
-      <AdvancedImage cldImg={myImage} />
-    </div>
-    </ApolloProvider>
+      </ApolloProvider>
   );
 }
 

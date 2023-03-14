@@ -112,7 +112,15 @@ function DogMap() {
         })}
         </MarkerClusterGroup>
       </MapContainer>
-      
+      <div>
+      {dogs.map((dog) => {
+          const { location, name, breed } = dog;
+          const imageURL = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
+            return (
+        <div><img src={imageURL} alt="pics yo" width="200px" ></img>
+      </div>
+    );})}
+    </div>
     </div>
   );
 }
