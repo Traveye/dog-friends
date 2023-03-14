@@ -23,36 +23,36 @@ import Auth from '../utils/auth';
 
 
 function DogProfile() {
-  const { dogId } = useParams();
+  const { dogID } = useParams();
   const [currentDog, setCurrentDog] = useState(null); // Initialize to null
-
+  console.log(dogID)
   // Fetch dog data from server
   const { loading, data } = useQuery(GET_DOG, {
-    variables: { dogId: dogId },
+    variables: { dogId: dogID },
   });
 
   useEffect(() => {
     if (data && data.dog) { // Check if data exists and contains dog property
       setCurrentDog(data.dog);
     }
-  }, [data, dogId]);
+  }, [data, dogID]);
 
   // Update endorsement mutation
-  // const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
+  const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
 
   // Handle endorsement button click
-  // const handleEndorsement = async () => {
-  //   try {
-  //     await updateEndorsement({ variables: { dogId } });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleEndorsement = async () => {
+    try {
+      await updateEndorsement({ variables: { dogID } });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(currentDog)
+  // console.log(currentDog)
 
   return (
     <div>
@@ -61,21 +61,21 @@ function DogProfile() {
         <div>Loading...</div>
         }
       </div>
-      {/* <div>
+      <div>
         {currentDog && (
           <Endorsements dog={currentDog} handleEndorsement={handleEndorsement} />
         )}
-      </div> */}
+      </div>
       <div>
-        <h3>{currentDog ? currentDog.name : null}</h3>
+        <h3>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
         <p>
           {currentDog ? currentDog.description : null}
         </p>
       </div>
-      <DogMedia currentDog={currentDog} />
+      <DogMedia images={ currentDog ? currentDog.media : <div>Loading...</div>} />
 
       <div>
-        <OtherDogs currentDog={currentDog} />
+        <OtherDogs owner={ currentDog ? currentDog.userReference : <div>Loading...</div>} />
       </div>
     </div>
   );

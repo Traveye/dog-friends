@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function DogMedia() {
+export default function DogMedia(pics) {
+
+   console.log(pics)
+
    return (
       <div>
-         picture yourself here :Smile:
+         <div>
+
+         </div>
       </div>
    )
 }

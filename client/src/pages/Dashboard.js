@@ -8,7 +8,7 @@
 //add dog dogName/breed/playStyle/media/and any other 
 // delete dog by id
 
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../utils/queries";
@@ -19,10 +19,14 @@ import "../components/DogComponents/createDogForm.css"
 import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
 import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
 
+import { UserContext } from '../utils/UserContext'
+
 
 function Dashboard () {
     const { userID } = useParams();
-
+    const { loggedIn, loggedInUser } = useContext(UserContext);
+    console.log("loggedIN", loggedIn)
+    console.log("loggedInUser", loggedInUser)
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
     const [showUpdateForm, setShowUpdateForm]=useState(false)
