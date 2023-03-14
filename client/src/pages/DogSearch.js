@@ -17,6 +17,7 @@ const DogSearch = () => {
     return (
         <div>
             <DogMap />
+            
         </div>
     );
 };
