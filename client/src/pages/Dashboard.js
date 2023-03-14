@@ -50,8 +50,20 @@ function Dashboard () {
         setCurrentUser(user);
      };
     },[data, userID]);
+
+    
+    const user = currentUser;
+    const dog = currentUser.dogReference;
+
+    useEffect(() => {
+        const newDogAdded = currentUser?.dogReference?.length > dog?.length;
+        if (newDogAdded) {
+          // refetch data to trigger a re-render
+         
+        }
+      }, [currentUser.dogReference, dog?.length]);
+
     //this is for modal
-    console.log(data); 
     useEffect( () => {
         const handleOutsideClick = (event) => {
             if (
@@ -85,14 +97,13 @@ function Dashboard () {
     }
     }
 
-    const user = currentUser;
-    const dog = currentUser.dogReference;
     const handleUpdateForm = () => {
         setShowUpdateForm(true)
     };
-    const handleCloseUpdateForm = () => {
-        let userForUpdateForm = currentUser
-       setShowUpdateForm(false);
+  
+    const handleCloseForm = () => {
+        
+       setShowCreateDogForm(false);
      }
 
     if (loading) {
@@ -114,7 +125,7 @@ function Dashboard () {
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <CreateDogForm userID={userID}/>
+        <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
         </div>
         </div>
         </>)}
@@ -129,7 +140,7 @@ function Dashboard () {
         </>
         </>
         ):(
-            <Navigate to= "/login"/>
+            <Navigate to= "/"/>
         )}
 
     </div>

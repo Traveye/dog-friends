@@ -6,27 +6,30 @@ import auth from "../../utils/auth";
 import swal from "sweetalert";
 import './createDogForm.css'
 
-const CreateDogForm = ({ userID }) => {
+const CreateDogForm = ({ userID, closeModal }) => {
     const [dogForm, setDog] = useState({name:'', bio:'', breed:'', playStyle:'',});
 
-    const [addDog, {error}] = useMutation(ADD_DOG);
+    const [addDog, {data, loading, error}] = useMutation(ADD_DOG);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try{
             console.log(dogForm.playStyle)
+            console.log(data)
             
              await addDog({
                 variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
             });
-            console.log('this is after addDog')
-             setDog({name:'', bio:'', breed:'', playStyle:''});
+            setDog({name:'', bio:'', breed:'', playStyle:''});
+            
+             closeModal();
 
         } catch (error) {
-            console.log('this is catch block')
+            console.log(`This is an error: ${error.message}`)
             console.error(error)
         }
     };
+    
 
     const handleChange = (event) => {
         const { name, value } = event.target;
