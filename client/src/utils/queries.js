@@ -25,23 +25,27 @@ query Query {
 }`
 
 export const GET_USER = gql`
-  query User($userId: ID!) {
-    user(userId: $userId) {
-      username
-      dogReference {
+    query User($userId: ID!) {
+      user(userId: $userId) {
         _id
-        bio
-        breed
-        endorsements {
-          counter
+        username
+        password
+        location
+        dogReference {
+          name
+          breed
+          bio
           playStyle
+          _id
+          media {
+            _id
+            content
+            isBanner
+            isProfile
+          }
         }
-        media
-        name
-        playStyle
       }
     }
-  }
 `;
 
 //! Queries
