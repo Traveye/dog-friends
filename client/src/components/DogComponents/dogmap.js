@@ -74,13 +74,13 @@ function DogMap() {
   return (
     <div>
       {/* //   this will be the search bar */}
-      <form onSubmit={handleSearch}>
+      <form className="form" onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Search by location"
           onChange={(event) => setSearch(event.target.value)}
         />
-        <button type="submit">Search</button>
+        <button className="button" type="submit">Search</button>
       </form>
       <MapContainer
         center={[34.0195, -118.4912]}
