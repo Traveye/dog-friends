@@ -2,6 +2,8 @@ const { User, Dog, Media } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 const fetch = require("node-fetch");
+const MAPBOX_TOKEN =
+"pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
 
 
 const resolvers = {

@@ -1,6 +1,6 @@
 // this coponent's responsibility is to query all the dogs from the database and provide markers for the map based on the data received. it will be passed to the map component as a prop.
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useLazyQuery, useQuery } from "@apollo/client";
@@ -36,8 +36,8 @@ function DogMap() {
   const [filter, setFilter] = useState("");
   //this will be the state that tracks the dogs that are rendered on the map
   const [dogs, setDogs] = useState([]);
-  //this will be the state that tracks the location of the map
-  // const [position, setPosition] = useState([34.0195, -118.4912]);
+  //this will be the ref that will be used to jump the map to a location on search
+  const mapJump = useRef(null);
 
   useEffect(() => {
     if (data){
@@ -50,15 +50,38 @@ function DogMap() {
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
     event.preventDefault();
+    const MAPBOX_TOKEN =
+  "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+    console.log("this is our search " + search)
+
+    const response = await fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${MAPBOX_TOKEN}`
+    );
+    const data = await response.json();
+    const [longitude, latitude] = data.features[0].center;
+    console.log("this is our " + longitude, latitude);
+
+    mapJump.current.setView([latitude, longitude], 10);
+
   };
 
   return (
     <div>
+      {/* //   this will be the search bar */}
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          placeholder="Search by location"
+          onChange={(event) => setSearch(event.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
       <MapContainer
         center={[34.0195, -118.4912]}
-        zoom={13}
+        zoom={7}
         scrollWheelZoom={false}
         style={{ width: "80%", height: "400px" }}
+        ref={mapJump}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -82,15 +105,6 @@ function DogMap() {
         })}
         </MarkerClusterGroup>
       </MapContainer>
-      {/* //   this will be the search bar */}
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search by location"
-          onChange={(event) => setSearch(event.target.value)}
-        />
-        <button type="submit">Search</button>
-      </form>
     </div>
   );
 }
