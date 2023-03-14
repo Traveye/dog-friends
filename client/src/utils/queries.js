@@ -76,6 +76,7 @@ export const GET_DOGS = gql`
       _id
       bio
       breed
+      location
       endorsements {
         counter
         playStyle

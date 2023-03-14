@@ -36,40 +36,13 @@ function DogMap() {
   //this will be the state that tracks the location of the map
   const [position, setPosition] = useState([34.0195, -118.4912]);
 
-  // this will handle initial load of the map w/ all dogs and geocoding
-  const geocodeAddress = async (address) => {
-    console.log("this is whats passed " + address)
-    const MAPBOX_TOKEN =
-      "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
-    // process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-    console.log()
-    const response = await fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAPBOX_TOKEN}`
-    );
-    const data = await response.json();
-    const [longitude, latitude] = data.features[0].center;
-    console.log("this is the location: ", longitude, latitude)
-    return { longitude, latitude };
-  };
-
   useEffect(() => {
-    if (data) {
-      console.log(data)
-      const geocodeDogs = async () => {
-        const geocodedDogsData = await Promise.all(
-          data.dogs.map(async (dog) => {
-            console.log(dog.userReference[0].location)
-            const location = await geocodeAddress(dog.userReference[0].location);
-            console.log("this is the return from geocodeaddress: ", location);
-            return { ...dog, location };
-          })
-        );
-        // console.log(geocodedDogsData);
-        setDogs(geocodedDogsData);
-      };
-      geocodeDogs();
+    if (data){
+      setDogs(data.dogs);
     }
   }, [data]);
+
+  console.log(dogs)
 
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
@@ -95,9 +68,7 @@ function DogMap() {
             return (
             <Marker
               key={dog._id}
-              position={[location.latitude, location.longitude]}
-              // icon={icon}
-              
+              position={[location[0], location[1]]}              
             >
               <Popup>
                 <h2>{name}</h2>
