@@ -8,7 +8,7 @@
 
 // MVP drop down with owner and other dogs at bottom of the page
 
-import React, {useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_DOG } from '../utils/queries';
@@ -24,58 +24,58 @@ import Auth from '../utils/auth';
 
 function DogProfile() {
   const { dogId } = useParams();
-  const [currentDog, setCurrentDog] = useState({});
+  const [currentDog, setCurrentDog] = useState(null); // Initialize to null
 
   // Fetch dog data from server
   const { loading, data } = useQuery(GET_DOG, {
     variables: { dogId: dogId },
   });
 
-  console.log(data);
-
   useEffect(() => {
-    if (data) {
-      const { dog } = data ?? {};
-      setCurrentDog(dog);
+    if (data && data.dog) { // Check if data exists and contains dog property
+      setCurrentDog(data.dog);
     }
-  }, [data, dogId, setCurrentDog]);
+  }, [data, dogId]);
 
   // Update endorsement mutation
-  const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
+  // const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
 
   // Handle endorsement button click
-  const handleEndorsement = async () => {
-    try {
-      await updateEndorsement({ variables: { dogId } });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleEndorsement = async () => {
+  //   try {
+  //     await updateEndorsement({ variables: { dogId } });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  console.log(currentDog)
 
   return (
     <div>
-
       <div>
-        <DogHero dog={ currentDog } />
+        { currentDog?.media ? <DogHero images={currentDog.media} /> :
+        <div>Loading...</div>
+        }
       </div>
-      <h2>{currentDog.name}</h2>
+      {/* <div>
+        {currentDog && (
+          <Endorsements dog={currentDog} handleEndorsement={handleEndorsement} />
+        )}
+      </div> */}
       <div>
-        <Endorsements dog={ currentDog } handleEndorsement={handleEndorsement} />
-      </div>
-      <div>
+        <h3>{currentDog ? currentDog.name : null}</h3>
         <p>
-          { currentDog.bio }
+          {currentDog ? currentDog.description : null}
         </p>
       </div>
-      <DogMedia dogPhotos={ currentDog.media } />
+      <DogMedia currentDog={currentDog} />
 
       <div>
-        <OtherDogs user={currentDog.userRef} />
+        <OtherDogs currentDog={currentDog} />
       </div>
     </div>
   );

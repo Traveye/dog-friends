@@ -9,7 +9,7 @@ const MAPBOX_TOKEN =
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('dogReference');
+      return User.find().populate('dogReference').populate('userReference');
     },
 
     user: async (parent, { userId }) => {
@@ -22,7 +22,7 @@ const resolvers = {
 
     dog: async (parent, { dogId }) => {
       console.log("resolve, resolve, resolve")
-      return Dog.findOne({ _id: dogId }).populate('userReference');
+      return Dog.findOne({ _id: dogId }).populate('userReference').populate('media').populate('endorsements');
     },
     getDogMedia: async (parent, args, context) => {
       if (context.user) {

@@ -25,7 +25,7 @@ function LoginModal() {
       // console.log("token",token)
       // console.log("userID",userID)
       Auth.login(token);
-
+      navigate(`/dashboard/${userID}`);
     } catch (err) {
       console.error(err);
       Swal('Oops!', 'Something went wrong!', 'error');

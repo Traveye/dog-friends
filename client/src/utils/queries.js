@@ -50,18 +50,23 @@ export const GET_USER = gql`
 export const GET_DOG = gql`
 query Query($dogId: ID!) {
   dog(dogId: $dogId) {
-    _id
     name
-    breed
     playStyle
     bio
+    breed
+    _id
+    userReference {
+      _id
+      username
+    }
     endorsements {
       counter
       playStyle
     }
-    media
-    userReference {
-      username
+    media {
+      content
+      isBanner
+      isProfile
     }
   }
 }

@@ -16,12 +16,15 @@ import { UPDATE_USER, REMOVE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MED
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
+import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
+
 
 function Dashboard () {
     const { userID } = useParams();
 
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
+    const [showUpdateForm, setShowUpdateForm]=useState(false)
     //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
@@ -47,8 +50,20 @@ function Dashboard () {
         setCurrentUser(user);
      };
     },[data, userID]);
+
+    
+    const user = currentUser;
+    const dog = currentUser.dogReference;
+
+    useEffect(() => {
+        const newDogAdded = currentUser?.dogReference?.length > dog?.length;
+        if (newDogAdded) {
+          // refetch data to trigger a re-render
+         
+        }
+      }, [currentUser.dogReference, dog?.length]);
+
     //this is for modal
-    console.log(data); 
     useEffect( () => {
         const handleOutsideClick = (event) => {
             if (
@@ -81,11 +96,15 @@ function Dashboard () {
         console.error(error);
     }
     }
-    const user = currentUser;
-    const dog = currentUser.dogReference;
-    const handleLogout = () => {
-        Auth.logout();
-    }
+
+    const handleUpdateForm = () => {
+        setShowUpdateForm(true)
+    };
+  
+    const handleCloseForm = () => {
+        
+       setShowCreateDogForm(false);
+     }
 
     if (loading) {
        return <div className="loading">Loading...</div>
@@ -95,13 +114,18 @@ function Dashboard () {
         <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
         {Auth.loggedIn()? (
             <>
-            <button className="update" onClick={()=> removeUser(userID)}>Remove User</button>
-            <button className="update" onClick={()=> updateUser(userID)}>Update User</button>
+            <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
+            <button className="update" onClick={handleUpdateForm}>Update User</button>
+            {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
+        <div className="modal-content" ref={modalRef}> <UpdateUserForm userID={userID}/>
+        </div>
+        </div>
+        </>)}
             <button className="delete" onClick={()=> removeUser(userID)}>Delete Dashboard</button>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <CreateDogForm userID={userID}/>
+        <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
         </div>
         </div>
         </>)}
@@ -116,7 +140,7 @@ function Dashboard () {
         </>
         </>
         ):(
-            <Navigate to= "/login"/>
+            <Navigate to= "/"/>
         )}
 
     </div>
