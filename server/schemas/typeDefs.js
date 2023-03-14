@@ -32,8 +32,8 @@ const typeDefs = gql`
   }
 
   type Media {
-    _id: ID!
-    content: String!
+    _id: ID
+    content: String
     isBanner: Boolean
     isProfile: Boolean
   }

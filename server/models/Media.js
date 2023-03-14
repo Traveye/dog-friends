@@ -2,8 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const mediaSchema = new Schema({
    content: {
-      type: String,
-      required: [true, 'Media content is required'],
+      type: String,   
+
    },
    isBanner: {
       type: Boolean,
