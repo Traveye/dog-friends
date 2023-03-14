@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useLazyQuery, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -65,6 +66,11 @@ function DogMap() {
 
   };
 
+  //this will be the function that handles links to dog profiles
+  const handleMarkerClick = (dogId) => {
+    window.location.href = `/dog/${dogId}`;
+  };
+
   return (
     <div>
       {/* //   this will be the search bar */}
@@ -99,6 +105,7 @@ function DogMap() {
               <Popup>
                 <h2>{name}</h2>
                 <p>{breed}</p>
+                <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
               </Popup>
             </Marker>
             );
