@@ -5,6 +5,10 @@ import { ApolloClient, InMemoryCache, ApolloProvider,
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 
+import {Cloudinary} from "@cloudinary/url-gen";
+import {AdvancedImage} from '@cloudinary/react';
+import {fill} from "@cloudinary/url-gen/actions/resize";
+
 import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 import DogSearch from './pages/DogSearch';
@@ -30,8 +34,16 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
-
+// Screenshot_20221005-190041_Instagram_1_ylcgst
 function App() {
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'datl67gp3'
+    }
+  });
+
+const myImage = cld.image('PXL_20230218_181552301_thosfq'); 
+myImage.resize(fill().width(250).height(250));
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -54,6 +66,9 @@ function App() {
             />
         </Routes>
       </Router>
+      <div>
+      <AdvancedImage cldImg={myImage} />
+    </div>
     </ApolloProvider>
   );
 }
