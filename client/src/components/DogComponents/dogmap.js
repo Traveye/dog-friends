@@ -64,9 +64,7 @@ function DogMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* <Marker position={[34.0195, -118.4912]}>
-
-        </Marker> */}
+        <MarkerClusterGroup>
         {dogs.map((dog) => {
           const { location, name, breed } = dog;
             return (
@@ -82,6 +80,7 @@ function DogMap() {
             </Marker>
             );
         })}
+        </MarkerClusterGroup>
       </MapContainer>
       {/* //   this will be the search bar */}
       <form onSubmit={handleSearch}>
