@@ -13,6 +13,7 @@ const resolvers = {
     },
 
     user: async (parent, { userId }) => {
+      console.log("hitting user resolver")
       return User.findOne({ _id: userId }).populate('dogReference');
     },
 
@@ -103,7 +104,8 @@ const resolvers = {
     },
 
 
-    updateUser: async (parent, { id, username, password, location, dogReference }) => {
+    updateUser: async (parent, { id, username, password, location, dogReference }, context) => {
+      console.log("hitting update user resolver")
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(id, { username, password, location, dogReference }, { new: true });
         return updatedUser;

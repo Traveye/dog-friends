@@ -3,96 +3,81 @@ import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_USER } from '../../utils/mutations';
 import { GET_USER } from '../../utils/queries';
 
-function updateUserForm({ userID }) {
-  const [username, setUsername] = useState('');
-  const [location, setLocation] = useState('');
+function UpdateUserForm({ userID, closeModal }) {
+  console.log('userUpdateForm', userID);
+
+  const { loading, error, data } = useQuery(GET_USER, {
+    variables: { userId: userID },
+  });
+
+  const [username, setUsername] = useState(data?.user.username || '');
+  const [location, setLocation] = useState(data?.user.location || '');
   const [password, setPassword] = useState('');
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showAddressInput, setShowAddressInput] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(false);
 
-  const { loading, data } = useQuery(GET_USER, {
-    variables: {
-      _id: userID,
+  const [updateUser] = useMutation(UPDATE_USER, {
+    variables: { updateUserId: userID, username, location, password },
+    onCompleted: () => {
+      closeModal()
     },
   });
 
-  const [updateUser, { error }] = useMutation(UPDATE_USER);
-
-  const handleUsernameUpdate = () => {
-    updateUser({
-      variables: { _id: userID, username },
-    });
-    setShowUsernameInput(false);
-  };
-
-  const handleLocationUpdate = () => {
-    updateUser({
-      variables: { _id: userID, location },
-    });
-    setShowAddressInput(false);
-  };
-
-  const handlePasswordUpdate = () => {
-    updateUser({
-      variables: { _id: userID, password },
-    });
-    setShowPasswordInput(false);
-  };
-
-
+  console.log(error);
 
   if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
+
+  const handleUpdate = () => {
+    updateUser();
+  };
 
   return (
-    <div>
-
-     <p>{data.getUser.username}</p>
-        <button onClick={() => setShowUsernameInput(true)}>🖍️</button>
-          {showUsernameInput && (
-          <>
-            <input
-              type="text"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <button onClick={handleUsernameUpdate}>Save</button>
-          </>
-          )}
-
-      <p>{data.getUser.location}</p>
-         <button onClick={() => setShowAddressInput(true)}>🖍️</button>
-          {showAddressInput && (
-          <>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+    <div className="userFormContainer">
+      <p>{data?.user.username}</p>
+      <button onClick={() => setShowUsernameInput(true)}>🖍️</button>
+      {showUsernameInput && (
+        <>
+          <input
+            type="text"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <button onClick={handleLocationUpdate}>Save</button>
-          </>
-          )}
-  
+        </>
+      )}
+
+      <p>{data?.user.location}</p>
+      <button onClick={() => setShowAddressInput(true)}>🖍️</button>
+      {showAddressInput && (
+        <>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </>
+      )}
+
       <p>**********</p>
-        <button onClick={() => setShowPasswordInput(true)}>🖍️</button>
-          {showPasswordInput && (  
-          <>
-            <input
-              type="text" 
-              id="password" 
-              name="password"  
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)}
+      <button onClick={() => setShowPasswordInput(true)}>🖍️</button>
+      {showPasswordInput && (
+        <>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={handlePasswordUpdate}>Save</button>
-          </>
-        )}
-
+        </>
+      )}
+      <button onClick={handleUpdate}>Save</button>
     </div>
-  )
+  );
 }
 
-export default updateUserForm;
+export default UpdateUserForm;

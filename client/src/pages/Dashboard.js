@@ -100,9 +100,12 @@ function Dashboard () {
     const handleUpdateForm = () => {
         setShowUpdateForm(true)
     };
+    const handleCloseUpdateForm = () => {
+        setShowUpdateForm(false)
+    };
+  
   
     const handleCloseForm = () => {
-        
        setShowCreateDogForm(false);
      }
 
@@ -117,7 +120,7 @@ function Dashboard () {
             <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
             <button className="update" onClick={handleUpdateForm}>Update User</button>
             {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <UpdateUserForm userID={userID}/>
+        <div className="modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
         </div>
         </div>
         </>)}
