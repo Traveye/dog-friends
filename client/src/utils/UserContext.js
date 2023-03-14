@@ -5,6 +5,8 @@ export const UserContext = createContext();
 
 export function UserProvider(props) {
   const [loggedIn, setLoggedIn] = useState(AuthService.loggedIn());
+  const [loggedInUser, setLoggedInUser] = useState("")
+ 
 
   function handleLogin(idToken) {
     AuthService.login(idToken);
@@ -17,7 +19,7 @@ export function UserProvider(props) {
   }
 
   return (
-    <UserContext.Provider value={{ loggedIn, handleLogin, handleLogout }}>
+    <UserContext.Provider value={{ loggedIn, handleLogin, handleLogout, loggedInUser, setLoggedInUser }}>
       {props.children}
     </UserContext.Provider>
   );

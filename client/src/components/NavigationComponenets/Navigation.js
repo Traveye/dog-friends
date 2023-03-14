@@ -5,15 +5,16 @@ import { UserContext } from '../../utils/UserContext'
 
 function Navigation() {
   const navigate = useNavigate();
-  const { loggedIn, logout } = useContext(UserContext);
-  console.log(loggedIn)
+  const { loggedIn, handleLogout, loggedInUser } = useContext(UserContext);
+  console.log("+++++",loggedIn)
+  console.log("+++++", loggedInUser)
 
   return (
     <div>
     <button  onClick={ () => navigate('/')}> Landing</button>
-    <button onClick={ () => navigate('/dashboard/:userID')}> Dashboard</button>
+    <button onClick={ () => navigate(`/dashboard/${loggedInUser}`)}> Dashboard</button>
     <button  onClick={ () => navigate('/dogSearch')}> Search</button>
-    <button onClick={logout}>Log Out</button>
+    <button onClick={handleLogout}>Log Out</button>
     </div>
   )
 }

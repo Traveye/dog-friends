@@ -23,8 +23,9 @@ import { UserContext } from '../utils/UserContext'
 
 function Dashboard () {
     const { userID } = useParams();
-    const { loggedIn } = useContext(UserContext);
+    const { loggedIn, loggedInUser } = useContext(UserContext);
     console.log("loggedIN", loggedIn)
+    console.log("loggedInUser", loggedInUser)
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
     const [showUpdateForm, setShowUpdateForm]=useState(false)
