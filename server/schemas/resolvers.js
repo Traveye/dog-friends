@@ -1,6 +1,7 @@
 const { User, Dog, Media } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
+const fetch = require("node-fetch");
 
 
 const resolvers = {

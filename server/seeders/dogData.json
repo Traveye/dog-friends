@@ -4,84 +4,96 @@
     "bio": "Hiccup is a good boy and really loves to run!",
     "media": [],
     "playStyle": "Running",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-122.63928, 47.739137]
   },
   {
     "name": "Mocha",
     "bio": "Mocha is a good girl, she likes to run and will get away so we need to play in a place that has a fence!",
     "media": [],
     "playStyle": "Craziness",
-    "breed": "Maltese"
+    "breed": "Maltese",
+    "location": [-122.63928, 47.739137]
   },
   {
     "name": "Kipo",
     "bio": "Kipo has a brother named Scooby they are great together but are always down to play with others",
     "media": [],
     "playStyle": "Running",
-    "breed": "Golden Retriever"
+    "breed": "Golden Retriever",
+    "location": [-122.63928, 47.739137]
   },
   {
     "name": "Scooby",
     "bio": "Scoody is a good boy. He has a new sister Kipo that is keeping him busy but he is always down to play with others!",
     "media": [],
     "playStyle": "Running",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-118.491227, 34.01947]
   },
   {
     "name": "The Italian",
     "bio": "Italy is a good girl and she loves to roll around with other dogs. She is small and like to play hard so I want her to play with other small rambunctious dogs!",
     "media": [],
     "playStyle": "Wrestling",
-    "breed": "Italian Grey Hound"
+    "breed": "Italian Grey Hound",
+    "location": [-121.890583, 37.336191]
   },
   {
     "name": "Hicarue",
     "bio": "A very playful guy that can play hard but also be very gentle",
     "media": [],
     "playStyle": "Wrestling",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-118.491227, 34.01947]
   },
   {
     "name": "Buddy",
     "bio": "Loves to be outside all the time. Rain, Sun, Snow; doesn't matter.",
     "media": [],
     "playStyle": "Tug-a-war",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-122.63928, 47.739137]
   },
   {
     "name": "Bubbu-ka-chue",
     "bio": "Gentle guy. Can really play with anyone at their level.",
     "media": [],
     "playStyle": "Any",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-118.491227, 34.01947]
   },
   {
     "name": "Thor",
     "bio": "Thor is a giant observer! He likes to play sometimes but also just mainly likes to watch the show.",
     "media": [],
     "playStyle": "companionship",
-    "breed": "Great Pyrenees"
+    "breed": "Great Pyrenees",
+    "location": [-121.890583, 37.336191]
   },
   {
     "name": "Jello",
     "bio": "Always on the go looking for friends to go places with. Love going out and being on the go.",
     "media": [],
     "playStyle": "Walking",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [-118.491227, 34.01947]
   },
   {
     "name": "Jables",
     "bio": "Seeking all water dogs. Splashing, running in and out, shaking on the humans you name it if it's a water activity Jables is your doggy pal!",
     "media": [],
     "playStyle": "Swimming",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [ -118.491227, 34.01947]
   },
   {
     "name": "Rocket",
     "bio": "Very mellow will chase ball but really likes to just sniff and hang.",
     "media": [],
     "playStyle": "Sniffing",
-    "breed": "Shepard Mix"
+    "breed": "Shepard Mix",
+    "location": [ -118.491227, 34.01947]
   },
   {
     "name": "Pepi",
@@ -89,6 +101,7 @@
     "bio": "More energy then Pepi knows what to do with",
     "media": [],
     "playStyle": "mutual play",
-    "breed": "Husky"
+    "breed": "Husky",
+    "location": [-73.9826608125, 40.76872225]
   }
 ]
