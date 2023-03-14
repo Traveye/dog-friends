@@ -22,6 +22,7 @@ const typeDefs = gql`
     playStyle: String!
     media: [ID!]
     userReference: [User]
+    location: [Int]
     endorsements: [Endorsement]
   }
 

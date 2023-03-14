@@ -32,6 +32,10 @@ const dogSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User'
    }],
+   location: {
+      type: [Number], // array of numbers (longitude, latitude)
+      index: '2dsphere' // create a geospatial index for location field
+    },
    media: [{
       type: Schema.Types.String,
       ref: 'Media'
@@ -40,6 +44,29 @@ const dogSchema = new Schema({
       endorsementsSchema
    }]
 });
+
+dogSchema.pre('save', async function (next) {
+   const dog = this;
+ 
+   if (!dog.isModified('location')) {
+     return next();
+   }
+ 
+   try {
+     const user = await User.findById(dog.userReference);
+     const response = await fetch(
+       `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.location}.json?access_token=${MAPBOX_TOKEN}`
+     );
+     const data = await response.json();
+     const [longitude, latitude] = data.features[0].center;
+ 
+     dog.longitude = longitude;
+     dog.latitude = latitude;
+     next();
+   } catch (error) {
+     next(error);
+   }
+ });
 
 
 const Dog = model('Dog', dogSchema);
