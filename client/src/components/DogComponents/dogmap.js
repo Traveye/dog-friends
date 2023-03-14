@@ -112,6 +112,7 @@ function DogMap() {
         })}
         </MarkerClusterGroup>
       </MapContainer>
+      
     </div>
   );
 }
