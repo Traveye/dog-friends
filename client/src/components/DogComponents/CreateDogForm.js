@@ -14,14 +14,14 @@ const CreateDogForm = ({ userID, closeModal }) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try{
-            console.log(dogForm.playStyle)
-            console.log(data)
             
-             await addDog({
+            await addDog({
                 variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
             });
             setDog({name:'', bio:'', breed:'', playStyle:''});
             
+            console.log(loading, data, error)
+            console.log(dogForm)
              closeModal();
 
         } catch (error) {

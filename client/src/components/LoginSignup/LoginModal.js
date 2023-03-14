@@ -41,8 +41,8 @@ function LoginModal() {
       <form onSubmit={handleFormSubmit}>
         <label htmlFor="username">User Name:</label>
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <label htmlFor="password">Password:</label>
-        <input type="text" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <label  htmlFor="password">Password:</label>
+        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button type="submit">
           Login
         </button>

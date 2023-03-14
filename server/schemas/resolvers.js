@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('dogReference').populate('userReference');
+      return User.find().populate('dogReference');
     },
 
     user: async (parent, { userId }) => {

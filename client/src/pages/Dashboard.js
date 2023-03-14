@@ -11,8 +11,8 @@
 import React, {useState, useEffect, useRef} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_USERS } from "../utils/queries";
-import { UPDATE_USER, REMOVE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MEDIA, REMOVE_MEDIA } from "../utils/mutations";
+import { GET_USER } from "../utils/queries";
+import { UPDATE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MEDIA, REMOVE_MEDIA } from "../utils/mutations";
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
@@ -31,8 +31,9 @@ function Dashboard () {
 
     const [currentUser, setCurrentUser] = useState({});
 
+console.log(currentUser)
+
     const [updateUser] = useMutation(UPDATE_USER);
-    const [removeUser] = useMutation(REMOVE_USER);
     // const [addDog] = useMutation(ADD_DOG);
     const [updateDog] = useMutation(UPDATE_DOG);
     const [removeDog] = useMutation(REMOVE_DOG);
@@ -40,28 +41,28 @@ function Dashboard () {
     const [updateMedia] = useMutation(UPDATE_MEDIA);
     const [removeMedia] = useMutation(REMOVE_MEDIA);
     
-    const { loading, data } = useQuery(GET_USERS);
+    const { loading, data } = useQuery(GET_USER, {variables: {userId: userID}});
     
-    
+    console.log(data)
     
     useEffect( () => {
-     if (data) {
-        const user = data.users.find((user) => user._id === userID);
-        setCurrentUser(user);
+     if (data && data.user) {
+         setCurrentUser(data.user);
      };
     },[data, userID]);
 
+console.log(currentUser)
     
-    const user = currentUser;
-    const dog = currentUser.dogReference;
+    const user = currentUser || {};
+    const dog = currentUser.dogReference || [];
 
     useEffect(() => {
-        const newDogAdded = currentUser?.dogReference?.length > dog?.length;
+        const newDogAdded = user?.dogReference?.length > dog?.length;
         if (newDogAdded) {
           // refetch data to trigger a re-render
          
         }
-      }, [currentUser.dogReference, dog?.length]);
+      }, [user?.dogReference, dog?.length]);
 
     //this is for modal
     useEffect( () => {
@@ -87,7 +88,7 @@ function Dashboard () {
             console.log('returned from server')
             const updatedUser = {
                 ...currentUser,
-                dogReference: currentUser.dogReference.filter(dog => dog._id !== dogId)
+                dogReference: user.dogReference.filter(dog => dog._id !== dogId)
             };
             setCurrentUser(updatedUser);
         }
@@ -99,13 +100,14 @@ function Dashboard () {
 
     const handleUpdateForm = () => {
         setShowUpdateForm(true)
+        // window.location.reload();
     };
     const handleCloseUpdateForm = () => {
         setShowUpdateForm(false)
         window.location.reload();
     };
   
-  
+  console.log(user)
     const handleCloseForm = () => {
        setShowCreateDogForm(false);
      }
@@ -115,17 +117,15 @@ function Dashboard () {
     } 
         return (
     <div  className="container">
-        <h1 className="userName">Hi, I am {user.username} and these are my Doggos!</h1>
+        <h1 className="userName">Hi, I am {user?.username} and these are my Doggos!</h1>
         {Auth.loggedIn()? (
             <>
-            <button className="remove" onClick={()=> removeUser(userID)}>Remove User</button>
             <button className="update" onClick={handleUpdateForm}>Update User</button>
             {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
         </div>
         </div>
         </>)}
-            <button className="delete" onClick={()=> removeUser(userID)}>Delete Dashboard</button>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>

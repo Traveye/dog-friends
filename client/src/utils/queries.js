@@ -7,19 +7,19 @@ export const GET_USERS = gql `
 query Query {
   users {
     _id
-    username
     location
+    password
     dogReference {
       _id
-      name
-      breed
       bio
+      breed
+      name
       playStyle
+      location
       endorsements {
-        counter
         playStyle
+        counter
       }
-      media
     }
   }
 }`

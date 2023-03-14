@@ -60,7 +60,7 @@ console.log("error", error)
         <input type="text" id="location" name="location"  value={location} onChange={(e) => setLocation(e.target.value)}/>
 
         <label htmlFor="password">Password:</label>
-        <input type="text" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <input type="password" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
 
         <button type="submit">
           Signup
