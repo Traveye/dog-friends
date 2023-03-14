@@ -15,17 +15,17 @@ const CreateDogForm = ({ userID, closeModal }) => {
         e.preventDefault();
         try{
             console.log(dogForm.playStyle)
+            console.log(data)
             
              await addDog({
                 variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
             });
             setDog({name:'', bio:'', breed:'', playStyle:''});
             
-            console.log('this is after addDog and setDog')
              closeModal();
 
         } catch (error) {
-            console.log('this is catch block')
+            console.log(`This is an error: ${error.message}`)
             console.error(error)
         }
     };

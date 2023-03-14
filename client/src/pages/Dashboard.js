@@ -125,7 +125,7 @@ function Dashboard () {
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <CreateDogForm onClose= {handleCloseForm} userID={userID}/>
+        <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
         </div>
         </div>
         </>)}
