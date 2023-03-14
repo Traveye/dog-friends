@@ -90,7 +90,6 @@ export const GET_DOGS = gql`
         counter
         playStyle
       }
-      media
       name
       userReference {
         location

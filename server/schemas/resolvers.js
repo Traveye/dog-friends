@@ -18,7 +18,7 @@ const resolvers = {
       return User.findOne({ _id: userId }).populate('dogReference');
     },
 
-    dogs: async (parent, { }) => {
+    dogs: async () => {
       return Dog.find().populate('userReference');
     },
 
