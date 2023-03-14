@@ -17,6 +17,7 @@ import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
 import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
+import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
 
 
 function Dashboard () {
@@ -126,6 +127,7 @@ console.log(currentUser)
         </div>
         </div>
         </>)}
+        <CloudinaryUploadWidget/>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
