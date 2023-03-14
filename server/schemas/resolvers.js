@@ -4,6 +4,7 @@ const { signToken } = require('../utils/auth');
 const fetch = require("node-fetch");
 const MAPBOX_TOKEN =
 "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+const bcrypt = require('bcrypt');
 
 
 const resolvers = {
@@ -107,7 +108,14 @@ const resolvers = {
     updateUser: async (parent, { id, username, password, location, dogReference }, context) => {
       console.log("hitting update user resolver")
       if (context.user) {
+
+         if (password) {
+          const salt = await bcrypt.genSalt(10);
+          password = await bcrypt.hash(password, salt);
+        }
         const updatedUser = await User.findByIdAndUpdate(id, { username, password, location, dogReference }, { new: true });
+
+       
         return updatedUser;
       }
       throw new AuthenticationError('You need to be logged in!');

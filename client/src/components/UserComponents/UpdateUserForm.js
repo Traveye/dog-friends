@@ -18,7 +18,11 @@ function UpdateUserForm({ userID, closeModal }) {
   const [showPasswordInput, setShowPasswordInput] = useState(false);
 
   const [updateUser] = useMutation(UPDATE_USER, {
-    variables: { updateUserId: userID, username, location, password },
+    variables: { updateUserId: userID, 
+      ...((username && { username }) || {}),
+      ...((location && { location }) || {}),
+      ...((password && { password }) || {}),
+    },
     onCompleted: () => {
       closeModal()
     },

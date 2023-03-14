@@ -102,6 +102,7 @@ function Dashboard () {
     };
     const handleCloseUpdateForm = () => {
         setShowUpdateForm(false)
+        window.location.reload();
     };
   
   
