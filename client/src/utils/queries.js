@@ -80,21 +80,24 @@ query Query($dogId: ID!) {
 // get all dogs by location or all-
 
 export const GET_DOGS = gql`
-  query Dogs {
-    dogs {
-      _id
-      bio
-      breed
+query Dogs {
+  dogs {
+    _id
+    bio
+    breed
+    location
+    endorsements {
+      counter
+      playStyle
+    }
+    name
+    userReference {
       location
-      endorsements {
-        counter
-        playStyle
-      }
-      media
-      name
-      userReference {
-        location
-      }
+    }
+    media {
+      _id
+      content
     }
   }
+}
 `;
