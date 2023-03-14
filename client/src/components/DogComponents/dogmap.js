@@ -2,6 +2,7 @@
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
