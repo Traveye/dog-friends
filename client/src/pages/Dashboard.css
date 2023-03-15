@@ -1,0 +1,47 @@
+
+#dashboardParentContainer {
+  height: 150vh;
+  display: flex;
+  justify-content: center;
+}
+
+#dashboardContainer {
+  padding: 2%;
+  margin-top: 75px;
+  height: fit-content;
+  width: 60%;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1), -10px 0 20px rgba(0, 0, 0, 0.1);
+
+}
+
+#userNameHeader {
+
+}
+
+.dashboardIconContainer {
+  display: flex;
+  width: 40%;
+}
+
+.dogCard {
+  padding: 5%;
+  margin-top: 2%;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1), -10px 0 20px rgba(0, 0, 0, 0.1);
+  height: 2%;
+}
+
+.dashboardIcon {
+  margin: 2%;
+}
+
+.dashboardButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: pink;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
