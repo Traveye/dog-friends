@@ -1,4 +1,4 @@
-import { ADD_DOG } from "../../utils/mutations";
+import { ADD_DOG, ADD_MEDIA } from "../../utils/mutations";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -10,10 +10,13 @@ const CreateDogForm = ({ userID, closeModal }) => {
     const [dogForm, setDog] = useState({name:'', bio:'', breed:'', playStyle:'',});
 
     const [addDog, {data, loading, error}] = useMutation(ADD_DOG);
+  
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try{
+
+          
             
             await addDog({
                 variables: {  name: dogForm.name, bio: dogForm.bio, playStyle: dogForm.playStyle, breed: dogForm.breed, }
@@ -53,6 +56,8 @@ const CreateDogForm = ({ userID, closeModal }) => {
   
             <label htmlFor="playStyle">Play Style</label>
             <input type="text" id="playStyle" name="playStyle" value={dogForm.playStyle} onChange={handleChange} />
+
+          
   
             <button type="submit">Save</button>
           </form>

@@ -84,8 +84,8 @@ const typeDefs = gql`
     deleteDog(dogId: ID!): Dog
 
     addMedia(
-      id: ID!
       content: String!
+      dogId: ID
       isBanner: Boolean
       isProfile: Boolean
     ): Media

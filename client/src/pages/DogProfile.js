@@ -52,7 +52,7 @@ function DogProfile() {
   if (loading) {
     return <div>Loading...</div>;
   }
-  // console.log(currentDog)
+   console.log(currentDog)
 
   return (
     <div>

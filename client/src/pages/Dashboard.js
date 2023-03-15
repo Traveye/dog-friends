@@ -47,7 +47,7 @@ console.log(currentUser)
     const [removeMedia] = useMutation(REMOVE_MEDIA);
     
     const { loading, data } = useQuery(GET_USER, {variables: {userId: userID}});
-    
+    console.log(UserContext)
     console.log(data)
     
     useEffect( () => {
@@ -131,7 +131,6 @@ console.log(currentUser)
         </div>
         </div>
         </>)}
-        <CloudinaryUploadWidget/>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
@@ -145,6 +144,8 @@ console.log(currentUser)
         <p>I love {dog.playStyle}</p>
         <p>This is me!: {dog.media}</p>
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
+        <CloudinaryUploadWidget dogId={dog._id} />
+            {console.log(dog._id)}
             <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
         </div>))}</div>
         </>
