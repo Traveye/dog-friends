@@ -24,7 +24,12 @@ import { UserContext } from '../utils/UserContext'
 
 function Dashboard () {
     const { userID } = useParams();
+
     const { loggedIn, loggedInUser } = useContext(UserContext);
+    const userContext = useContext(UserContext);
+    console.log("userID dashboard",userID)
+    userContext.setLoggedInUser(userID);
+
     console.log("loggedIN", loggedIn)
     console.log("loggedInUser", loggedInUser)
     //modal state set to false
@@ -36,7 +41,7 @@ function Dashboard () {
 
     const [currentUser, setCurrentUser] = useState({});
 
-console.log(currentUser)
+
 
     const [updateUser] = useMutation(UPDATE_USER);
     // const [addDog] = useMutation(ADD_DOG);
@@ -47,8 +52,8 @@ console.log(currentUser)
     const [removeMedia] = useMutation(REMOVE_MEDIA);
     
     const { loading, data } = useQuery(GET_USER, {variables: {userId: userID}});
-    console.log(UserContext)
-    console.log(data)
+    // console.log(UserContext)
+    // console.log(data)
     
     useEffect( () => {
      if (data && data.user) {
@@ -56,7 +61,7 @@ console.log(currentUser)
      };
     },[data, userID]);
 
-console.log(currentUser)
+
     
     const user = currentUser || {};
     const dog = currentUser.dogReference || [];
@@ -105,9 +110,9 @@ console.log(currentUser)
 
     const handleUpdateForm = () => {
         setShowUpdateForm(true)
-        // window.location.reload();
     };
     const handleCloseUpdateForm = () => {
+
         setShowUpdateForm(false)
         window.location.reload();
     };
