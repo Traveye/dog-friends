@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Swal from 'sweetalert'
+import Swal from 'sweetalert2';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
@@ -7,67 +7,57 @@ import { useNavigate  } from 'react-router-dom';
 
 
 function SignupModal() {
-  const [username, setUsername] = useState('');
-  const [location, setLocation] = useState('');
-  const [password, setPassword] = useState('');
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
-  // console.log(username, email, address, password)
 
-console.log("error", error)
+  const handleSubmit = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: 'Signup',
+      html:
+        '<input type="text" id="username" class="swal2-input" placeholder="Username">' +
+        '<input type="text" id="location" class="swal2-input" placeholder="Location">' +
+        '<input type="password" id="password" class="swal2-input" placeholder="Password">',
+      focusConfirm: false,
+      preConfirm: () => {
+        const username = Swal.getPopup().querySelector('#username').value;
+        const location = Swal.getPopup().querySelector('#location').value;
+        const password = Swal.getPopup().querySelector('#password').value;
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    console.log("j", e)
-    try {
-      console.log("in try")
-      const { data } = await addUser({
-        variables: { 
-          username: username, 
-          location: location, 
-          password: password },
-      });
-      console.log("data", data)
-      const userID = data.addUser.user._id;
+        return { username, location, password };
+      }
+    });
 
-      Auth.login(data.addUser.token);
-      Swal({
-        title: 'Signup successful!',
-        icon: 'success',
-      });
-      navigate(`/dashboard/${userID}`);
+    if (formValues) {
+      try {
+        const { data } = await addUser({
+          variables: formValues,
+        });
+        const userID = data.addUser.user._id;
 
-    } catch (err) {
-      console.log("catch err", err)
-      Swal({
-        title: 'Error!',
-        text: err.message,
-        icon: 'error',
-      });
+        Auth.login(data.addUser.token);
+        Swal.fire({
+          title: 'Signup successful!',
+          icon: 'success',
+        });
+        navigate(`/dashboard/${userID}`);
+      } catch (err) {
+        Swal.fire({
+          title: 'Error!',
+          text: err.message,
+          icon: 'error',
+        });
+      }
     }
   };
 
-  
   return (
     <div>
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-
-        <label htmlFor="username" >User Name:</label>
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-
-        <label htmlFor="address">Address:</label>
-        <input type="text" id="location" name="location"  value={location} onChange={(e) => setLocation(e.target.value)}/>
-
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
-
-        <button type="submit">
-          Signup
-        </button>
-
-      </form>
+      <button onClick={handleSubmit}>
+        Signup
+      </button>
     </div>
   )
 }
-export default SignupModal
+
+export default SignupModal;

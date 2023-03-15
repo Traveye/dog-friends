@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from '@apollo/client';
 import { ADD_MEDIA } from "../utils/mutations";
-console.log(ADD_MEDIA)
-const CloudinaryUploadWidget =  (dogId) => {
-  const cloudName = "datl67gp3";
-  const [secureUrl, setSecureUrl] = useState('');
-  const [addMedia]=useMutation(ADD_MEDIA);
 
-  const addImg = async (dogId, secureUrl) => {
-    console.log(dogId+" "+secureUrl)
-    
-    try{
-      await addMedia({variables:{dogId:dogId, content:secureUrl}
-      })
-      
-    }
-      catch (error){
-        console.error(error)
-      }
-  }
+const CloudinaryUploadWidget = ({ dogId }) => {
+  const cloudName = "datl67gp3";
+  const [addMedia] = useMutation(ADD_MEDIA);
 
   useEffect(() => {
-    var myWidget = window.cloudinary.createUploadWidget(
+    const handleUpload = async (data) => {
+      const mediaUrl = data.info.secure_url;
+      console.log(`Media URL: ${mediaUrl}`);
+      try {
+        await addMedia({ variables: { dogId, content: mediaUrl } });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const myWidget = window.cloudinary.createUploadWidget(
       {
-        cloudName: cloudName,
+        cloudName,
         uploadPreset: "n9mflcx1",
         cropping: false,
         multiple: false,
@@ -56,7 +52,6 @@ const CloudinaryUploadWidget =  (dogId) => {
                   lastModified: Date.now(),
                 });
                 callback(data);
-                setSecureUrl(data.info.secure_url);
               }, "image/jpeg", 0.6);
             };
           };
@@ -65,24 +60,17 @@ const CloudinaryUploadWidget =  (dogId) => {
       (error, result) => {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
-          console.log(dogId)
-          document
-            .getElementById("uploadedimage")
-            .setAttribute("src", result.info.secure_url);
-         addImg(dogId, secureUrl);
+          handleUpload(result);
         }
       }
     );
 
-
     document.getElementById("upload_widget").addEventListener(
       "click",
-      function () {
-        myWidget.open();
-      },
+      () => myWidget.open(),
       false
     );
-  }, []);
+  }, [addMedia, dogId]);
 
   return (
     <button id="upload_widget" className="cloudinary-button">
@@ -92,3 +80,4 @@ const CloudinaryUploadWidget =  (dogId) => {
 };
 
 export default CloudinaryUploadWidget;
+

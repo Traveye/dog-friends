@@ -16,6 +16,7 @@ function Landing() {
 
   const handleSignup = () => {
     setShowSignup(true);
+    modalRef.current.style.display = 'block';
   }
   const handleLogin = () => {
     setShowLogin(true);
