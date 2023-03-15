@@ -26,6 +26,7 @@ function Dashboard () {
     //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
+    
 
     const [currentUser, setCurrentUser] = useState({});
 
@@ -57,6 +58,7 @@ function Dashboard () {
             if (
                 (modalRef.current && !modalRef.current.contains(event.target)) || (backdropRef.current && !backdropRef.current.contains(event.target))){
                 setShowCreateDogForm(false);
+                setShowUpdateForm(false)
             }
         };
         document.addEventListener("mousedown", handleOutsideClick);
@@ -110,8 +112,8 @@ function Dashboard () {
         {Auth.loggedIn()? (
             <>
             <button className="dashboardButton" onClick={handleUpdateForm}>Update User</button>
-            {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
+            {showUpdateForm && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+        <div className="our-modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
         </div>
         </div>
         </>)}
@@ -122,8 +124,8 @@ function Dashboard () {
         <button className="dashboardIcon" onClick={() => setShowCreateDogForm(true)}>🐶</button>
         </div>
        <>
-        {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
+        {showCreateDogForm && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+        <div className="our-modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
         </div>
         </div>
         </>)}
