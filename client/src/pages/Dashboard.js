@@ -141,7 +141,7 @@ function Dashboard () {
         {console.log(dog)}
         <p>This is me!: {dog.media.content}</p>
         <p>I love {dog.playStyle}</p>
-        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
+        <p>This is me!: <img width='200px' alt="dog" src={dog.media?.[0]?.content}/></p>
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
         <CloudinaryUploadWidget dogId={dog?._id} />
             {console.log(dog._id)}
