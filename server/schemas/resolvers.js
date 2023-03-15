@@ -1,4 +1,4 @@
-const { User, Dog, Media } = require("../models");
+const { User, Dog, Media, endorsementsSchema } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const fetch = require("node-fetch");
@@ -61,11 +61,11 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { name, bio, playStyle, breed }, context) => {
+    addDog: async (parent, { dogData }, context) => {
       console.log("first");
       if (context.user) {
         console.log(
-          `these are variables ${name}, ${bio}, ${playStyle}, ${breed}`
+          `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
         );
 
         const dog = await Dog.create({
@@ -76,11 +76,12 @@ const resolvers = {
           userReference: context.user._id,
           media: [],
         });
+
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
-        
+
         const user = await User.findById(context.user._id);
 
         const userLocation = user.location
@@ -132,6 +133,7 @@ const resolvers = {
     //   //  throw new AuthenticationError("You need to be logged in!");
     // },
 
+
     updateUser: async (
       parent,
       { id, username, password, location, dogReference },
@@ -170,7 +172,6 @@ const resolvers = {
     },
 
     updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
-      console.log('tryingtoupdatemedia')
       if (context.user.dog) {
         const updatedMedia = await Media.findByIdAndUpdate(
           id,
@@ -223,12 +224,35 @@ const resolvers = {
           update,
           { new: true }
         );
-        if (!dog) throw new UserInputError("Dog not found");
+        if (!dog) throw new AuthenticationError("Dog not found");
         return dog;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+
+    addEndorsement: async (_, { dogId, playStyle }, context) => {
+      console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE', playStyle)
+      // if (context.user) {
+      try {
+        const currentDog = await Dog.findOneAndUpdate(
+          { _id: dogId },
+          { $push: { endorsements: playStyle } },
+          { new: true }
+
+        );
+        if (!currentDog) throw new AuthenticationError("Dog not found");
+
+        return currentDog
+
+
+      } catch (err) {
+        throw new Error(`Failed to add endorsement: ${err.message}`, 'INTERNAL_SERVER_ERROR');
+      }
+      // } else {
+      //   throw new AuthenticationError('User must be logged in to add an endorsement');
+    }
   },
+
 };
 
 module.exports = resolvers;
