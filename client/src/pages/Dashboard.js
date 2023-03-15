@@ -1,14 +1,15 @@
+
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USER } from "../utils/queries";
-import { UPDATE_USER, UPDATE_DOG, REMOVE_DOG, ADD_MEDIA, UPDATE_MEDIA, REMOVE_MEDIA } from "../utils/mutations";
+import { REMOVE_DOG } from "../utils/mutations";
 import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
 import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
 import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
-
+import './Dashboard.css'
 import { UserContext } from '../utils/UserContext'
 
 
@@ -19,8 +20,6 @@ function Dashboard () {
     console.log("userID dashboard",userID)
     userContext.setLoggedInUser(userID);
 
-    console.log("loggedIN", loggedIn)
-    console.log("loggedInUser", loggedInUser)
     //modal state set to false
     const [showCreateDogForm, setShowCreateDogForm]=useState(false)
     const [showUpdateForm, setShowUpdateForm]=useState(false)
@@ -30,19 +29,9 @@ function Dashboard () {
 
     const [currentUser, setCurrentUser] = useState({});
 
-
-
-    const [updateUser] = useMutation(UPDATE_USER);
-    // const [addDog] = useMutation(ADD_DOG);
-    const [updateDog] = useMutation(UPDATE_DOG);
     const [removeDog] = useMutation(REMOVE_DOG);
-    const [addMedia] = useMutation(ADD_MEDIA);
-    const [updateMedia] = useMutation(UPDATE_MEDIA);
-    const [removeMedia] = useMutation(REMOVE_MEDIA);
     
     const { loading, data } = useQuery(GET_USER, {variables: {userId: userID}});
-    // console.log(UserContext)
-    // console.log(data)
     
     useEffect( () => {
      if (data && data.user) {
@@ -59,7 +48,6 @@ function Dashboard () {
         const newDogAdded = user?.dogReference?.length > dog?.length;
         if (newDogAdded) {
           // refetch data to trigger a re-render
-         
         }
       }, [user?.dogReference, dog?.length]);
 
@@ -101,7 +89,6 @@ function Dashboard () {
         setShowUpdateForm(true)
     };
     const handleCloseUpdateForm = () => {
-
         setShowUpdateForm(false)
         window.location.reload();
     };
@@ -109,50 +96,64 @@ function Dashboard () {
   console.log(user)
     const handleCloseForm = () => {
        setShowCreateDogForm(false);
+       window.location.reload();
      }
 
     if (loading) {
        return <div className="loading">Loading...</div>
     } 
         return (
-    <div  className="container">
-        <h1 className="userName">Hi, I am {user?.username} and these are my Doggos!</h1>
+
+        <div  id="dashboardParentContainer">
+        <div id="dashboardContainer">
+        <h1 id="userNameHeader">Hi, {user?.username}!</h1>
         {Auth.loggedIn()? (
             <>
-            <button className="update" onClick={handleUpdateForm}>Update User</button>
+            <button className="dashboardButton" onClick={handleUpdateForm}>Update User</button>
             {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
         </div>
         </div>
         </>)}
-        <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
+
+
+        <div className="dashboardIconContainer">
+        <p>Add a dog Σ>―❤️️→ </p>
+        <button className="dashboardIcon" onClick={() => setShowCreateDogForm(true)}>🐶</button>
+        </div>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
-       
         </div>
         </div>
         </>)}
-        <div className="doggos">{dog?.map((dog) => (<div className="dogCard"><h3>My name is {dog.name}</h3> 
-        <p>We live in {user.location}</p>
-        <p>I am a {dog.breed}!</p>
 
-        <p>I love {dog.playStyle}</p> 
-        {console.log(dog)}
-        <p>This is me!: {dog.media.content}</p>
-        <p>I love {dog.playStyle}</p>
+        
+        <div>{dog?.map((dog) => (<div className="dogCard">
+        <div>   
+        <h3>{dog.name}</h3> 
+        <p>Lives at⦂ {user.location}</p>
+        <p>{dog.name} is a⦂ {dog.breed}!</p>
+
+        <p>Favorite play style is⦂ {dog.playStyle}</p>
         {/* <p>This is me!: {dog.media[0]?.content}</p> */}
-        <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
-        <CloudinaryUploadWidget dogId={dog?._id} />
-            {console.log(dog._id)}
-            <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
+
+        <div><h4>About {dog.name}!</h4> {dog.bio}</div>
+        <CloudinaryUploadWidget  dogId={dog?._id} />
+        <div className="dashboardIconContainer">
+            <p>Delete a dog profile Σ>―დ→</p>
+            <button className="dashboardIcon" value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
+            </div>
+            </div>
+
+
         </div>))}</div>
         </>
         </>
         ):(
             <Navigate to= "/"/>
         )}
-
+    </div>
     </div>
     
     );
