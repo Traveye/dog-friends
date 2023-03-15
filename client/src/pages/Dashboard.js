@@ -14,7 +14,6 @@ import { UserContext } from '../utils/UserContext'
 
 function Dashboard () {
     const { userID } = useParams();
-
     const { loggedIn, loggedInUser } = useContext(UserContext);
     const userContext = useContext(UserContext);
     console.log("userID dashboard",userID)
@@ -137,9 +136,16 @@ function Dashboard () {
         <div className="doggos">{dog?.map((dog) => (<div className="dogCard"><h3>My name is {dog.name}</h3> 
         <p>We live in {user.location}</p>
         <p>I am a {dog.breed}!</p>
+<<<<<<< HEAD
         <p>I love {dog.playStyle}</p> 
         {console.log(dog)}
         <p>This is me!: {dog.media.content}</p>
+=======
+
+        <p>I love {dog.playStyle}</p>
+        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
+
+>>>>>>> b13ba7bef9e174d3b3d5c145c2554dc0794e6edf
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
         <CloudinaryUploadWidget dogId={dog?._id} />
             {console.log(dog._id)}
