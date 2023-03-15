@@ -119,7 +119,7 @@ function DogMap() {
       <div className={styles.cards}>
       {dogs.map((dog) => {
           const { location, name, breed } = dog;
-          const imageURL = dog.media?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
+          const imageURL = dog.media?.[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
             return (
         <div className={styles.card}>
           <h2>{name}</h2>

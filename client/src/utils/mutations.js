@@ -48,11 +48,13 @@ mutation Mutation($username: String!, $password: String!) {
 `;
 
 export const UPDATE_DOG = gql`
-mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String, $breed: String, $media: [ID!]) {
+mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String, $breed: String, $media: ID!) {
   updateDog(name: $name, dogId: $dogId, bio: $bio, playStyle: $playStyle, breed: $breed, media: $media) {
     bio
     breed
-    media
+    media {
+      _id
+    }
     name
     playStyle
   }

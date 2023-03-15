@@ -1,13 +1,3 @@
-// should be able to add dog update dog and update user
-
-//! Queries
-// me === getUserByID username/media/all dogs that belong to that user
-//? user might need to enter street address 
-//! Mutation 
-// update dog find the dog by id and they should be able to update any field in the model
-//add dog dogName/breed/playStyle/media/and any other 
-// delete dog by id
-
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
@@ -25,6 +15,10 @@ import { UserContext } from '../utils/UserContext'
 function Dashboard () {
     const { userID } = useParams();
     const { loggedIn, loggedInUser } = useContext(UserContext);
+    const userContext = useContext(UserContext);
+    console.log("userID dashboard",userID)
+    userContext.setLoggedInUser(userID);
+
     console.log("loggedIN", loggedIn)
     console.log("loggedInUser", loggedInUser)
     //modal state set to false
@@ -36,7 +30,7 @@ function Dashboard () {
 
     const [currentUser, setCurrentUser] = useState({});
 
-console.log(currentUser)
+
 
     const [updateUser] = useMutation(UPDATE_USER);
     // const [addDog] = useMutation(ADD_DOG);
@@ -47,8 +41,8 @@ console.log(currentUser)
     const [removeMedia] = useMutation(REMOVE_MEDIA);
     
     const { loading, data } = useQuery(GET_USER, {variables: {userId: userID}});
-    console.log(UserContext)
-    console.log(data)
+    // console.log(UserContext)
+    // console.log(data)
     
     useEffect( () => {
      if (data && data.user) {
@@ -56,7 +50,7 @@ console.log(currentUser)
      };
     },[data, userID]);
 
-console.log(currentUser)
+
     
     const user = currentUser || {};
     const dog = currentUser.dogReference || [];
@@ -105,9 +99,9 @@ console.log(currentUser)
 
     const handleUpdateForm = () => {
         setShowUpdateForm(true)
-        // window.location.reload();
     };
     const handleCloseUpdateForm = () => {
+
         setShowUpdateForm(false)
         window.location.reload();
     };
@@ -135,17 +129,21 @@ console.log(currentUser)
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
+       
         </div>
         </div>
         </>)}
         <div className="doggos">{dog?.map((dog) => (<div className="dogCard"><h3>My name is {dog.name}</h3> 
         <p>We live in {user.location}</p>
         <p>I am a {dog.breed}!</p>
+
         <p>I love {dog.playStyle}</p> 
-        {console.log(dog.media)}
-        <p>This is me!: {dog.media}</p>
+        {console.log(dog)}
+        <p>This is me!: {dog.media.content}</p>
+        <p>I love {dog.playStyle}</p>
+        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
-        <CloudinaryUploadWidget dogId={dog._id} />
+        <CloudinaryUploadWidget dogId={dog?._id} />
             {console.log(dog._id)}
             <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
         </div>))}</div>

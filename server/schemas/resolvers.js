@@ -68,7 +68,15 @@ const resolvers = {
           `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
         );
 
-        const dog = await Dog.create(dogData);
+        const dog = await Dog.create({
+          name,
+          bio,
+          playStyle,
+          breed,
+          userReference: context.user._id,
+          media: [],
+        });
+
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
@@ -92,25 +100,39 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    addMedia: async (parent, { content, dogId }) => {
-      console.log(dogId + " word")
-      try {
-        const dog = await Dog.findById(dogId)
-        const media = await Media.create({ content })
-        console.log(media);
-        const updatedDog = await Dog.findByIdAndUpdate(
-          dogId,
-          { $push: { media: media } },
-          { new: true });
-        console.log(updatedDog)
-        return media;
-      } catch (error) {
-
-        console.error(error)
-
-      }
-      throw new AuthenticationError("You need to be logged in!");
+    addMedia: async (parent, { dogId, content }) => {
+      console.log(`this is the top of add media with dog id${dogId} and this is content ${content}`)
+      const media = await Media.create({ content });
+      const dog = await Dog.findByIdAndUpdate(
+        dogId,
+        { $push: { media: media._id } },
+        { new: true }
+      );
+      console.log(dog)
+      console.log(`this is media ${media}`)
+      return media;
     },
+    // addMedia: async (parent, { content, dog }) => {
+    //   console.log(dogId+" word")
+    //   try{
+    //     // const dog = await Dog.findById(dogId)
+    //     const media = await Media.create({content})
+    //     console.log(media);
+    //     const updatedDog = await Dog.findByIdAndUpdate(
+    //       dogId,
+    //       { $push: { media: media._id } },
+    //       { new: true });
+    //       console.log(updatedDog)
+    //       updatedDog.save();
+    //     return media;
+    //   } catch(error){
+ 
+    //     console.error(error)
+        
+    //   }
+    //   //  throw new AuthenticationError("You need to be logged in!");
+    // },
+
 
     updateUser: async (
       parent,
