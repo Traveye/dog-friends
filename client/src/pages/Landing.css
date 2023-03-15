@@ -1,0 +1,54 @@
+#landingParent {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#landingContainer {
+  padding: 20px;
+  margin-top: 75px;
+  height: 45%;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1), -10px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#howlrP {
+  display: inline;
+  width: auto;
+  height: 1rem;
+  max-width: 100%;
+}
+
+.landingbtn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: pink;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.landingbtn + .landingbtn {
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  #landingContainer {
+   
+    margin-right: 10%;
+    margin-left: 10%;
+    padding: 40px;
+   
+
+    box-shadow: 20px 0 40px rgba(0, 0, 0, 0.1), -20px 0 40px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #landingContainer {
+    height: 80%;
+    margin-left: 10%
+  }
+}
