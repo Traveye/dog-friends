@@ -100,7 +100,7 @@ const resolvers = {
     },
 
     addMedia: async (parent, { dogId, content }) => {
-      console.log(dogId)
+      console.log(`this is the top of add media with dog id${dogId} and this is content ${content}`)
       const media = await Media.create({ content });
       const dog = await Dog.findByIdAndUpdate(
         dogId,
@@ -170,6 +170,7 @@ const resolvers = {
     },
 
     updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
+      console.log('tryingtoupdatemedia')
       if (context.user.dog) {
         const updatedMedia = await Media.findByIdAndUpdate(
           id,

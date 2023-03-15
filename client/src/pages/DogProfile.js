@@ -57,25 +57,25 @@ function DogProfile() {
   return (
     <div>
       <div>
-        { currentDog?.media ? <DogHero images={currentDog.media} /> :
-        <div>Loading...</div>
-        }
+      <DogHero images={ currentDog ? currentDog.media : null }/>
       </div>
       <div>
+        
         {currentDog && (
           <Endorsements dog={currentDog} handleEndorsement={handleEndorsement} />
         )}
       </div>
+
       <div>
         <h3>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
         <p>
           {currentDog ? currentDog.description : null}
         </p>
       </div>
-      <DogMedia images={ currentDog ? currentDog.media : <div>Loading...</div>} />
+      <DogMedia images={ currentDog ? currentDog.media : null} />
 
       <div>
-        <OtherDogs owner={ currentDog ? currentDog.userReference : <div>Loading...</div>} />
+        <OtherDogs owner={ currentDog ? currentDog.userReference : null} />
       </div>
     </div>
   );

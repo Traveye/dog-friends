@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import DogImg from "../DogComponents/DogImg"
 
-export default function DogHero(images) {
+export default function DogHero( images ) {
+  console.log(images)
 
-   console.log(images)
-//   const [bgUrl, setBgUrl] = useState("");
+  // const [bgUrl, setBgUrl] = useState("https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20221227_170719_guzznm.jpg");
 
-//   useEffect(() => {
-//     if (currentDog[0].content) {
-//       setBgUrl(currentDog[0].content);
-//     }
-//   }, [currentDog]);
+  // useEffect(() => {
+  //   const bannerImage = images.find(image => image.isBanner === true);
+  //   if (bannerImage && bannerImage.content) {
+  //     setBgUrl(bannerImage.content);
+  //   }
+  // }, [images]);
 
   const style = {
-   //  backgroundImage: `url(${bgUrl})`,
-   //  backgroundSize: "cover",
+    // backgroundImage: `url(${bgUrl})`,
+    // backgroundSize: "cover",
     height: "400px",
     width: "100%"
   };
@@ -22,7 +23,7 @@ export default function DogHero(images) {
   return (
     <div style={style}>
       <div>
-        {/* <DogImg /> */}
+        <DogImg />
       </div>
     </div>
   );

@@ -14,7 +14,8 @@ function LoginModal() {
   const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState("")
   const userContext = useContext(UserContext);
-
+  
+  console.log("===", loggedInUser)
 
   const handleFormSubmit  = async (e) => {
     e.preventDefault();

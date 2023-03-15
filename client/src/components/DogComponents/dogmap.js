@@ -2,12 +2,13 @@
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import MarkerClusterGroup from 'react-leaflet-cluster';
+import MarkerClusterGroup from "react-leaflet-cluster";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import styles from "../../styles/dogmap.module.css"
 
 // this is to fix the default icon issue with leaflet
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -17,7 +18,7 @@ let DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
   iconSize: [25, 41], // specify the size of the icon image
-  iconAnchor: [12, 41] // specify the anchor point of the icon image
+  iconAnchor: [12, 41], // specify the anchor point of the icon image
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
@@ -41,19 +42,19 @@ function DogMap() {
   const mapJump = useRef(null);
 
   useEffect(() => {
-    if (data){
+    if (data) {
       setDogs(data.dogs);
     }
   }, [data]);
 
-  console.log(dogs)
+  console.log(dogs);
 
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
     event.preventDefault();
     const MAPBOX_TOKEN =
-  "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
-    console.log("this is our search " + search)
+      "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+    console.log("this is our search " + search);
 
     const response = await fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${MAPBOX_TOKEN}`
@@ -63,7 +64,6 @@ function DogMap() {
     console.log("this is our " + longitude, latitude);
 
     mapJump.current.setView([latitude, longitude], 10);
-
   };
 
   //this will be the function that handles links to dog profiles
@@ -72,52 +72,60 @@ function DogMap() {
   };
 
   return (
-    <div>
+    <div className={styles.dogSearch}>
       {/* //   this will be the search bar */}
-      <form onSubmit={handleSearch}>
+      <form className={styles.form} onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Search by location"
           onChange={(event) => setSearch(event.target.value)}
+          className={styles.input}
         />
-        <button type="submit">Search</button>
+        <button className="button" type="submit">
+          Search
+        </button>
       </form>
       <MapContainer
         center={[34.0195, -118.4912]}
         zoom={7}
         scrollWheelZoom={false}
-        style={{ width: "70%", height: "80vh" }}
+        style={{ width: "100%", height: "100vh" }}
         ref={mapJump}
+        className={styles.map}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MarkerClusterGroup>
-        {dogs.map((dog) => {
-          const { location, name, breed } = dog;
+          {dogs.map((dog) => {
+            const { location, name, breed } = dog;
             return (
-            <Marker
-              key={dog._id}
-              position={[location[1], location[0]]} 
-              icon={DefaultIcon}
-            >
-              <Popup>
-                <h2>{name}</h2>
-                <p>{breed}</p>
-                <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
-              </Popup>
-            </Marker>
+              <Marker
+                key={dog._id}
+                position={[location[1], location[0]]}
+                icon={DefaultIcon}
+              >
+                <Popup>
+                  <h2>{name}</h2>
+                  <p>{breed}</p>
+                  <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
+                </Popup>
+              </Marker>
             );
-        })}
+          })}
         </MarkerClusterGroup>
       </MapContainer>
-      <div>
+      <div className={styles.cards}>
       {dogs.map((dog) => {
           const { location, name, breed } = dog;
-          const imageURL = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
+          const imageURL = dog.media?.[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
             return (
-        <div><img src={imageURL} alt="pics yo" width="200px" ></img>
+        <div className={styles.card}>
+          <h2>{name}</h2>
+          <img src={imageURL} alt="pics yo" width="200px" ></img>
+          <p>{breed}</p>
+          <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
       </div>
     );})}
     </div>

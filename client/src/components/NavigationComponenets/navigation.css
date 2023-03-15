@@ -1,0 +1,31 @@
+#howlr {
+  width: auto;
+  height: 3rem;
+
+}
+
+#btnsContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btns {
+  margin-left: 10px; }
+
+#navContainer {
+  display: flex;
+  padding-top: 1%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  #navContainer {
+  flex-direction: column;
+  }
+
+  #btnsContainer {
+    margin-top: 5%;
+  }
+}
