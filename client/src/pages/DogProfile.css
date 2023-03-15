@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  padding: 20px;
+  min-width: 90%;
+}
+
+.main.card {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mini.card {
+  background-color: rgb(152, 236, 95);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.mini.card>p {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: .5rem;
+  padding: .5rem;
+}
+
+#dog-name {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+#dog-breed {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+#dog-play {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+#dog-bio {
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  #dog-name {
+    font-size: 1.5rem;
+  }
+
+  #dog-breed,
+  #dog-play {
+    font-size: 1rem;
+  }
+
+  #dog-bio {
+    font-size: 0.8rem;
+  }
+}

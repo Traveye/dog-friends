@@ -26,10 +26,16 @@ const typeDefs = gql`
     endorsements: [Endorsement]
   }
 
-  type Endorsement {
+  input EndorsementData {
     playStyle: String
     counter: Int
   }
+
+  type Endorsement{
+    playStyle: String
+    counter: Int
+  }
+
 
   type Media {
     _id: ID
@@ -45,6 +51,7 @@ const typeDefs = gql`
     dog(dogId: ID!): Dog
     getDogMedia: [Media]
   }
+  
 
   type Mutation {
     addUser(username: String!, password: String!, location: String!): Auth
@@ -56,6 +63,7 @@ const typeDefs = gql`
       location: String
       dogReference: ID
     ): User
+
     deleteUser(
       id: ID!
       username: String
@@ -69,18 +77,23 @@ const typeDefs = gql`
       bio: String!
       playStyle: String!
       breed: String!
+
       media: ID
       endorsements: String
+
     ): Dog
+
     updateDog(
       dogId: ID!
       name: String
       bio: String
       playStyle: String
       breed: String
+
       media: ID
-      endorsements: String
+      endorsements: EndorsementData
     ): Dog
+      
     deleteDog(dogId: ID!): Dog
 
     addMedia(
@@ -95,12 +108,15 @@ const typeDefs = gql`
       playStyle: String!
       increment: Int!
     ): Dog
+
     updateMedia(
       id: ID!
       content: String
       isBanner: Boolean
       isProfile: Boolean
     ): Media
+
+    addEndorsement(dogId: ID!, playStyle: EndorsementData ): Endorsement
   }
 `;
 

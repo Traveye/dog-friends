@@ -1,5 +1,4 @@
 
-
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
@@ -16,7 +15,6 @@ import { UserContext } from '../utils/UserContext'
 
 function Dashboard () {
     const { userID } = useParams();
-
     const { loggedIn, loggedInUser } = useContext(UserContext);
     const userContext = useContext(UserContext);
     console.log("userID dashboard",userID)
@@ -129,6 +127,7 @@ function Dashboard () {
         </div>
         </div>
         </>)}
+
         
         <div>{dog?.map((dog) => (<div className="dogCard">
         <div>   
@@ -146,6 +145,7 @@ function Dashboard () {
             <button className="dashboardIcon" value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
             </div>
             </div>
+
 
         </div>))}</div>
         </>
