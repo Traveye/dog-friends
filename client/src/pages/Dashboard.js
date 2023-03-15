@@ -17,6 +17,7 @@ import Auth from '../utils/auth';
 import CreateDogForm from "../components/DogComponents/CreateDogForm";
 import "../components/DogComponents/createDogForm.css"
 import UpdateUserForm from '../components/UserComponents/UpdateUserForm';
+import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
 
 import { UserContext } from '../utils/UserContext'
 
@@ -130,6 +131,7 @@ console.log(currentUser)
         </div>
         </div>
         </>)}
+        <CloudinaryUploadWidget/>
         <button onClick={() => setShowCreateDogForm(true)}>🐶</button>
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
@@ -140,7 +142,8 @@ console.log(currentUser)
         <div className="doggos">{dog?.map((dog) => (<div className="dogCard"><h3>My name is {dog.name}</h3> 
         <p>We live in {user.location}</p>
         <p>I am a {dog.breed}!</p>
-        <p>I love {dog.playStyle}</p>
+        <p>I love {dog.playStyle}</p> 
+        {console.log(dog.media)}
         <p>This is me!: {dog.media}</p>
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
             <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
