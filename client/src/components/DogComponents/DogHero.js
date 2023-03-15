@@ -20,8 +20,8 @@ export default function DogHero( {images} ) {
   };
 
   return (
-    <div style={style}className="banner-container">
-      <div  className='hero'>
+    <div className="banner-container">
+      <div className='hero' style={style}>
         <DogImg />
       </div>
     </div>
