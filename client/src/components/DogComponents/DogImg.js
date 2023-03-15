@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function DogImage() {
   const placeholder =
-    'https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20221227_170719_guzznm.jpg';
+    'https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg';
 
   const style = {
     backgroundImage: `url(${placeholder})`,

@@ -97,8 +97,8 @@ const CloudinaryUploadWidget =  ({dogId}) => {
    console.log(`this is URL ${secureUrl}`)
 
   return (
-    <button id={dogId} className="cloudinary-button">
-      Upload
+    <button id={dogId} className="dashboardButton">
+      Upload Photos
     </button>
   );
 };
