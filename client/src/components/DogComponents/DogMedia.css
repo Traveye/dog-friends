@@ -28,7 +28,7 @@
  }
  
  .slide img {
-   width: 100%;
+   width: 375px;
    height: auto;
    object-fit: cover;
  }

@@ -74,7 +74,7 @@ function DogProfile() {
             </div>
 
             <div>
-            <article id='dog-bio'>{currentDog ? currentDog.bio : <div>Loading...</div>}</article>
+            <article id='dog-bio' className='card'>{currentDog ? currentDog.bio : <div>Loading...</div>}</article>
             </div>
 
           <DogMedia images={currentDog?.media} />
