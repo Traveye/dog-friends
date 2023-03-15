@@ -69,7 +69,7 @@ const typeDefs = gql`
       bio: String!
       playStyle: String!
       breed: String!
-      media: [ID]
+      media: ID
       endorsements: String
     ): Dog
     updateDog(
@@ -78,7 +78,7 @@ const typeDefs = gql`
       bio: String
       playStyle: String
       breed: String
-      media: [ID]
+      media: ID
       endorsements: String
     ): Dog
     deleteDog(dogId: ID!): Dog
