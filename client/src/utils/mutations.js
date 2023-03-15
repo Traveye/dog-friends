@@ -28,12 +28,10 @@ mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: Stri
 }
 `
 export const ADD_MEDIA = gql`
-mutation AddMedia($addMediaId: ID!, $content: String!, $isBanner: Boolean, $isProfile: Boolean) {
-  addMedia(id: $addMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
-    _id
+mutation Mutation($content: String!, $dogId: ID) {
+  addMedia(content: $content, dogId: $dogId) {
     content
-    isBanner
-    isProfile
+    _id
   }
 }
 `

@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function DogMedia(pics) {
+export default function DogMedia(images) {
 
-   console.log(pics)
+   console.log(images)
 
    return (
       <div>
