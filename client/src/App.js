@@ -5,6 +5,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider,
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 
+import {UserProvider} from './utils/UserContext'
 import {Cloudinary} from "@cloudinary/url-gen";
 import {AdvancedImage} from '@cloudinary/react';
 import {fill} from "@cloudinary/url-gen/actions/resize";
@@ -13,6 +14,8 @@ import Landing from './pages/Landing';
 import Dashboard from './pages/Dashboard';
 import DogSearch from './pages/DogSearch';
 import DogProfile from './pages/DogProfile';
+import Navigation from './components/NavigationComponenets/Navigation';
+
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -42,11 +45,13 @@ function App() {
     }
   });
 
-const myImage = cld.image('PXL_20230218_181552301_thosfq'); 
+const myImage = cld.image('IMG_5034_teojbe'); 
 myImage.resize(fill().width(250).height(250));
   return (
     <ApolloProvider client={client}>
+      <UserProvider>
       <Router>
+      <Navigation/>
         <Routes>
             <Route 
                 path="/" 
@@ -66,7 +71,9 @@ myImage.resize(fill().width(250).height(250));
             />
         </Routes>
       </Router>
+      </UserProvider>
     </ApolloProvider>
+
   );
 }
 

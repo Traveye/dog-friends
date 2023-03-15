@@ -113,24 +113,15 @@ function DogMap() {
           })}
         </MarkerClusterGroup>
       </MapContainer>
-      {/* this div will house the cards rendered from dog data with images of the dawgs */}
       <div>
-        {dogs.map((dog) => {
-          const { name, breed, playStyle } = dog;
-
-          const imageUrl = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg";
-          console.log(imageUrl)
-
-          return (
-            <div key={dog._id}>
-              <h2>{name}</h2>
-              <p>{breed}</p>
-              <p>{playStyle}</p>
-              <img src={imageUrl} alt="dog" width="200px"/>
-            </div>
-          );
-        })}
+      {dogs.map((dog) => {
+          const { location, name, breed } = dog;
+          const imageURL = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
+            return (
+        <div><img src={imageURL} alt="pics yo" width="200px" ></img>
       </div>
+    );})}
+    </div>
     </div>
   );
 }
