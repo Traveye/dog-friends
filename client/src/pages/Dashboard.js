@@ -136,7 +136,7 @@ function Dashboard () {
         <p>{dog.name} is a⦂ {dog.breed}!</p>
 
         <p>Favorite play style is⦂ {dog.playStyle}</p>
-        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
+        <p>This is me!: <img width="200px" alt="doggo" src={dog.media?.[0]?.content}/></p>
 
         <div><h4>About {dog.name}!</h4> {dog.bio}</div>
         <CloudinaryUploadWidget  dogId={dog?._id} />
