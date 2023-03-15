@@ -1,23 +1,27 @@
-*{
-   border-radius: 4px;
-   margin: 10px 0;
-   padding: 10px;
-}
 
 .banner-container {
    background-color: pink;
    border: 1px solid #ccc;
+   border-radius: 4px;
+   margin: 1.5rem;
+   padding: 10px;
 }
 
-.hero{
-   background-size: contain;
-   height: "400px";
-   width: "100%"
-}
-
-.banner-container>div {
+.hero {
    display: flex;
-   justify-content: center;
+   justify-content: flex-end;
    align-items: center;
    height: 200px;
+   display: flex;
+   background-size: contain;
+   height: "400px";
+   margin: .5rem;
+   padding: 5px;
 }
+
+@media only screen and (max-width: 768px) {
+   .hero {
+     flex-direction: column;
+     height: auto;
+   }
+ }

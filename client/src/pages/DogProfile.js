@@ -90,6 +90,6 @@ function DogProfile() {
       )}
     </div>
   );
-      }
+}
 
 export default DogProfile;

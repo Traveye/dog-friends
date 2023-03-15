@@ -10,7 +10,7 @@ export default function DogImage() {
     borderRadius: '50%',
     width: '250px',
     height: '250px',
-    border: '5px solid rgb(152, 236, 95)',
+    border: '5px solid rgb(223, 207, 62)',
     boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
   };
 
