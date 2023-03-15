@@ -56,12 +56,14 @@ export default function DogMedia({ images }) {
                />
             ))}
          </div>
-         {/* <button className="prev" onClick={handlePrevClick}>
-            LEFT
+         <div className="dots">
+         <button className="prev" onClick={handlePrevClick}>
+         &#x2190;
          </button>
          <button className="next" onClick={handleNextClick}>
-            RIGHT
-         </button> */}
+         &#x2192;
+         </button>
+         </div>
       </div>
    );
 }

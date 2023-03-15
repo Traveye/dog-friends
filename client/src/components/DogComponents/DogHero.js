@@ -7,6 +7,12 @@ export default function DogHero( {images} ) {
 
   const [bgUrl, setBgUrl] = useState("https://res.cloudinary.com/datl67gp3/image/upload/v1677896577/20221227_170719_guzznm.jpg");
 
+  
+  let smile;
+  if(images){
+    smile = images.find((image) => image.isProfile === true);
+  }
+
 
   useEffect(() => {
     const bannerImage = images && images.find(image => image.isBanner === true);
@@ -23,7 +29,7 @@ export default function DogHero( {images} ) {
   return (
     <div className="banner-container">
       <div className='hero' style={style}>
-        <DogImg className='float-right'/>
+        <DogImg prop={smile}/>
       </div>
     </div>
   );
