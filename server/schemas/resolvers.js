@@ -61,20 +61,14 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { name, bio, playStyle, breed }, context) => {
+    addDog: async (parent, { dogData }, context) => {
       console.log("first");
       if (context.user) {
         console.log(
-          `these are variables ${name}, ${bio}, ${playStyle}, ${breed}`
+          `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
         );
 
-        const dog = await Dog.create({
-          name,
-          bio,
-          playStyle,
-          breed,
-          userReference: context.user._id,
-        });
+        const dog = await Dog.create(dogData);
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
@@ -208,28 +202,26 @@ const resolvers = {
           update,
           { new: true }
         );
-        if (!dog) throw new UserInputError("Dog not found");
+        if (!dog) throw new AuthenticationError("Dog not found");
         return dog;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
 
     addEndorsement: async (_, { dogId, playStyle }, context) => {
-      console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE')
+      console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE', playStyle)
       // if (context.user) {
       try {
-        const currentDog = await Dog.findById(dogId);
-        if (!currentDog) {
-          throw new UserInputError('Could not find the specified dog');
-        }
+        const currentDog = await Dog.findOneAndUpdate(
+          { _id: dogId },
+          { $push: { endorsements: playStyle } },
+          { new: true }
 
-        const newEndorsement = await endorsementsSchema.create({
-          playStyle,
-        }, { new: true });
+        );
+        if (!currentDog) throw new AuthenticationError("Dog not found");
 
-        currentDog.endorsements.push(newEndorsement);
-        await currentDog.save();
-        return currentDog;
+        return currentDog
+
 
       } catch (err) {
         throw new Error(`Failed to add endorsement: ${err.message}`, 'INTERNAL_SERVER_ERROR');

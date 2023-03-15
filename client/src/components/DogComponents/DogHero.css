@@ -1,0 +1,17 @@
+.banner-container {
+   background-color: #f2f2f2;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   margin: 10px 0;
+   padding: 10px;
+   background-size: cover;
+   height: "400px";
+   width: "100%"
+}
+
+.banner-container>div {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 200px;
+}
