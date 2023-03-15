@@ -66,9 +66,6 @@ myImage.resize(fill().width(250).height(250));
             />
         </Routes>
       </Router>
-      <div>
-      <AdvancedImage cldImg={myImage} />
-    </div>
     </ApolloProvider>
   );
 }
