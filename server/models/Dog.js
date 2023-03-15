@@ -41,7 +41,7 @@ const dogSchema = new Schema({
   },
   media: [
     {
-      type: Schema.Types.Mixed,
+      type: Schema.Types.ObjectId,
       ref: "Media",
     },
   ],

@@ -135,6 +135,7 @@ console.log(currentUser)
        <>
         {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
         <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
+       
         </div>
         </div>
         </>)}
@@ -142,9 +143,9 @@ console.log(currentUser)
         <p>We live in {user.location}</p>
         <p>I am a {dog.breed}!</p>
         <p>I love {dog.playStyle}</p>
-        <p>This is me!: {dog.media}</p>
+        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
-        <CloudinaryUploadWidget dogId={dog._id} />
+        <CloudinaryUploadWidget dogId={dog?._id} />
             {console.log(dog._id)}
             <button value={dog._id} onClick={() => deleteDog(dog._id)}>🥺</button>
         </div>))}</div>
