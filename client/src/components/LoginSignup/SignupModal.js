@@ -55,16 +55,22 @@ console.log("error", error)
   return (
     <div>
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
+      <form className="ourForms" onSubmit={handleFormSubmit}>
 
-        <label htmlFor="username" >User Name:</label>
+      <div className="formItemGroup">
+        <label htmlFor="username" >User Name⦂</label>
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+        </div>
 
-        <label htmlFor="address">Address:</label>
+        <div className="formItemGroup">
+        <label htmlFor="address">Address⦂</label>
         <input type="text" id="location" name="location"  value={location} onChange={(e) => setLocation(e.target.value)}/>
+        </div>
 
-        <label htmlFor="password">Password:</label>
+        <div className="formItemGroup">
+        <label htmlFor="password">Password⦂</label>
         <input type="password" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
+        </div>
 
         <button type="submit">
           Signup
