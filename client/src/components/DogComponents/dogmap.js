@@ -79,6 +79,7 @@ function DogMap() {
           type="text"
           placeholder="Search by location"
           onChange={(event) => setSearch(event.target.value)}
+          className={styles.input}
         />
         <button className="button" type="submit">
           Search
@@ -120,10 +121,10 @@ function DogMap() {
           const { location, name, breed } = dog;
           const imageURL = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
             return (
-        <div>
+        <div className={styles.card}>
           <h2>{name}</h2>
-          <p>{breed}</p>
           <img src={imageURL} alt="pics yo" width="200px" ></img>
+          <p>{breed}</p>
           <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
       </div>
     );})}
