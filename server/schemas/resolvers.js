@@ -1,4 +1,4 @@
-const { User, Dog, Media } = require("../models");
+const { User, Dog, Media, endorsementsSchema } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const fetch = require("node-fetch");
@@ -79,7 +79,7 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
-        
+
         const user = await User.findById(context.user._id);
 
         const userLocation = user.location
@@ -99,23 +99,23 @@ const resolvers = {
     },
 
     addMedia: async (parent, { content, dogId }) => {
-      console.log(dogId+" word")
-      try{
+      console.log(dogId + " word")
+      try {
         const dog = await Dog.findById(dogId)
-        const media = await Media.create({content})
+        const media = await Media.create({ content })
         console.log(media);
         const updatedDog = await Dog.findByIdAndUpdate(
           dogId,
           { $push: { media: media } },
           { new: true });
-          console.log(updatedDog)
+        console.log(updatedDog)
         return media;
-      } catch(error){
- 
+      } catch (error) {
+
         console.error(error)
-        
+
       }
-       throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     updateUser: async (
@@ -156,7 +156,6 @@ const resolvers = {
     },
 
     updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
-      console.log('tryingtoupdatemedia')
       if (context.user.dog) {
         const updatedMedia = await Media.findByIdAndUpdate(
           id,
@@ -214,7 +213,32 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+
+    addEndorsement: async (_, { dogId, playStyle }, context) => {
+      console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE')
+      // if (context.user) {
+      try {
+        const currentDog = await Dog.findById(dogId);
+        if (!currentDog) {
+          throw new UserInputError('Could not find the specified dog');
+        }
+
+        const newEndorsement = await endorsementsSchema.create({
+          playStyle,
+        }, { new: true });
+
+        currentDog.endorsements.push(newEndorsement);
+        await currentDog.save();
+        return currentDog;
+
+      } catch (err) {
+        throw new Error(`Failed to add endorsement: ${err.message}`, 'INTERNAL_SERVER_ERROR');
+      }
+      // } else {
+      //   throw new AuthenticationError('User must be logged in to add an endorsement');
+    }
   },
+
 };
 
 module.exports = resolvers;

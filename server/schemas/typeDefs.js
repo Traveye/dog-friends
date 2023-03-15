@@ -95,12 +95,15 @@ const typeDefs = gql`
       playStyle: String!
       increment: Int!
     ): Dog
+
     updateMedia(
       id: ID!
       content: String
       isBanner: Boolean
       isProfile: Boolean
     ): Media
+
+    addEndorsement(dogId: ID!, playStyle: String!): Dog
   }
 `;
 

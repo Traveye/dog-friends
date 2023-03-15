@@ -9,7 +9,7 @@
 // MVP drop down with owner and other dogs at bottom of the page
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_DOG } from '../utils/queries';
 import { UPDATE_ENDORSEMENT } from '../utils/mutations';
@@ -20,6 +20,7 @@ import DogMedia from '../components/DogComponents/DogMedia';
 import OtherDogs from '../components/DogComponents/OtherDogs';
 
 import Auth from '../utils/auth';
+import './DogProfile.css'
 
 
 function DogProfile() {
@@ -52,33 +53,43 @@ function DogProfile() {
   if (loading) {
     return <div>Loading...</div>;
   }
-   console.log(currentDog)
+  console.log(currentDog)
 
   return (
-    <div>
-      <div>
-      <DogHero images={ currentDog ? currentDog.media : null }/>
-      </div>
-      <div>
-        
-        {currentDog && (
-          <Endorsements dog={currentDog} handleEndorsement={handleEndorsement} />
-        )}
-      </div>
+    <div className='container'>
+      {Auth.loggedIn() ? (
+        <div>
+          <div>
+            <DogHero images={currentDog?.media} />
+          </div>
+          <div className='main card'>
+            <h3 id='dog-name'>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
+          {/* <Endorsements dog={currentDog?.endorsements
+} handleEndorsement={handleEndorsement} /> */}
+          </div>
+          <div className='info card'>
+            <div className='mini card'>
+            <p id='dog-breed'>{currentDog ? currentDog.breed : <div>Loading...</div>}</p>
+            <p id='dog-play'>{currentDog ? currentDog.playStyle : <div>Loading...</div>}</p>
+            </div>
 
-      <div>
-        <h3>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
-        <p>
-          {currentDog ? currentDog.description : null}
-        </p>
-      </div>
-      <DogMedia images={ currentDog ? currentDog.media : null} />
+            <div>
+            <article id='dog-bio'>{currentDog ? currentDog.bio : <div>Loading...</div>}</article>
+            </div>
 
-      <div>
-        <OtherDogs owner={ currentDog ? currentDog.userReference : null} />
-      </div>
+          <DogMedia images={currentDog?.media} />
+          </div>
+
+          <div>
+            {/* <OtherDogs owner={currentDog?.userReference} /> */}
+          </div>
+        </div>
+      ) : (
+        // <Navigate to="/" />
+        <div>Need to be logged in!</div>
+      )}
     </div>
   );
-}
+      }
 
 export default DogProfile;

@@ -79,4 +79,5 @@ const dogSchema = new Schema({
 
 const Dog = model("Dog", dogSchema);
 
-module.exports = Dog;
+module.exports = { Dog, endorsementsSchema };
+
