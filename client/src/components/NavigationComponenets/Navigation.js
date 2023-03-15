@@ -4,6 +4,7 @@ import { UserContext } from '../../utils/UserContext'
 import howlr from '../../assets/HowlrTransparent.png'
 import "./navigation.css"
 
+
 function Navigation() {
   const navigate = useNavigate();
   const { loggedIn, handleLogout, loggedInUser } = useContext(UserContext);

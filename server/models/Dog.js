@@ -3,7 +3,6 @@ const fetch = require("node-fetch");
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
 const User = require("./User");
-//process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const endorsementsSchema = new Schema({
   playStyle: {
@@ -41,42 +40,38 @@ const dogSchema = new Schema({
   },
   media: [
     {
-      type: Schema.Types.Mixed,
+      type: Schema.Types.ObjectId,
       ref: "Media",
     },
   ],
-  endorsements: [
-    {
-      endorsementsSchema,
-    },
-  ],
-});
+  endorsements: [endorsementsSchema] 
+},
+  
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  });
 
-// dogSchema.post("save", async function (doc, next) {
-//   const user = await User.findById(doc.userReference);
 
-//   if (!user.isModified("location")) {
-//     console.log(!user.isModified("location"));
-//     console.log("location not modified");
-//     return next();
-//   }
-//   try {
-//     console.log("hit the try");
-//     const response = await fetch(
-//       `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.location}.json?access_token=${MAPBOX_TOKEN}`
-//     );
-//     const data = await response.json();
-//     const [longitude, latitude] = data.features[0].center;
-
-//     doc.location = [longitude, latitude];
-//     console.log("location modified: ", doc.location);
-//     await doc.save();
-//     next();
-//   } catch (error) {
-//     next(error);
-//   }
+// dogSchema.virtual('endorsements'
+// {
+//   ref: 'Endorsement',
+//   localField: '_id',
+//   foreignField: 'dog',
+//   justOne: false,
+//   options: { select: 'playStyle' },
+//   count: true,
+// }
+// ).get(function(){
+//   return this.endorsements.length
+// }).set(function(data){
+//   this.set({counter: data})
 // });
+
+
+
 
 const Dog = model("Dog", dogSchema);
 
-module.exports = Dog;
+module.exports = { Dog, endorsementsSchema };
+

@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from '@apollo/client';
 import { ADD_MEDIA } from "../utils/mutations";
-
-const CloudinaryUploadWidget = ({ dogId }) => {
+const CloudinaryUploadWidget =  ({dogId}) => {
+  console.log(`this is line 5 ${dogId}`)
   const cloudName = "datl67gp3";
-  const [addMedia] = useMutation(ADD_MEDIA);
+  const [secureUrl, setSecureUrl] = useState('');
+  const [addMedia]=useMutation(ADD_MEDIA);
+
+
 
   useEffect(() => {
-    const handleUpload = async (data) => {
-      const mediaUrl = data.info.secure_url;
-      console.log(`Media URL: ${mediaUrl}`);
-      try {
-        await addMedia({ variables: { dogId, content: mediaUrl } });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
     const myWidget = window.cloudinary.createUploadWidget(
       {
         cloudName,
@@ -60,20 +53,50 @@ const CloudinaryUploadWidget = ({ dogId }) => {
       (error, result) => {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
-          handleUpload(result);
+          console.log(`this is dogId in addImg${dogId}`)
+          document
+            .getElementById("uploadedimage")
+            //  .setAttribute("src", result.info.secure_url);
+            console.log(secureUrl)
+         addImg(dogId, result.info.secure_url);
         }
       }
     );
 
-    document.getElementById("upload_widget").addEventListener(
+    const addImg = async (dogId, secureUrl) => {
+      console.log("this is line 11 "+dogId+" "+secureUrl)
+      
+      try{
+        await addMedia({variables:{dogId:dogId, content:secureUrl}
+        })
+        
+      }
+        catch (error){
+          console.error(error)
+        }
+    }
+
+    const handleUpload = async () => {
+      await myWidget.open();
+     
+    };
+
+
+    document.getElementById(`${dogId}`).addEventListener(
       "click",
-      () => myWidget.open(),
+      function (event) {
+        event.stopPropagation();
+        handleUpload();
+      },
       false
     );
-  }, [addMedia, dogId]);
+   }, [dogId, secureUrl, addMedia]);
+
+   console.log(`this is dogId before the return ${dogId}`)
+   console.log(`this is URL ${secureUrl}`)
 
   return (
-    <button id="upload_widget" className="cloudinary-button">
+    <button id={dogId} className="cloudinary-button">
       Upload
     </button>
   );
