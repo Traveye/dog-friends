@@ -46,9 +46,28 @@ function SignupModal() {
   return (
     <div>
       <h2>Signup</h2>
-      <button onClick={handleSubmit}>
-        Signup
-      </button>
+      <form className="ourForms" onSubmit={handleFormSubmit}>
+
+      <div className="formItemGroup">
+        <label htmlFor="username" >User Name⦂</label>
+        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+        </div>
+
+        <div className="formItemGroup">
+        <label htmlFor="address">Address⦂</label>
+        <input type="text" id="location" name="location"  value={location} onChange={(e) => setLocation(e.target.value)}/>
+        </div>
+
+        <div className="formItemGroup">
+        <label htmlFor="password">Password⦂</label>
+        <input type="password" id="password" name="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
+        </div>
+
+        <button type="submit">
+          Signup
+        </button>
+
+      </form>
     </div>
   )
 }

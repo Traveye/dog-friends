@@ -26,6 +26,7 @@ function Dashboard () {
     //this is for modal
     const modalRef = useRef();
     const backdropRef = useRef();
+    
 
     const [currentUser, setCurrentUser] = useState({});
 
@@ -57,6 +58,7 @@ function Dashboard () {
             if (
                 (modalRef.current && !modalRef.current.contains(event.target)) || (backdropRef.current && !backdropRef.current.contains(event.target))){
                 setShowCreateDogForm(false);
+                setShowUpdateForm(false)
             }
         };
         document.addEventListener("mousedown", handleOutsideClick);
@@ -110,8 +112,8 @@ function Dashboard () {
         {Auth.loggedIn()? (
             <>
             <button className="dashboardButton" onClick={handleUpdateForm}>Update User</button>
-            {showUpdateForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
+            {showUpdateForm && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+        <div className="our-modal-content" ref={modalRef}> <UpdateUserForm closeModal={handleCloseUpdateForm} userID={userID}/>
         </div>
         </div>
         </>)}
@@ -122,8 +124,8 @@ function Dashboard () {
         <button className="dashboardIcon" onClick={() => setShowCreateDogForm(true)}>🐶</button>
         </div>
        <>
-        {showCreateDogForm && (<> <div className="modal-backdrop" ref={backdropRef}>
-        <div className="modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
+        {showCreateDogForm && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+        <div className="our-modal-content" ref={modalRef}> <CreateDogForm closeModal={handleCloseForm} userID={userID}/>
         </div>
         </div>
         </>)}
@@ -136,7 +138,7 @@ function Dashboard () {
         <p>{dog.name} is a⦂ {dog.breed}!</p>
 
         <p>Favorite play style is⦂ {dog.playStyle}</p>
-        {/* <p>This is me!: {dog.media[0]?.content}</p> */}
+        <p>This is me!: <img width="200px" alt="doggo" src={dog.media?.[0]?.content}/></p>
 
         <div><h4>About {dog.name}!</h4> {dog.bio}</div>
         <CloudinaryUploadWidget  dogId={dog?._id} />

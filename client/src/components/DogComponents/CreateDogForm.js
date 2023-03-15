@@ -44,18 +44,27 @@ const CreateDogForm = ({ userID, closeModal }) => {
     return (
         <div>
         <div>
-          <form onSubmit={handleFormSubmit}>
-            <label htmlFor="name">Name</label>
+          <form className="ourForms" onSubmit={handleFormSubmit}>
+
+          <div className="formItemGroup">
+            <label htmlFor="name">Name⦂</label>
             <input type="text" id="name" name="name" value={dogForm.name} onChange={handleChange} />
+            </div>
   
-            <label htmlFor="bio">Bio</label>
-            <textarea id="bio" name="bio" value={dogForm.bio} onChange={handleChange} />
+            <div className="formItemGroup">
+            <label htmlFor="bio">Bio⦂</label>
+            <textarea id="bio" name="bio"  value={dogForm.bio} onChange={handleChange} />
+            </div>
   
-            <label htmlFor="breed">Breed</label>
+            <div className="formItemGroup">
+            <label htmlFor="breed">Breed⦂</label>
             <input type="text" id="breed" name="breed" value={dogForm.breed} onChange={handleChange} />
-  
-            <label htmlFor="playStyle">Play Style</label>
+            </div>
+
+          <div className="formItemGroup">
+            <label htmlFor="playStyle">Play Style⦂</label>
             <input type="text" id="playStyle" name="playStyle" value={dogForm.playStyle} onChange={handleChange} />
+            </div>
 
           
   

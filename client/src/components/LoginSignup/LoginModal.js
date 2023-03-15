@@ -44,11 +44,17 @@ function LoginModal() {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="username">User Name:</label>
+      <form className="ourForms" onSubmit={handleFormSubmit}>
+        <div className="formItemGroup">
+        <label htmlFor="username">User Name⦂</label>
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <label  htmlFor="password">Password:</label>
+      </div>
+
+      <div className="formItemGroup">
+        <label  htmlFor="password">Password⦂</label>
         <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
+
         <button type="submit">
           Login
         </button>
