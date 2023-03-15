@@ -68,6 +68,7 @@ query Query($dogId: ID!) {
       playStyle
     }
     media {
+      _id
       content
       isBanner
       isProfile

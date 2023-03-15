@@ -7,32 +7,9 @@ const CloudinaryUploadWidget =  ({dogId}) => {
   const [secureUrl, setSecureUrl] = useState('');
   const [addMedia]=useMutation(ADD_MEDIA);
 
-  const addImg = async (dogId, secureUrl) => {
-    console.log("this is line 11 "+dogId+" "+secureUrl)
-    
-    try{
-      await addMedia({variables:{dogId:dogId, content:secureUrl}
-      })
-      
-    }
-      catch (error){
-        console.error(error)
-      }
-  }
+
 
   useEffect(() => {
-
-    const handleSuccess = async (error, result) => {
-      if (!error && result && result.event === "success") {
-        console.log("Done! Here is the image info: ", result.info);
-        console.log(`this is dogId in addImg${dogId}`);
-        document
-          .getElementById("uploadedimage")
-          .setAttribute("src", result.info.secure_url);
-        setSecureUrl(result.info.secure_url); // update secureUrl state
-      }
-    };
-
     const myWidget = window.cloudinary.createUploadWidget(
       {
         cloudName: cloudName,
@@ -80,19 +57,29 @@ const CloudinaryUploadWidget =  ({dogId}) => {
           console.log(`this is dogId in addImg${dogId}`)
           document
             .getElementById("uploadedimage")
-             .setAttribute("src", result.info.secure_url);
+            //  .setAttribute("src", result.info.secure_url);
             console.log(secureUrl)
-        //  addImg(dogId, secureUrl);
+         addImg(dogId, result.info.secure_url);
         }
       }
-      ,handleSuccess
     );
+
+    const addImg = async (dogId, secureUrl) => {
+      console.log("this is line 11 "+dogId+" "+secureUrl)
+      
+      try{
+        await addMedia({variables:{dogId:dogId, content:secureUrl}
+        })
+        
+      }
+        catch (error){
+          console.error(error)
+        }
+    }
 
     const handleUpload = async () => {
       await myWidget.open();
-      if (secureUrl) {
-        await addImg(dogId, secureUrl);
-      }
+     
     };
 
 
@@ -104,7 +91,7 @@ const CloudinaryUploadWidget =  ({dogId}) => {
       },
       false
     );
-   }, [dogId, secureUrl]);
+   }, [dogId, secureUrl, addMedia]);
 
    console.log(`this is dogId before the return ${dogId}`)
    console.log(`this is URL ${secureUrl}`)

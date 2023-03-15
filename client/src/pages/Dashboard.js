@@ -1,13 +1,3 @@
-// should be able to add dog update dog and update user
-
-//! Queries
-// me === getUserByID username/media/all dogs that belong to that user
-//? user might need to enter street address 
-//! Mutation 
-// update dog find the dog by id and they should be able to update any field in the model
-//add dog dogName/breed/playStyle/media/and any other 
-// delete dog by id
-
 import React, {useState, useEffect, useRef, useContext} from "react";
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
@@ -24,7 +14,6 @@ import { UserContext } from '../utils/UserContext'
 
 function Dashboard () {
     const { userID } = useParams();
-
     const { loggedIn, loggedInUser } = useContext(UserContext);
     const userContext = useContext(UserContext);
     console.log("userID dashboard",userID)
@@ -148,9 +137,11 @@ function Dashboard () {
         <p>We live in {user.location}</p>
         <p>I am a {dog.breed}!</p>
 
+        <p>I love {dog.playStyle}</p> 
+        {console.log(dog)}
+        <p>This is me!: {dog.media.content}</p>
         <p>I love {dog.playStyle}</p>
         {/* <p>This is me!: {dog.media[0]?.content}</p> */}
-
         <div><h4>This is what my friends say about me!</h4> {dog.bio}</div>
         <CloudinaryUploadWidget dogId={dog?._id} />
             {console.log(dog._id)}
