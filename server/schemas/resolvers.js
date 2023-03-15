@@ -170,6 +170,7 @@ const resolvers = {
     },
 
     updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
+      console.log('tryingtoupdatemedia')
       if (context.user.dog) {
         const updatedMedia = await Media.findByIdAndUpdate(
           id,
