@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Swal from 'sweetalert'
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 import { useNavigate  } from 'react-router-dom';
+import {UserContext} from '../../utils/UserContext'
 
 
 function SignupModal() {
@@ -12,7 +13,8 @@ function SignupModal() {
   const [password, setPassword] = useState('');
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
-  // console.log(username, email, address, password)
+  const [loggedInUser, setLoggedInUser] = useState("")
+  const userContext = useContext(UserContext);
 
 console.log("error", error)
 
@@ -31,6 +33,8 @@ console.log("error", error)
       const userID = data.addUser.user._id;
 
       Auth.login(data.addUser.token);
+      userContext.setLoggedInUser(userID);
+
       Swal({
         title: 'Signup successful!',
         icon: 'success',
