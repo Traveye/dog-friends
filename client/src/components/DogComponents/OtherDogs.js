@@ -1,7 +1,7 @@
 import Swal from 'sweetalert'
 
 export default function OtherDogs(owner) {
-  console.log(owner)
+  // console.log(owner)
    
  
    return (
