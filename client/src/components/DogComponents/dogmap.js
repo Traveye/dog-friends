@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import styles from "../../styles/dogmap.module.css"
 
 // this is to fix the default icon issue with leaflet
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -71,9 +72,9 @@ function DogMap() {
   };
 
   return (
-    <div>
+    <div className={styles.dogSearch}>
       {/* //   this will be the search bar */}
-      <form className="form" onSubmit={handleSearch}>
+      <form className={styles.form} onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Search by location"
@@ -87,8 +88,9 @@ function DogMap() {
         center={[34.0195, -118.4912]}
         zoom={7}
         scrollWheelZoom={false}
-        style={{ width: "70%", height: "80vh" }}
+        style={{ width: "100%", height: "100vh" }}
         ref={mapJump}
+        className={styles.map}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -113,12 +115,16 @@ function DogMap() {
           })}
         </MarkerClusterGroup>
       </MapContainer>
-      <div>
+      <div className={styles.cards}>
       {dogs.map((dog) => {
           const { location, name, breed } = dog;
           const imageURL = dog.media[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
             return (
-        <div><img src={imageURL} alt="pics yo" width="200px" ></img>
+        <div>
+          <h2>{name}</h2>
+          <p>{breed}</p>
+          <img src={imageURL} alt="pics yo" width="200px" ></img>
+          <Link to={`/dogProfile/${dog._id}`}>Go to profile</Link>
       </div>
     );})}
     </div>

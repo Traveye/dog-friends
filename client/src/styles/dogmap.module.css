@@ -1,0 +1,14 @@
+.dogSearch {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
+    gap: 1.5rem;
+    background-color: aquamarine;
+}
+
+.form {
+    grid-column: span 2;
+}
+
+.map{}
+
+.cards{}
