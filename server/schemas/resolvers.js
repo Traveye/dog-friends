@@ -98,23 +98,24 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    addMedia: async (parent, { id, content, isBanner, isProfile }, context) => {
-      if (context.user) {
-        const media = await Media.create({
-          id,
-          content,
-          isBanner,
-          isProfile,
-        });
-
-        await Dog.findOneAndUpdate(
-          { _id: context.dog._id },
-          { $addToSet: { media: media._id } }
-        );
-
+    addMedia: async (parent, { content, dogId }) => {
+      console.log(dogId+" word")
+      try{
+        const dog = await Dog.findById(dogId)
+        const media = await Media.create({content})
+        console.log(media);
+        const updatedDog = await Dog.findByIdAndUpdate(
+          dogId,
+          { $push: { media: media } },
+          { new: true });
+          console.log(updatedDog)
         return media;
+      } catch(error){
+ 
+        console.error(error)
+        
       }
-      throw new AuthenticationError("You need to be logged in!");
+       throw new AuthenticationError("You need to be logged in!");
     },
 
     updateUser: async (
