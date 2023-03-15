@@ -7,6 +7,7 @@ class CloudinaryUploadWidget extends Component {
     var myWidget = window.cloudinary.createUploadWidget(
         {
           cloudName: cloudName,
+          uploadPreset: "wl5nccxv",
         },
         (error, result) => {
           if (!error && result && result.event === "success") {
