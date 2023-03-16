@@ -44,7 +44,7 @@ const dogSchema = new Schema({
       ref: "Media",
     },
   ],
-  endorsements: [endorsementsSchema] 
+  endorsements: [] 
 },
   
   {
