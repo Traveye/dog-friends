@@ -41,7 +41,9 @@ export default function DogMedia({ images }) {
          <div className="slide-container" ref={slideRef}>
             {pics.map((x, index) => (
                <div key={index} className="slide">
+                  <div className="image-wrapper">
                   <img src={x.content} alt="doggy" />
+                  </div>
                </div>
             ))}
          </div>
@@ -54,12 +56,14 @@ export default function DogMedia({ images }) {
                />
             ))}
          </div>
+         <div className="dots">
          <button className="prev" onClick={handlePrevClick}>
-            LEFT
+         &#x2190;
          </button>
          <button className="next" onClick={handleNextClick}>
-            RIGHT
+         &#x2192;
          </button>
+         </div>
       </div>
    );
 }
