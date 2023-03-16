@@ -71,13 +71,19 @@ Try it here: [Howler](https://howler.herokuapp.com/)
 (all the play styles can get dog bone) 
 
 
+### Search for Dogs
+To search for other dogs on Howler, click on the "Search" button in the navigation bar. You can search different locations for dogs. Once you find a dog you are interested in, you can view their profile and send a message to their owner to connect and arrange a playdate.
 
-## Installation
+![Alt text](./assets/DogSearch.gif)
+
+### Viewing a dog profile
+To view a dog's profile, simply click on the 'View Profile' from the search results. The dog's profile will display their name, breed, age, bio, and playstyle, as well as any photos that have been uploaded by the owner.
 
 
 
-## Usage 
 
+
+That's it! With these basic features, you should be able to use the Howler app to find other dog owners and connect with their dogs for fun and friendship.
 
 ## Models and Routes
 
