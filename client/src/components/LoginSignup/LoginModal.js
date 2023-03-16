@@ -45,17 +45,17 @@ function LoginModal() {
     <div>
       <h2>Login</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
-        <div className="formItemGroup">
+        <div className="formItemGroup ourGrid">
         <label htmlFor="username">User Name⦂</label>
         <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
       </div>
 
-      <div className="formItemGroup">
+      <div className="formItemGroup ourGrid">
         <label  htmlFor="password">Password⦂</label>
         <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
 
-        <button type="submit">
+        <button type="submit" className='ourButton'>
           Login
         </button>
       </form>
