@@ -19,6 +19,7 @@ const CreateDogForm = ({ userID, closeModal }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(dogForm)
       await addDog({
         variables: {
           name: dogForm.name,
@@ -27,6 +28,7 @@ const CreateDogForm = ({ userID, closeModal }) => {
           breed: dogForm.breed,
         },
       });
+      console.log(dogForm.name)
       setDog({ name: "", bio: "", breed: "", playStyle: "" });
 
       console.log(loading, data, error);

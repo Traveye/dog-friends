@@ -61,12 +61,14 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, { dogData }, context) => {
+    addDog: async (parent, dogData , context) => {
       console.log("first");
+      console.log(dogData)
       if (context.user) {
         console.log(
           `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
         );
+          const {name, bio, playStyle, breed,} = dogData
 
         const dog = await Dog.create({
           name,
