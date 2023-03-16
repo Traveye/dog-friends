@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import LoginModal from '../components/LoginSignup/LoginModal';
 import SignupModal from '../components/LoginSignup/SignupModal';
 import "../components/DogComponents/createDogForm.css"
@@ -10,6 +10,21 @@ function Landing() {
 
   const modalRef = useRef();
   const backdropRef = useRef();
+  useEffect( () => {
+    const handleOutsideClick = (event) => {
+        if (
+            (modalRef.current && !modalRef.current.contains(event.target)) || (backdropRef.current && !backdropRef.current.contains(event.target))){
+              setShowSignup(false)
+              setShowLogin(false);
+        }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () =>{
+        document.removeEventListener('mousedown', handleOutsideClick);
+    };
+}, []);
+
 
   const[showSignup, setShowSignup] = useState(false)
   const[showLogin, setShowLogin] = useState(false)
@@ -36,8 +51,8 @@ function Landing() {
 
 
     <button className="landingbtn" onClick={handleLogin}>LogIn</button>
-    {showLogin && (<> <div className="modal-backdrop" ref={backdropRef}>
-    <div className="modal-content" ref={modalRef}>
+    {showLogin && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+    <div className="our-modal-content" ref={modalRef}>
       <LoginModal onClose={handleCloseLogin}/>
       </div>
         </div>
@@ -45,8 +60,8 @@ function Landing() {
 
 
     <button className="landingbtn" onClick={handleSignup}>Signup</button>
-    {showSignup && (<> <div className="modal-backdrop" ref={backdropRef}>
-    <div className="modal-content" ref={modalRef}>
+    {showSignup && (<> <div className="our-modal-backdrop" ref={backdropRef}>
+    <div className="our-modal-content" ref={modalRef}>
       <SignupModal onClose={handleCloseSignup}/>
       </div>
         </div>
@@ -57,4 +72,3 @@ function Landing() {
 }
 
 export default Landing;
-

@@ -64,7 +64,7 @@ function DogProfile() {
           </div>
           <div className='main card'>
             <h3 id='dog-name'>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
-          {/* <Endorsements dog={currentDog?.endorsements
+          {/* <Endorsements endorsy={currentDog?.endorsements
 } handleEndorsement={handleEndorsement} /> */}
           </div>
           <div className='info card'>
@@ -74,7 +74,7 @@ function DogProfile() {
             </div>
 
             <div>
-            <article id='dog-bio'>{currentDog ? currentDog.bio : <div>Loading...</div>}</article>
+            <article id='dog-bio' className='card'>{currentDog ? currentDog.bio : <div>Loading...</div>}</article>
             </div>
 
           <DogMedia images={currentDog?.media} />

@@ -1,10 +1,11 @@
 import React from "react";
 
-export default function Endorsements({ dog, handleEndorsement }) {
+export default function Endorsements({ endorsy, handleEndorsement }) {
+  console.log(endorsy)
    return (
      <div>
-       <h3>www</h3>
-       <button onClick={handleEndorsement}>Endorse {dog.name}</button>
+       <h3>{endorsy.name}</h3>
+       <button onClick={handleEndorsement}>+1!</button>
      </div>
    );
  }
