@@ -231,7 +231,9 @@ const resolvers = {
     },
 
     addEndorsement: async (_, { dogId, playStyle }, context) => {
-      console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE', playStyle)
+      // console.log('checkitoutthisiseminem', playStyle)
+      // let { playStyle: braaa } = playStyle
+      // console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE', braaa)
       // if (context.user) {
       try {
         const currentDog = await Dog.findOneAndUpdate(
