@@ -14,7 +14,13 @@ const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
     playStyle: "",
   });
 
-  const [addDog, { data, loading, error }] = useMutation(ADD_DOG);
+  const [addDog, { data, loading, error }] = useMutation(ADD_DOG, {
+    update(cache, {data:{addDog}}){
+      try {
+        const { } = cache.readQuery({})
+      }
+    }
+  });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -30,12 +36,7 @@ const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
       });
       console.log(dogForm.name)
 
-      // updateCurrentUser({
-      //   name: dogForm.name,
-      //   bio: dogForm.bio,
-      //   playStyle: dogForm.playStyle,
-      //   breed: dogForm.breed,
-      // });
+      //add create write thing
 
 
       setDog({ name: "", bio: "", breed: "", playStyle: "" });

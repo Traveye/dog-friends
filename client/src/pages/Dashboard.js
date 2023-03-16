@@ -90,13 +90,12 @@ function Dashboard() {
   };
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
-    window.location.reload();
+    
   };
 
   console.log(user);
   const handleCloseForm = () => {
     setShowCreateDogForm(false);
-    window.location.reload();
   };
 
   if (loading) {
