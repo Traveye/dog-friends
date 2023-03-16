@@ -6,7 +6,7 @@ import auth from "../../utils/auth";
 import swal from "sweetalert";
 import "./createDogForm.css";
 
-const CreateDogForm = ({ userID, closeModal }) => {
+const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
   const [dogForm, setDog] = useState({
     name: "",
     bio: "",
@@ -29,6 +29,15 @@ const CreateDogForm = ({ userID, closeModal }) => {
         },
       });
       console.log(dogForm.name)
+
+      // updateCurrentUser({
+      //   name: dogForm.name,
+      //   bio: dogForm.bio,
+      //   playStyle: dogForm.playStyle,
+      //   breed: dogForm.breed,
+      // });
+
+
       setDog({ name: "", bio: "", breed: "", playStyle: "" });
 
       console.log(loading, data, error);

@@ -194,7 +194,6 @@ const resolvers = {
     },
 
     deleteDog: async (parent, { dogId }, context) => {
-      console.log(context);
       console.log("we in resolvers baby");
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
