@@ -12,7 +12,7 @@ const CloudinaryUploadWidget =  ({dogId}) => {
   useEffect(() => {
     const myWidget = window.cloudinary.createUploadWidget(
       {
-        cloudName: cloudName,
+        cloudName,
         uploadPreset: "n9mflcx1",
         cropping: false,
         multiple: false,
@@ -45,7 +45,6 @@ const CloudinaryUploadWidget =  ({dogId}) => {
                   lastModified: Date.now(),
                 });
                 callback(data);
-                setSecureUrl(data.info.secure_url);
               }, "image/jpeg", 0.6);
             };
           };
@@ -104,3 +103,4 @@ const CloudinaryUploadWidget =  ({dogId}) => {
 };
 
 export default CloudinaryUploadWidget;
+
