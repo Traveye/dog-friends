@@ -44,7 +44,6 @@ const CloudinaryUploadWidget =  ({dogId}) => {
                   type: "image/jpeg",
                   lastModified: Date.now(),
                 });
-                callback(data);
               }, "image/jpeg", 0.6);
             };
           };
