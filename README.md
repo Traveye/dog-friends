@@ -48,7 +48,7 @@ You can add photos of your dog by clicking on the "Upload Media" button on your 
 
 
 ### Search for Dogs
-To search for other dogs on Howler, click on the "Search" button in the navigation bar. You can search for dogs based on their breed, age, location, and other criteria. Once you find a dog you are interested in, you can view their profile and send a message to their owner to connect and arrange a playdate.
+To search for other dogs on Howler, click on the "Search" button in the navigation bar. You can search different locations for dogs. Once you find a dog you are interested in, you can view their profile and send a message to their owner to connect and arrange a playdate.
 
 ![Alt text](./assets/DogSearch.gif)
 
