@@ -26,16 +26,40 @@ Try it here:
 
 
 
-## User Stories 
-
-
-
-## Installation
-
-
-
 ## Usage 
 
+### Login/SignUp
+
+To use the Howler app, you must first create an account. Click on the "Sign Up" button on the landing page and enter your details to create an account. If you already have an account, click on the "Login" button and enter your credentials to access your account.
+
+![Login](./assets/login.gif)
+
+### Add Dog
+Once you have logged in, you can add a dog to your profile by clicking on the "Add Dog" button. Enter your dog's details, such as name, breed, age, and any other information you want to include.
+
+![Add Dog](./assets/addDog.gif)
+
+
+### Upload Media
+You can add photos of your dog by clicking on the "Upload Media" button on your dog's profile page. You can upload multiple photos, and they will be displayed on your dog's profile for other users to see.
+
+
+![Add Dog](./assets/uploadDog.gif)
+
+
+### Search for Dogs
+To search for other dogs on Howler, click on the "Search" button in the navigation bar. You can search for dogs based on their breed, age, location, and other criteria. Once you find a dog you are interested in, you can view their profile and send a message to their owner to connect and arrange a playdate.
+
+![Alt text](./assets/DogSearch.gif)
+
+### Viewing a dog profile
+To view a dog's profile, simply click on the 'View Profile' from the search results. The dog's profile will display their name, breed, age, bio, and playstyle, as well as any photos that have been uploaded by the owner.
+
+
+
+
+
+That's it! With these basic features, you should be able to use the Howler app to find other dog owners and connect with their dogs for fun and friendship.
 
 ## Models and Routes
 
