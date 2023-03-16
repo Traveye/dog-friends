@@ -19,8 +19,8 @@ const CloudinaryUploadWidget =  ({dogId}) => {
         maxFiles: 1,
         resourceType: "image",
         clientAllowedFormats: ["jpeg", "jpg", "png"],
-        maxFileSize: 10000000, // 10MB
-        customUploadFunction: function (data, callback) {
+        maxFileSize: 10000000, // max file size of 10MB
+        customUploadFunction: function (data) {
           const reader = new FileReader();
           reader.readAsDataURL(data.file);
           reader.onload = (event) => {
@@ -29,7 +29,7 @@ const CloudinaryUploadWidget =  ({dogId}) => {
             img.onload = () => {
               const canvas = document.createElement("canvas");
               const ctx = canvas.getContext("2d");
-              const maxDimensions = 800; // maximum width or height
+              const maxDimensions = 800; // maximum width or height of 800px
               const scaleFactor = Math.min(
                 maxDimensions / img.width,
                 maxDimensions / img.height
@@ -44,7 +44,6 @@ const CloudinaryUploadWidget =  ({dogId}) => {
                   type: "image/jpeg",
                   lastModified: Date.now(),
                 });
-                callback(data);
                 setSecureUrl(data.info.secure_url);
               }, "image/jpeg", 0.6);
             };
@@ -57,7 +56,7 @@ const CloudinaryUploadWidget =  ({dogId}) => {
           console.log(`this is dogId in addImg${dogId}`)
           document
             .getElementById("uploadedimage")
-            //  .setAttribute("src", result.info.secure_url);
+          
             console.log(secureUrl)
          addImg(dogId, result.info.secure_url);
         }
