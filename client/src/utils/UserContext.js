@@ -6,7 +6,7 @@ export const UserContext = createContext();
 export function UserProvider(props) {
   const [loggedIn, setLoggedIn] = useState(AuthService.loggedIn());
   const [loggedInUser, setLoggedInUser] = useState("")
- 
+  const [currentUser, setCurrentUser] = useState({});
 
   function handleLogin(idToken) {
     AuthService.login(idToken);
@@ -19,7 +19,7 @@ export function UserProvider(props) {
   }
 
   return (
-    <UserContext.Provider value={{ loggedIn, handleLogin, handleLogout, loggedInUser, setLoggedInUser }}>
+    <UserContext.Provider value={{ loggedIn, handleLogin, handleLogout, loggedInUser, setLoggedInUser, currentUser, setCurrentUser }}>
       {props.children}
     </UserContext.Provider>
   );

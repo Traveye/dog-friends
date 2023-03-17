@@ -52,9 +52,8 @@ function DogMap() {
   //this will be the function that handles the search input
   const handleSearch = async (event) => {
     event.preventDefault();
-    const MAPBOX_TOKEN =
-      "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
-    console.log("this is our search " + search);
+    const MAPBOX_TOKEN = "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
+    console.log("this is our search " + search );
 
     const response = await fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${search}.json?access_token=${MAPBOX_TOKEN}`

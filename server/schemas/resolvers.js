@@ -83,7 +83,7 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
-
+    
         const user = await User.findById(context.user._id);
 
         const userLocation = user.location
