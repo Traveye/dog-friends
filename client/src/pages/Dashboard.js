@@ -13,7 +13,7 @@ import { UserContext } from "../utils/UserContext";
 
 function Dashboard() {
   const { userID } = useParams();
-  const { loggedIn, loggedInUser } = useContext(UserContext);
+ 
   const userContext = useContext(UserContext);
   console.log("userID dashboard", userID);
   userContext.setLoggedInUser(userID);
@@ -25,29 +25,29 @@ function Dashboard() {
   const modalRef = useRef();
   const backdropRef = useRef();
 
-  const [currentUser, setCurrentUser] = useState({});
 
   const [removeDog] = useMutation(REMOVE_DOG);
 
-  const { loading, data } = useQuery(GET_USER, {
+  const { loading, data, refetch } = useQuery(GET_USER, {
     variables: { userId: userID },
   });
 
   useEffect(() => {
     if (data && data.user) {
-      setCurrentUser(data.user);
+      userContext.setCurrentUser(data.user);
     }
   }, [data, userID]);
 
-  const user = currentUser || {};
-  const dog = currentUser.dogReference || [];
+  const user = userContext.currentUser || {};
+  const dog = userContext.currentUser.dogReference || [];
 
   useEffect(() => {
     const newDogAdded = user?.dogReference?.length > dog?.length;
     if (newDogAdded) {
       // refetch data to trigger a re-render
+      refetch();
     }
-  }, [user?.dogReference, dog?.length]);
+  }, [user?.dogReference, dog?.length, refetch]);
 
   //this is for modal
   useEffect(() => {
@@ -75,19 +75,17 @@ function Dashboard() {
       await removeDog({ variables: { dogId } });
       console.log("returned from server");
       const updatedUser = {
-        ...currentUser,
+        ...userContext.currentUser,
         dogReference: user.dogReference.filter((dog) => dog._id !== dogId),
       };
-      setCurrentUser(updatedUser);
+      userContext.setCurrentUser(updatedUser);
     } catch (error) {
       console.log("this is the catch block");
       console.error(error);
     }
   };
 
-  const handleUpdateForm = () => {
-    setShowUpdateForm(true);
-  };
+ 
   const handleCloseUpdateForm = () => {
     setShowUpdateForm(false);
     
@@ -96,6 +94,7 @@ function Dashboard() {
   console.log(user);
   const handleCloseForm = () => {
     setShowCreateDogForm(false);
+  
   };
 
   if (loading) {
@@ -107,7 +106,7 @@ function Dashboard() {
         <h1 id="userNameHeader">Hi, {user?.username}!</h1>
         {Auth.loggedIn() ? (
           <>
-            <button className="dashboardButton" onClick={handleUpdateForm}>
+            <button className="dashboardButton" onClick={() => setShowUpdateForm(true)}>
               Update User
             </button>
             {showUpdateForm && (

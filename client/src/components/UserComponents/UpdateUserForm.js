@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import React, { useState, useContext } from 'react';
+import { useMutation,} from '@apollo/client';
 import { UPDATE_USER } from '../../utils/mutations';
-import { GET_USER } from '../../utils/queries';
+import { UserContext } from "../../utils/UserContext";
 
 function UpdateUserForm({ userID, closeModal }) {
   console.log('userUpdateForm', userID);
-
-  const { loading, error, data } = useQuery(GET_USER, {
-    variables: { userId: userID },
-  });
-
-  const [username, setUsername] = useState(data?.user.username || '');
-  const [location, setLocation] = useState(data?.user.location || '');
+  const userContext = useContext(UserContext);
+  
+console.log("3",userContext.currentUser.username)
+  const [username, setUsername] = useState(userContext.currentUser.username || '');
+  const [location, setLocation] = useState(userContext.currentUser.location || '');
   const [password, setPassword] = useState('');
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showAddressInput, setShowAddressInput] = useState(false);
@@ -24,14 +22,12 @@ function UpdateUserForm({ userID, closeModal }) {
       ...((password && { password }) || {}),
     },
     onCompleted: () => {
+ userContext.setCurrentUser({...userContext.currentUser, username})
+
       closeModal()
     },
   });
 
-  console.log(error);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
 
   const handleUpdate = () => {
     updateUser();
@@ -39,7 +35,7 @@ function UpdateUserForm({ userID, closeModal }) {
 
   return (
     <div className="userFormContainer">
-      <p>{data?.user.username}</p>
+      <p>{userContext.currentUser.username}</p>
       <button onClick={() => setShowUsernameInput(true)}>🖍️</button>
       {showUsernameInput && (
         <>
@@ -52,7 +48,7 @@ function UpdateUserForm({ userID, closeModal }) {
         </>
       )}
 
-      <p>{data?.user.location}</p>
+      <p>{userContext.currentUser.location}</p>
       <button onClick={() => setShowAddressInput(true)}>🖍️</button>
       {showAddressInput && (
         <>
