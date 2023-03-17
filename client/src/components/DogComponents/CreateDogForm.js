@@ -1,10 +1,10 @@
-import { ADD_DOG, ADD_MEDIA } from "../../utils/mutations";
+import { ADD_DOG} from "../../utils/mutations";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import auth from "../../utils/auth";
-import swal from "sweetalert";
 import "./createDogForm.css";
+import { GET_USER } from "../../utils/queries"
+
+
 
 const CreateDogForm = ({ userID, closeModal }) => {
   const [dogForm, setDog] = useState({
@@ -14,8 +14,30 @@ const CreateDogForm = ({ userID, closeModal }) => {
     playStyle: "",
   });
 
-  const [addDog, { data, loading, error }] = useMutation(ADD_DOG);
-
+  const [addDog, { data, loading, error }] = useMutation(ADD_DOG, {
+    update(cache, {data:{addDog}}){
+      try {
+        console.log('this is it '+userID)
+        console.log(cache.readQuery({query: GET_USER, variables: {
+          userId: userID
+        }}))
+        const {User}  = cache.readQuery({query: GET_USER, variables: {
+          userId: userID
+        }});
+        console.log('this is before the writequery')
+        cache.writeQuery({
+          query:GET_USER,
+          variables: {
+            userId: userID
+          },
+          data: {user: User}
+        });
+      } catch(error){
+console.error(error)
+      }
+    },
+    refetchQueries:[{query: GET_USER, variables: { userId:userID}}]
+  });
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,12 +49,9 @@ const CreateDogForm = ({ userID, closeModal }) => {
           playStyle: dogForm.playStyle,
           breed: dogForm.breed,
         },
-      });
-      console.log(dogForm.name)
-      setDog({ name: "", bio: "", breed: "", playStyle: "" });
 
-      console.log(loading, data, error);
-      console.log(dogForm);
+      });
+      setDog({ name: "", bio: "", breed: "", playStyle: "" });
       closeModal();
     } catch (error) {
       console.log(`This is an error: ${error.message}`);
