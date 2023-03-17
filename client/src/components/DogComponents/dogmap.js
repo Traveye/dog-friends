@@ -1,9 +1,9 @@
 // this coponent's responsibility is to query all the dogs from the database and provide markers for the map based on the data received. it will be passed to the map component as a prop.
 // It should also handle interactions with the map, such as clicking on a marker to view the dog's profile.
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { GET_DOGS } from "../../utils/queries";
 import L from "leaflet";
@@ -34,8 +34,6 @@ function DogMap() {
   const { loading, data } = useQuery(GET_DOGS);
   //this will be the state that tracks the search input
   const [search, setSearch] = useState("");
-  //this will be the state that tracks the filter input
-  const [filter, setFilter] = useState("");
   //this will be the state that tracks the dogs that are rendered on the map
   const [dogs, setDogs] = useState([]);
   //this will be the ref that will be used to jump the map to a location on search
@@ -65,10 +63,6 @@ function DogMap() {
     mapJump.current.setView([latitude, longitude], 10);
   };
 
-  //this will be the function that handles links to dog profiles
-  const handleMarkerClick = (dogId) => {
-    window.location.href = `/dog/${dogId}`;
-  };
 
   return (
     <div className={styles.dogSearch}>
@@ -117,7 +111,7 @@ function DogMap() {
       </MapContainer>
       <div className={styles.cards}>
       {dogs.map((dog) => {
-          const { location, name, breed } = dog;
+          const {  name, breed } = dog;
           const imageURL = dog.media?.[0]?.content || "https://res.cloudinary.com/datl67gp3/image/upload/v1677887118/cld-sample.jpg"
             return (
         <div className={styles.card}>
@@ -133,33 +127,3 @@ function DogMap() {
 }
 
 export { DogMap };
-
-// this page needs to render a map with leaflet all the dogs in the database will be pins on the map -- need to get location information from the database and render it on the map
-// should call car component and render it on the map
-// should have a search bar that allows you to search by location and render the dogs in that location on the map
-// should have a filter that allows you to search by breed and render the dogs of that breed on the map
-// should have a filter that allows you to search by play style and render the dogs of that play style on the map
-// should have a filter that allows you to search by age and render the dogs of that age on the map
-// should have a filter that allows you to search by size and render the dogs of that size on the map
-
-// {/* <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-// <TileLayer
-//     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// />
-// {dogs.map((dog) => (
-//     <Marker
-//     key={dog._id}
-//     position={[dog.location.latitude, dog.location.longitude]}
-//     icon={icon}
-//     >
-//     <Popup>
-//         <h2>{dog.name}</h2>
-//         <p>{dog.breed}</p>
-//         <p>{dog.age}</p>
-//         <p>{dog.size}</p>
-//         <p>{dog.playStyle}</p>
-//     </Popup>
-//     </Marker>
-// ))}
-// </MapContainer> */}

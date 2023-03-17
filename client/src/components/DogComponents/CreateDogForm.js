@@ -6,7 +6,7 @@ import { GET_USER } from "../../utils/queries"
 
 
 
-const CreateDogForm = ({ userID, closeModal }) => {
+const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
   const [dogForm, setDog] = useState({
     name: "",
     bio: "",

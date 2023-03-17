@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from '@apollo/client';
+import { useMutation } from "@apollo/client";
 import { ADD_MEDIA } from "../utils/mutations";
-const CloudinaryUploadWidget =  ({dogId}) => {
-  console.log(`this is line 5 ${dogId}`)
+const CloudinaryUploadWidget = ({ dogId }) => {
+  console.log(`this is line 5 ${dogId}`);
   const cloudName = "datl67gp3";
-  const [secureUrl, setSecureUrl] = useState('');
-  const [addMedia]=useMutation(ADD_MEDIA);
-
-
+  const [secureUrl, setSecureUrl] = useState("");
+  const [addMedia] = useMutation(ADD_MEDIA);
 
   useEffect(() => {
     const myWidget = window.cloudinary.createUploadWidget(
@@ -39,12 +37,16 @@ const CloudinaryUploadWidget =  ({dogId}) => {
               canvas.width = newWidth;
               canvas.height = newHeight;
               ctx.drawImage(img, 0, 0, newWidth, newHeight);
-              canvas.toBlob((blob) => {
-                data.file = new File([blob], data.file.name, {
-                  type: "image/jpeg",
-                  lastModified: Date.now(),
-                });
-              }, "image/jpeg", 0.6);
+              canvas.toBlob(
+                (blob) => {
+                  data.file = new File([blob], data.file.name, {
+                    type: "image/jpeg",
+                    lastModified: Date.now(),
+                  });
+                },
+                "image/jpeg",
+                0.6
+              );
             };
           };
         },
@@ -52,34 +54,29 @@ const CloudinaryUploadWidget =  ({dogId}) => {
       (error, result) => {
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
-          console.log(`this is dogId in addImg${dogId}`)
-          document
-            .getElementById("uploadedimage")
-          
-            console.log(secureUrl)
-         addImg(dogId, result.info.secure_url);
+          console.log(`this is dogId in addImg${dogId}`);
+          document.getElementById("uploadedimage");
+
+          console.log(secureUrl);
+          addImg(dogId, result.info.secure_url);
         }
       }
     );
 
     const addImg = async (dogId, secureUrl) => {
-      console.log("this is line 11 "+dogId+" "+secureUrl)
-      
-      try{
-        await addMedia({variables:{dogId:dogId, content:secureUrl}
-        })
-        
+      console.log("this is line 11 " + dogId + " " + secureUrl);
+
+      try {
+        await addMedia({ variables: { dogId: dogId, content: secureUrl } });
+        setSecureUrl(secureUrl);
+      } catch (error) {
+        console.error(error);
       }
-        catch (error){
-          console.error(error)
-        }
-    }
+    };
 
     const handleUpload = async () => {
       await myWidget.open();
-     
     };
-
 
     document.getElementById(`${dogId}`).addEventListener(
       "click",
@@ -89,17 +86,17 @@ const CloudinaryUploadWidget =  ({dogId}) => {
       },
       false
     );
-   }, [dogId, secureUrl, addMedia]);
+  }, [dogId, secureUrl, addMedia]);
 
-   console.log(`this is dogId before the return ${dogId}`)
-   console.log(`this is URL ${secureUrl}`)
+  console.log(`this is dogId before the return ${dogId}`);
+  console.log(`this is URL ${secureUrl}`);
 
   return (
-    <button id={dogId} className="dashboardButton">
-      Upload Photos
-    </button>
+    <button 
+    id={dogId} 
+    className="dashboardButton">
+    Upload Photos</button>
   );
 };
 
 export default CloudinaryUploadWidget;
-
