@@ -10,23 +10,45 @@
 * [Description](#description)
 * [Technologies Used](#technologies-used)
 * [User Stories](#user-stories)
-* [Installation](#installation)
 * [Usage](#usage)
 * [Models and Routes](#models-and-routes)
-* [New libraries/NPM Packages](#new-libraries/npm-packages)
 * [Credits](#credits)
 * [License](#license)
 
-## Description 
+# Description 
 
-# Goals
+## Goals
 The purpose of this project is to provide dog owners, who want to find playmates for their pet, a convenient way to connect with likeminded owners in their area. Users will be able to search for other users by location and filter other users to find playmates who meet their dogs specific needs. For example, Users who own smaller dogs may filter out larger dog Users. Ideally a user will be able to find local dogs who fit their pets playstyle needs and then be able to connect with them. 
 
-# First Iteration
+## First Iteration
+For our first attempt, we started by creating our back end. We used Node.JS with Express as our runtime environment, MongoDB as our database, and GraphQL with Apollo to interact with our DB. We created User, Dog, and Media models as our database tables and defined how these could be accessed for CRUD operations using TypeDefs and Resolvers. 
 
+We then created our React app and used various components to render our application. Our components include:
+- A Landing page for login or signup
+- A Dashboard page where a user can update their information as well as add their dog(s)'s information. 
+- A Profile page where other uses can view individul Dog information
+- A search page with an interactive map that users can update to view dogs in their current area. 
 
+To build our 
 
 Try it here: [Howler](https://howler.herokuapp.com/)
+
+## Future Development
+
+There are many potential features and improvements that could be added to Howler in the future. Some ideas include:
+
+Messaging Capabilities: Add the ability to send photos and videos through the messaging system, as well as the ability to create group chats with other dog owners.
+
+Search Filter by Location: Develop a search filter option that allows users to search for dogs in specific locations or within a certain distance from their own location.
+
+Dog Endorsement System: Create a dog endorsement system that allows users to give positive ratings and reviews to other dogs on the app. This could help other users find dogs that are friendly, well-behaved,  fun to play with or simply match their criteria.
+
+Matching System: Develop a more advanced matching system that takes into account more criteria, such as playstyle, size, and energy level, to help users find dogs that are a good fit for their own dog.
+
+Events Calendar: Create a calendar feature that shows local dog events, such as meetups and dog-friendly festivals, and allow users to RSVP and connect with other attendees.
+
+These are just a few examples of the many ways that Howler could be developed in the future. We are always looking for feedback and suggestions from our users, so if you have any ideas or requests for new features, please feel free to contact us!
+
 
 ## Technologies Used
 
@@ -42,6 +64,7 @@ Try it here: [Howler](https://howler.herokuapp.com/)
 - [![apollo-server-express](https://img.shields.io/badge/apollo--server--express-3.6.2-blueviolet.svg)](https://www.npmjs.com/package/apollo-server-express)
 - [![graphql](https://img.shields.io/badge/graphql-16.6.0-pink.svg?logo=graphql)](https://graphql.org/)
 - [![jest](https://img.shields.io/badge/jest-29.4.3-purple.svg?logo=jest)](https://jestjs.io/)
+- [![Mapbox](https://img.shields.io/badge/Mapbox-3.3.1-0072C6?logo=mapbox&logoColor=white)](https://www.mapbox.com/)
 - [![mongoose](https://img.shields.io/badge/mongoose-7.0.1-green.svg?logo=mongodb)](https://mongoosejs.com/)
 - [![Optional Require](https://img.shields.io/badge/Optional%20Require-1.0.3-blue.svg)](https://www.npmjs.com/package/optional-require)
 - [![Reactstrap](https://img.shields.io/badge/Reactstrap-9.1.6-61DAFB.svg?logo=react)](https://reactstrap.github.io/)
@@ -70,6 +93,26 @@ Try it here: [Howler](https://howler.herokuapp.com/)
 - As a user I want to be able to leave an endorsement for dogs that we had play dates with
 (all the play styles can get dog bone) 
 
+## Usage
+
+### Login/SignUp
+
+To use the Howler app, you must first create an account. Click on the "Sign Up" button on the landing page and enter your details to create an account. If you already have an account, click on the "Login" button and enter your credentials to access your account.
+
+![Login](./assets/login.gif)
+
+### Add Dog
+Once you have logged in, you can add a dog to your profile by clicking on the "Add Dog" button. Enter your dog's details, such as name, breed, age, and any other information you want to include.
+
+![Add Dog](./assets/addDog.gif)
+
+
+### Upload Media
+You can add photos of your dog by clicking on the "Upload Media" button on your dog's profile page. You can upload multiple photos, and they will be displayed on your dog's profile for other users to see.
+
+
+![Add Dog](./assets/uploadDog.gif)
+
 
 ### Search for Dogs
 To search for other dogs on Howler, click on the "Search" button in the navigation bar. You can search different locations for dogs. Once you find a dog you are interested in, you can view their profile and send a message to their owner to connect and arrange a playdate.
@@ -79,45 +122,7 @@ To search for other dogs on Howler, click on the "Search" button in the navigati
 ### Viewing a dog profile
 To view a dog's profile, simply click on the 'View Profile' from the search results. The dog's profile will display their name, breed, age, bio, and playstyle, as well as any photos that have been uploaded by the owner.
 
-
-
-
-
 That's it! With these basic features, you should be able to use the Howler app to find other dog owners and connect with their dogs for fun and friendship.
-
-## Models and Routes
-
-Below is an ERD of our database schema and table relationships. We used MongoDB and Mongoose to create our database.
-
-
-
-Below is a list of our API routes and their corresponding controller methods.
-<!-- 
-| Route | HTTP Verb | Description |
-| ----- | --------- | ----------- |
-| `/api/users` | `GET` | Get all users |
-| `/api/users` | `POST` | Create a new user |
-| `/api/users/:id` | `GET` | Get a user by id |
-| `/api/users/:id` | `PUT` | Update a user by id |
-| `/api/pins` | `GET` | Get all pins |
-| `/api/pins` | `POST` | Create a new pin |
-| `/api/pins/:id` | `GET` | Get a pin by id |
-| `/api/pins/:id` | `PUT` | Update a pin by id |
-| `/api/pins/:id` | `DELETE` | Delete a pin by id |
-| `/api/trips` | `GET` | Get all trips |
-| `/api/trips` | `POST` | Create a new trip |
-| `/api/trips/:id` | `GET` | Get a trip by id |
-| `/api/trips/:id` | `PUT` | Update a trip by id |
-| `/api/trips/:id` | `DELETE` | Delete a trip by id |
-| `/api/journals` | `GET` | Get all trip journals |
-| `/api/journals` | `POST` | Create a new trip journal |
-| `/api/journals/:id` | `GET` | Get a trip journal by id |
-| `/api/journals/:id` | `PUT` | Update a trip journal by id |
-| `/api/journals/:id` | `DELETE` | Delete a trip journal by id | -->
-
-
-## Learning Objectives
-
 
 ## Credits
 
