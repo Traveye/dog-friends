@@ -1,47 +1,50 @@
 const { Schema, model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
-
+/*
 const isPassword = function (password) {
-  console.log(password)
-  const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
-  console.log(regex.test(password))
-  return regex.test(password);
+  regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
+  return regex.test(password)
 }
-
+*/
 const userSchema = new Schema({
-  //? unique username can be validated on client side
-  username: {
+  firstName: {
     type: String,
     required: true,
-    trim: true,
-    unique: true,
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true
   },
   password: {
     type: String,
     required: true,
     trim: true,
-    validate: {
-      validator: isPassword,
-      message: "Password must include at least one number, one upcase letter, one lowercase letter, one special character ( !@#$%^&*(?) ) and be at least 6 characters in length. "
-    }
+    match: [/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/, 'Password must include at least one number, one upcase letter, one lowercase letter, one special character ( !@#$%^&*(?) ) and be at least 6 characters in length']
+    /*
+    validate:{
+    validator: isPassword,
+    message:"Password must include at least one number, one upcase letter, one lowercase letter, one special character ( !@#$%^&*(?) ) and be at least 6 characters in length." //Please revert if it does not work the same.
+    } */
   },
+  email: {
+      type:String,
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'] //this regex matches an email address with the format "username@domain.extension"
+},
   location: {
     type: String,
-    //maxLength: 300
     trim: true
   },
-  dogReference: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Dog'
-    }
-  ],
-  // media:[{
-  //     type: Schema.Types.ObjectId,
-  //     ref: 
-  // }]
-});
-
+  dogReference: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Dog'
+  }],
+  chats: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Chat'
+  }],
+})
 
 userSchema.pre('remove', async function (next) {
   try {
@@ -53,6 +56,7 @@ userSchema.pre('remove', async function (next) {
   }
 });
 
+
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -62,14 +66,12 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+
 userSchema.methods.isCorrectPassword = async function (password) {
-  console.log(password)
-  console.log(this.password)
   return await bcrypt.compare(password, this.password);
 };
 
 
-
-const User = model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
