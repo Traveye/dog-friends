@@ -12,17 +12,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_DOG } from '../utils/queries';
-import { UPDATE_ENDORSEMENT } from '../utils/mutations';
 
-import Endorsements from '../components/DogComponents/Endorsements';
 import DogHero from '../components/DogComponents/DogHero';
 import DogMedia from '../components/DogComponents/DogMedia';
-import OtherDogs from '../components/DogComponents/OtherDogs';
+
 
 import Auth from '../utils/auth';
 import './DogProfile.css'
 
-
+``
 function DogProfile() {
   const { dogID } = useParams();
   const [currentDog, setCurrentDog] = useState(null); // Initialize to null
@@ -38,17 +36,6 @@ function DogProfile() {
     }
   }, [data, dogID]);
 
-  // Update endorsement mutation
-  const [updateEndorsement] = useMutation(UPDATE_ENDORSEMENT);
-
-  // Handle endorsement button click
-  const handleEndorsement = async () => {
-    try {
-      await updateEndorsement({ variables: { dogID } });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -64,8 +51,7 @@ function DogProfile() {
           </div>
           <div className='main card'>
             <h3 id='dog-name'>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
-          {/* <Endorsements endorsy={currentDog?.endorsements
-} handleEndorsement={handleEndorsement} /> */}
+
           </div>
           <div className='info card'>
             <div className='mini card'>
@@ -81,7 +67,6 @@ function DogProfile() {
           </div>
 
           <div>
-            {/* <OtherDogs owner={currentDog?.userReference} /> */}
           </div>
         </div>
       ) : (
