@@ -61,14 +61,14 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (parent, dogData , context) => {
+    addDog: async (parent, dogData, context) => {
       console.log("first");
       console.log(dogData)
       if (context.user) {
         console.log(
           `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
         );
-          const {name, bio, playStyle, breed,} = dogData
+        const { name, bio, playStyle, breed, } = dogData
 
         const dog = await Dog.create({
           name,
@@ -83,7 +83,7 @@ const resolvers = {
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
-    
+
         const user = await User.findById(context.user._id);
 
         const userLocation = user.location
@@ -128,9 +128,9 @@ const resolvers = {
     //       updatedDog.save();
     //     return media;
     //   } catch(error){
- 
+
     //     console.error(error)
-        
+
     //   }
     //   //  throw new AuthenticationError("You need to be logged in!");
     // },
@@ -211,51 +211,33 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    updateEndorsementCounter: async (
-      _,
-      { dogId, playStyle, increment },
-      context
-    ) => {
-      if (context.user) {
-        const update = increment
-          ? { $inc: { [`endorsements.${playStyle}`]: 1 } }
-          : { $inc: { [`endorsements.${playStyle}`]: -1 } };
-        const dog = await Dog.findOneAndUpdate(
-          { _id: dogId, user: context.user._id },
-          update,
-          { new: true }
-        );
-        if (!dog) throw new AuthenticationError("Dog not found");
-        return dog;
+
+    addEndorsement: async (parent, { dogId, playStyle, counter }, context) => {
+      const { userId } = context;
+
+      // First, check if the user has already endorsed this dog for this play style
+      const dog = await Dog.findById(dogId);
+      const existingEndorsement = dog.endorsements.find(
+        endorsement => endorsement.playStyle === playStyle
+      );
+
+      if (existingEndorsement) {
+        // If the user has already endorsed this dog for this play style,
+        // increment the endorsement counter and save the dog
+        existingEndorsement.counter++;
+        await dog.save();
+      } else {
+        // If the user has not endorsed this dog for this play style,
+        // create a new endorsement object and push it to the endorsements array
+        const newEndorsement = { playStyle, counter: 1 };
+        dog.endorsements.push(newEndorsement);
+        await dog.save();
       }
-      throw new AuthenticationError("You need to be logged in!");
-    },
 
-    addEndorsement: async (_, { dogId, playStyle }, context) => {
-      // console.log('checkitoutthisiseminem', playStyle)
-      // let { playStyle: braaa } = playStyle
-      // console.log('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE', braaa)
-      // if (context.user) {
-      try {
-        const currentDog = await Dog.findOneAndUpdate(
-          { _id: dogId },
-          { $push: { endorsements: playStyle } },
-          { new: true }
-
-        );
-        if (!currentDog) throw new AuthenticationError("Dog not found");
-
-        return currentDog
-
-
-      } catch (err) {
-        throw new Error(`Failed to add endorsement: ${err.message}`, 'INTERNAL_SERVER_ERROR');
-      }
-      // } else {
-      //   throw new AuthenticationError('User must be logged in to add an endorsement');
+      return dog;
     }
-  },
 
+  }
 };
 
 module.exports = resolvers;

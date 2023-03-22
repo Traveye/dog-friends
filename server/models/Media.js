@@ -13,10 +13,10 @@ const mediaSchema = new Schema({
       type: Boolean,
       default: false
    },
-   dogs:[{
+   dog:{
       type: Schema.Types.ObjectId,
       ref:'Dog'
-   }]
+   } // Changed from array to object. only 1 dog owner
 });
 
 const Media = model('Media', mediaSchema);
