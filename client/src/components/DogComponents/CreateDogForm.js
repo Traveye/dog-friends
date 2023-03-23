@@ -17,10 +17,6 @@ const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
   const [addDog, { data, loading, error }] = useMutation(ADD_DOG, {
     update(cache, {data:{addDog}}){
       try {
-        console.log('this is it '+userID)
-        console.log(cache.readQuery({query: GET_USER, variables: {
-          userId: userID
-        }}))
         const {User}  = cache.readQuery({query: GET_USER, variables: {
           userId: userID
         }});
