@@ -7,6 +7,8 @@ export const GET_USERS = gql `
 query Query {
   users {
     _id
+    firstName
+    lastName
     location
     password
     dogReference {
@@ -28,7 +30,9 @@ export const GET_USER = gql`
     query User($userId: ID!) {
       user(userId: $userId) {
         _id
-        username
+        email
+        firstName
+        lastName
         password
         location
         dogReference {
@@ -61,7 +65,8 @@ query Query($dogId: ID!) {
     _id
     userReference {
       _id
-      username
+      firstName
+      email
     }
     endorsements {
       counter

@@ -34,6 +34,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (data && data.user) {
+      console.log(data.user)
       userContext.setCurrentUser(data.user);
     }
   }, [data, userID, userContext]);
@@ -99,7 +100,7 @@ function Dashboard() {
   return (
     <div id="dashboardParentContainer">
       <div id="dashboardContainer">
-        <h1 id="userNameHeader">Hi, {user?.username}!</h1>
+        <h1 id="userNameHeader">Hi, {user?.firstName}!</h1>
         {Auth.loggedIn() ? (
           <>
             <button className="dashboardButton" onClick={() => setShowUpdateForm(true)}>

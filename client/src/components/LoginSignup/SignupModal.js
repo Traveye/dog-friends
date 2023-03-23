@@ -7,13 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
 
 function SignupModal() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState("");
   const userContext = useContext(UserContext);
+
 
   console.log("error", error);
 
@@ -21,10 +23,13 @@ function SignupModal() {
     e.preventDefault();
     console.log("j", e);
     try {
-      console.log("in try");
+      console.log(email, firstName, lastName, location, password )
       const { data } = await addUser({
+        
         variables: {
-          username: username,
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
           location: location,
           password: password,
         },
@@ -54,15 +59,40 @@ function SignupModal() {
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
+
         <div className="formItemGroup ourGrid">
-          <label htmlFor="username">
-            User Name⦂
+          <label htmlFor="email">
+            Email⦂
           </label>
           <input
             type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="firstName">
+            First Name⦂
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="lastName">
+            Last Name⦂
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
 
