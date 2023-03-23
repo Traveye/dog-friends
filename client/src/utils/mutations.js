@@ -2,15 +2,17 @@ import { gql } from '@apollo/client';
 
 //User SignUp
 export const ADD_USER = gql`
-mutation AddUser($username: String!, $password: String!, $location: String!) {
-  addUser(username: $username, password: $password, location: $location) {
-    token
+mutation AddUser($email: String!, $firstName: String!, $lastName: String!, $password: String!, $location: String!) {
+  addUser(email: $email, firstName: $firstName, lastName: $lastName, password: $password, location: $location) {
     user {
       _id
-      username
+      email
+      firstName
+      lastName
       password
       location
     }
+    token
   }
 }
 `
@@ -37,15 +39,14 @@ mutation Mutation($content: String!, $dogId: ID) {
 `
 
 export const LOGIN_USER = gql`
-mutation Mutation($username: String!, $password: String!) {
-  login(username: $username, password: $password) {
+mutation Mutation($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
     token
     user {
       _id
     }
   }
-}
-`;
+}`
 
 export const UPDATE_DOG = gql`
 mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String, $breed: String, $media: ID!) {
@@ -72,9 +73,13 @@ mutation UpdateMedia($updateMediaId: ID!, $content: String, $isBanner: Boolean, 
 `
 
 export const UPDATE_USER = gql`
-mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $location: String) {
-  updateUser(id: $updateUserId, username: $username, password: $password, location: $location) {
-    _id
+mutation UpdateUser($email: String!, $firstName: String!, $lastName: String!, $password: String, $location: String, $updateUserId: ID!) {
+  updateUser(email: $email, firstName: $firstName, lastName: $lastName, password: $password, location: $location, id: $updateUserId) {
+    email
+    firstName
+    lastName
+    password
+    location
   }
 }
 `

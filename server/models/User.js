@@ -1,20 +1,29 @@
-const { Schema, model, mongoose } = require('mongoose');
+const { Schema, model, mongoose} = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const isPassword = function (password) {
-  console.log(password)
   const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
   console.log(regex.test(password))
   return regex.test(password);
 }
 
 const userSchema = new Schema({
-  //? unique username can be validated on client side
-  username: {
+  email:{
+    type: String,
+    trim: true,trim: true,
+    required: true,
+    unique: true,
+    match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+  },
+  firstName: {
     type: String,
     required: true,
     trim: true,
-    unique: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
   },
   password: {
     type: String,
@@ -35,11 +44,7 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Dog'
     }
-  ],
-  // media:[{
-  //     type: Schema.Types.ObjectId,
-  //     ref: 
-  // }]
+  ]
 });
 
 
