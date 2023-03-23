@@ -74,7 +74,7 @@ function DogMap() {
           onChange={(event) => setSearch(event.target.value)}
           className={styles.input}
         />
-        <button className="button" type="submit">
+        <button className="ourButton" type="submit">
           Search
         </button>
       </form>

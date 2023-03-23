@@ -36,7 +36,7 @@ console.log("3",userContext.currentUser.username)
   return (
     <div className="userFormContainer">
       <p>{userContext.currentUser.username}</p>
-      <button onClick={() => setShowUsernameInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowUsernameInput(true)}>🖍️</button>
       {showUsernameInput && (
         <>
           <input
@@ -49,7 +49,7 @@ console.log("3",userContext.currentUser.username)
       )}
 
       <p>{userContext.currentUser.location}</p>
-      <button onClick={() => setShowAddressInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowAddressInput(true)}>🖍️</button>
       {showAddressInput && (
         <>
           <input
@@ -63,7 +63,7 @@ console.log("3",userContext.currentUser.username)
       )}
 
       <p>**********</p>
-      <button onClick={() => setShowPasswordInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowPasswordInput(true)}>🖍️</button>
       {showPasswordInput && (
         <>
           <input
@@ -75,7 +75,7 @@ console.log("3",userContext.currentUser.username)
           />
         </>
       )}
-      <button onClick={handleUpdate}>Save</button>
+      <button className='ourButton' onClick={handleUpdate}>Save</button>
     </div>
   );
 }
