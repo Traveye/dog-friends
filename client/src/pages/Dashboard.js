@@ -37,7 +37,7 @@ function Dashboard() {
       console.log(data.user)
       userContext.setCurrentUser(data.user);
     }
-  }, [data, userID]);
+  }, [data, userID, userContext]);
 
   const user = userContext.currentUser || {};
   const dog = userContext.currentUser.dogReference || [];
@@ -69,19 +69,15 @@ function Dashboard() {
   }, [showCreateDogForm]);
 
   const deleteDog = async (dogId) => {
-    console.log("we clicking baby");
     console.log(dogId);
     try {
-      console.log("this is the try hard");
       await removeDog({ variables: { dogId } });
-      console.log("returned from server");
       const updatedUser = {
         ...userContext.currentUser,
         dogReference: user.dogReference.filter((dog) => dog._id !== dogId),
       };
       userContext.setCurrentUser(updatedUser);
     } catch (error) {
-      console.log("this is the catch block");
       console.error(error);
     }
   };
@@ -131,7 +127,7 @@ function Dashboard() {
                 className="dashboardIcon"
                 onClick={() => setShowCreateDogForm(true)}
               >
-                🐶
+                Add Dog
               </button>
             </div>
             <>
@@ -168,13 +164,12 @@ function Dashboard() {
                       </div>
                       <CloudinaryUploadWidget dogId={dog?._id} />
                       <div className="dashboardIconContainer">
-                        <p>Delete a dog profile Σ>―დ→</p>
                         <button
                           className="dashboardIcon"
                           value={dog._id}
                           onClick={() => deleteDog(dog._id)}
                         >
-                          🥺
+                          Remove Dog
                         </button>
                       </div>
                     </div>

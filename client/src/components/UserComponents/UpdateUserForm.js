@@ -43,7 +43,7 @@ function UpdateUserForm({ userID, closeModal }) {
     <div className="userFormContainer">
 
       <p>{userContext.currentUser.email}</p>
-      <button onClick={() => setShowEmailInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowEmailInput(true)}>🖍️</button>
       {showEmailInput && (
         <>
           <input
@@ -56,7 +56,7 @@ function UpdateUserForm({ userID, closeModal }) {
       )}
 
       <p>{userContext.currentUser.firstName}</p>
-      <button onClick={() => setShowFirstNameInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowFirstNameInput(true)}>🖍️</button>
       {showFirstNameInput && (
         <>
           <input
@@ -69,7 +69,7 @@ function UpdateUserForm({ userID, closeModal }) {
       )}
 
       <p>{userContext.currentUser.lastName}</p>
-      <button onClick={() => setShowLastNameInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowLastNameInput(true)}>🖍️</button>
       {showLastNameInput && (
         <>
           <input
@@ -82,7 +82,7 @@ function UpdateUserForm({ userID, closeModal }) {
       )}
 
       <p>{userContext.currentUser.location}</p>
-      <button onClick={() => setShowAddressInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowAddressInput(true)}>🖍️</button>
       {showAddressInput && (
         <>
           <input
@@ -96,7 +96,7 @@ function UpdateUserForm({ userID, closeModal }) {
       )}
 
       <p>**********</p>
-      <button onClick={() => setShowPasswordInput(true)}>🖍️</button>
+      <button className='ourButton' onClick={() => setShowPasswordInput(true)}>🖍️</button>
       {showPasswordInput && (
         <>
           <input
@@ -108,7 +108,7 @@ function UpdateUserForm({ userID, closeModal }) {
           />
         </>
       )}
-      <button onClick={handleUpdate}>Save</button>
+      <button className='ourButton' onClick={handleUpdate}>Save</button>
     </div>
   );
 }

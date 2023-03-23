@@ -1,6 +1,8 @@
 #howlr {
   width: auto;
   height: 3rem;
+  filter: drop-shadow(5px 5px 2px gray);
+  /* padding: 5px; */
 
 }
 
@@ -11,11 +13,20 @@
 }
 
 .btns {
-  margin-left: 10px; }
+  margin-left: 10px; 
+  box-shadow: 0 2px 4px gray;
+  transition: all 0.2s ease;
+}
+
+.btns:active{
+  box-shadow: 0 0 2px gray;
+  transform: translateY(2px);
+}
 
 #navContainer {
   display: flex;
-  padding-top: 1%;
+  box-sizing: border-box;
+  padding: 1%;
   justify-content: space-between;
   align-items: center;
 }
