@@ -7,6 +7,7 @@ const MAPBOX_TOKEN =
 const bcrypt = require("bcrypt");
 
 const resolvers = {
+  
   Query: {
     users: async () => {
       return User.find().populate("dogReference");
@@ -38,14 +39,16 @@ const resolvers = {
   },
   //? removed doge
   Mutation: {
-    addUser: async (parent, { username, password, location }) => {
-      const user = await User.create({ username, password, location });
+    addUser: async (parent, { email, firstName, lastName, password, location }) => {
+      console.log("hitting add User resolver")
+      const user = await User.create({ email, firstName, lastName, password, location });
       const token = signToken(user);
       return { token, user };
     },
 
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (parent, { email,  password }) => {
+      const user = await User.findOne({ email });
+      console.log('hitting login resolver')
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
       }
@@ -138,7 +141,7 @@ const resolvers = {
 
     updateUser: async (
       parent,
-      { id, username, password, location, dogReference },
+      { id, email, firstName, lastName, password, location, dogReference },
       context
     ) => {
       console.log("hitting update user resolver");
@@ -149,7 +152,7 @@ const resolvers = {
         }
         const updatedUser = await User.findByIdAndUpdate(
           id,
-          { username, password, location, dogReference },
+          { email, firstName, lastName, password, location, dogReference },
           { new: true }
         );
 

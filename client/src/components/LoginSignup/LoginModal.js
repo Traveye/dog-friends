@@ -8,27 +8,24 @@ import {UserContext} from '../../utils/UserContext'
 
 function LoginModal() {
   
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [login, { error }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState("")
   const userContext = useContext(UserContext);
   
-  console.log("===", loggedInUser)
 
   const handleFormSubmit  = async (e) => {
     e.preventDefault();
 
     try {
       const mutationResponse = await login({
-        variables: { username: username, password: password },
+        variables: { email: email, password: password },
       });
 
       const token = mutationResponse.data.login.token;
       const userID = mutationResponse.data.login.user._id;
-      // console.log("token",token)
-      // console.log("userID",userID)
+
       Auth.login(token);
       userContext.setLoggedInUser(userID);
       navigate(`/dashboard/${userID}`);
@@ -46,8 +43,8 @@ function LoginModal() {
       <h2>Login</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
-        <label htmlFor="username">User Name⦂</label>
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <label htmlFor="email">Email⦂</label>
+        <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
 
       <div className="formItemGroup ourGrid">
