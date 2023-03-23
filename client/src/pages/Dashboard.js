@@ -10,6 +10,10 @@ import UpdateUserForm from "../components/UserComponents/UpdateUserForm";
 import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
 import "./Dashboard.css";
 import { UserContext } from "../utils/UserContext";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 function Dashboard() {
   const { userID } = useParams();
@@ -26,7 +30,7 @@ function Dashboard() {
   const backdropRef = useRef();
 
 
-  const [removeDog] = useMutation(REMOVE_DOG);
+  const [removeDog] = useMutation(REMOVE_DOG, {refetchQueries: [{query: GET_USER, variables: { userId: userID}}]});
 
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: { userId: userID },
@@ -40,7 +44,7 @@ function Dashboard() {
   }, [data, userID, userContext]);
 
   const user = userContext.currentUser || {};
-  const dog = userContext.currentUser.dogReference || [];
+  const dog = user.dogReference || [];
 
   useEffect(() => {
     const newDogAdded = user?.dogReference?.length > dog?.length;
@@ -68,8 +72,29 @@ function Dashboard() {
     };
   }, [showCreateDogForm]);
 
+  function deleteDogModal (dogId){
+    MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove dog!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteDog(dogId)
+        MySwal.fire(
+          'Deleted!',
+          'Your dog has been removed.',
+          'success'
+        )
+      }
+    })
+  }
+
   const deleteDog = async (dogId) => {
-    console.log(dogId);
+    console.log(`this is delete dog ${dogId}`);
     try {
       await removeDog({ variables: { dogId } });
       const updatedUser = {
@@ -88,7 +113,6 @@ function Dashboard() {
     
   };
 
-  console.log(user);
   const handleCloseForm = () => {
     setShowCreateDogForm(false);
   
@@ -167,7 +191,7 @@ function Dashboard() {
                         <button
                           className="dashboardIcon"
                           value={dog._id}
-                          onClick={() => deleteDog(dog._id)}
+                          onClick={() => deleteDogModal(dog?._id)}
                         >
                           Remove Dog
                         </button>
