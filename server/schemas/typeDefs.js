@@ -3,10 +3,24 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type User {
     _id: ID
-    username: String!
+    firstName: String!
+    lastName: String!
     password: String!
     location: String!
     dogReference: [Dog]
+    chats:[Chat]
+  }
+
+  type Chat {
+    _id: ID
+    owners: [User]
+    messages: [Messages] 
+  }
+
+  type Messages {
+    sender: User
+    message: String
+    timestamp: String
   }
 
   type Auth {
@@ -20,15 +34,10 @@ const typeDefs = gql`
     breed: String!
     bio: String!
     playStyle: String!
-    media: [Media]
-    userReference: [User]
     location: [Float]
+    media: [Media]
     endorsements: [Endorsement]
-  }
-
-  input EndorsementData {
-    playStyle: String
-    counter: Int
+    userReference: [User]
   }
 
   type Endorsement{
@@ -36,6 +45,69 @@ const typeDefs = gql`
     counter: Int
   }
 
+  input loginInput {
+    email: String!
+    password: String!
+  }
+
+  input EndorsementDataInput {
+    playStyle: String
+    counter: Int
+  }
+
+  input AddUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    location: String!
+  }
+
+  input UpdateUserInput {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    location: String
+    dogReference: ID
+  }
+
+  input UpdateDogInput {
+    dogId: ID!
+    name: String
+    bio: String
+    playStyle: String
+    breed: String
+    media: ID
+    endorsements: EndorsementDataInput
+  }
+
+  input AddDogInput {
+    name: String!
+    bio: String!
+    playStyle: String!
+    breed: String!
+  }
+
+  input AddMediaInput {
+    content: String!
+    dogId: ID
+    isBanner: Boolean
+    isProfile: Boolean
+  }
+
+  input UpdateMediaInput {
+    id: ID!
+    content: String
+    isBanner: Boolean
+    isProfile: Boolean
+  }
+
+  input AddEndorsementInput {
+    dogId: ID!
+    playStyle: EndorsementDataInput
+  }
 
   type Media {
     _id: ID
@@ -50,73 +122,28 @@ const typeDefs = gql`
     dogs: [Dog]
     dog(dogId: ID!): Dog
     getDogMedia: [Media]
+    chats: [Chat]
+    chat(chatId: ID): Chat
   }
   
 
   type Mutation {
-    addUser(username: String!, password: String!, location: String!): Auth
-    login(username: String!, password: String!): Auth
-    updateUser(
-      id: ID!
-      username: String
-      password: String
-      location: String
-      dogReference: ID
-    ): User
+    login(input: loginInput!): Auth
+    addUser(input: AddUserInput!): Auth
+    updateUser(input: UpdateUserInput!): User
+    deleteUser(input: UpdateUserInput!): User
 
-    deleteUser(
-      id: ID!
-      username: String
-      password: String
-      location: String
-      dogReference: ID
-    ): User
+    addDog(input: AddDogInput!): Dog
+    updateDog(input: UpdateDogInput!): Dog
+    deleteDog(input: UpdateDogInput!): Dog
 
-    addDog(
-      name: String!
-      bio: String!
-      playStyle: String!
-      breed: String!
+    addMedia(input: AddMediaInput!): Media
+    updateMedia(input: UpdateMediaInput!): Media
 
-      media: ID
-      endorsements: String
+    updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
+    addEndorsement(input: AddEndorsementInput!): Endorsement
 
-    ): Dog
-
-    updateDog(
-      dogId: ID!
-      name: String
-      bio: String
-      playStyle: String
-      breed: String
-
-      media: ID
-      endorsements: EndorsementData
-    ): Dog
-      
-    deleteDog(dogId: ID!): Dog
-
-    addMedia(
-      content: String!
-      dogId: ID
-      isBanner: Boolean
-      isProfile: Boolean
-    ): Media
-
-    updateEndorsementCounter(
-      dogId: ID!
-      playStyle: String!
-      increment: Int!
-    ): Dog
-
-    updateMedia(
-      id: ID!
-      content: String
-      isBanner: Boolean
-      isProfile: Boolean
-    ): Media
-
-    addEndorsement(dogId: ID!, playStyle: EndorsementData ): Endorsement
+    sendChat(chatId: ID, message: String): String
   }
 `;
 

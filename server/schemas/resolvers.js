@@ -8,92 +8,87 @@ const bcrypt = require("bcrypt");
 
 const resolvers = {
   Query: {
-    users: async () => {
+    users: async () => { // Tested
       return User.find().populate("dogReference");
     },
-
-    user: async (parent, { userId }) => {
-      console.log("hitting user resolver");
+    user: async (__, { userId }) => {
       return User.findOne({ _id: userId }).populate("dogReference");
     },
-
-    dogs: async () => {
-      return Dog.find().populate("userReference").populate("media");
-    },
-
-    dog: async (parent, { dogId }) => {
-      console.log("resolve, resolve, resolve");
+    // me: async () => {
+    // },
+    dog: async (__, { dogId }) => { //Tested
       return Dog.findOne({ _id: dogId })
         .populate("userReference")
         .populate("media")
         .populate("endorsements");
     },
-    getDogMedia: async (parent, args, context) => {
+    dogs: async () => {
+      return Dog.find().populate("userReference").populate("media");
+    },
+    chats: async (__, __, context) => {
       if (context.user) {
-        const dog = await Dog.findById(context.dog._id).populate("media");
-        return dog.media;
+        const user = await User.findById(context.user._id).populate({
+          path: "chats",
+          populate: {
+            path: "owners",
+          },
+        });
+        return user.chats;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    chat: async (__, { chatId }, context) => { 
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: "chats",
+          populate: {
+            path: "owners",
+          },
+        });
+        const chat = user.chats.find((chat) => chat._id === chatId);
+        return chat;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
   },
-  //? removed doge
   Mutation: {
-    addUser: async (parent, { username, password, location }) => {
-      const user = await User.create({ username, password, location });
+    addUser: async (__, { input }) => { //tested :)
+      const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },
 
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (__, { input }) => { //tested :)
+      const { email, password } = input
+      const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
       const correctPw = await user.isCorrectPassword(password);
-      console.log("====", correctPw);
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
       const token = signToken(user);
-
       return { token, user };
     },
 
-    addDog: async (parent, dogData, context) => {
-      console.log("first");
-      console.log(dogData)
+    addDog: async (__, { input }, context) => { //TESTED
       if (context.user) {
-        console.log(
-          `these are variables ${dogData.name}, ${dogData.bio}, ${dogData.playStyle}, ${dogData.breed}`
-        );
-        const { name, bio, playStyle, breed, } = dogData
-
-        const dog = await Dog.create({
-          name,
-          bio,
-          playStyle,
-          breed,
-          userReference: context.user._id,
-          media: [],
-        });
+        const dog = await Dog.create(input);
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { dogReference: dog._id } }
         );
-
         const user = await User.findById(context.user._id);
 
         const userLocation = user.location
-        console.log(userLocation)
         const response = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocation}.json?access_token=${MAPBOX_TOKEN}`
         );
         const data = await response.json();
         const [longitude, latitude] = data.features[0].center;
-        console.log("this is our coords " + longitude, latitude)
         dog.location = [longitude, latitude];
         await dog.save();
 
@@ -102,46 +97,21 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    addMedia: async (parent, { dogId, content }) => {
-      console.log(`this is the top of add media with dog id${dogId} and this is content ${content}`)
+    addMedia: async (__, { dogId, content }) => {
       const media = await Media.create({ content });
       const dog = await Dog.findByIdAndUpdate(
         dogId,
         { $push: { media: media._id } },
         { new: true }
       );
-      console.log(dog)
-      console.log(`this is media ${media}`)
       return media;
     },
-    // addMedia: async (parent, { content, dog }) => {
-    //   console.log(dogId+" word")
-    //   try{
-    //     // const dog = await Dog.findById(dogId)
-    //     const media = await Media.create({content})
-    //     console.log(media);
-    //     const updatedDog = await Dog.findByIdAndUpdate(
-    //       dogId,
-    //       { $push: { media: media._id } },
-    //       { new: true });
-    //       console.log(updatedDog)
-    //       updatedDog.save();
-    //     return media;
-    //   } catch(error){
-
-    //     console.error(error)
-
-    //   }
-    //   //  throw new AuthenticationError("You need to be logged in!");
-    // },
-
 
     updateUser: async (
-      parent,
+      __,
       { id, username, password, location, dogReference },
       context
     ) => {
-      console.log("hitting update user resolver");
       if (context.user) {
         if (password) {
           const salt = await bcrypt.genSalt(10);
@@ -152,20 +122,18 @@ const resolvers = {
           { username, password, location, dogReference },
           { new: true }
         );
-
         return updatedUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    updateDog: async (
-      parent,
-      { id, name, bio, playStyle, breed, endorsement, media }
-    ) => {
+    updateDog: async (__, { input }) => {
+      const { name, bio, playStyle, breed, endorsement, media } = input
+
       if (context.user) {
         const updatedDog = await Dog.findByIdAndUpdate(
           id,
-          { id, name, bio, playStyle, breed, endorsement, media },
+          { name, bio, playStyle, breed, endorsement, media },
           { new: true }
         );
         return updatedDog;
@@ -173,7 +141,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    updateMedia: async (parent, { id, content, isBanner, isProfile }) => {
+    updateMedia: async (__, { id, content, isBanner, isProfile }) => {
       if (context.user.dog) {
         const updatedMedia = await Media.findByIdAndUpdate(
           id,
@@ -185,7 +153,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    deleteUser: async (parent, { userId }, context) => {
+    deleteUser: async (__, { userId }, context) => {
       if (context.user) {
         const user = await User.findOneAndDelete({ _id: userId });
         return user;
@@ -193,12 +161,11 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    deleteDog: async (parent, { dogId }, context) => {
-      console.log("we in resolvers baby");
+    deleteDog: async (__, { dogId }, context) => {
       if (context.user) {
         const dog = await Dog.findOneAndDelete({
           _id: dogId,
-          // user: context.user._id,
+          user: context.user._id,
         });
 
         await User.findOneAndUpdate(
@@ -212,7 +179,7 @@ const resolvers = {
     },
 
 
-    addEndorsement: async (parent, { dogId, playStyle, counter }, context) => {
+    addEndorsement: async (__, { dogId, playStyle, counter }, context) => {
       const { userId } = context;
 
       // First, check if the user has already endorsed this dog for this play style
@@ -235,9 +202,26 @@ const resolvers = {
       }
 
       return dog;
+    },
+    sendChat: async (__, { chatId }, context) => {
+      // if (context.user){ //PLEASE ADD ME AFTER TESTING
+      const user = await User.findById(context.user._id).populate('chats')
+      const chat = user.chats.find((x) => x._id === chatId);
+      if (!chat) { throw new Error('Chat not found') }
+      //If a chat doesnt exist, throw error but continue doing the workk????
+      console.log('walalala guey')
+      chat.message.push({
+        message: input.message,
+        sender: input.user
+      })
+      await chat.save()
+      return console.log('huh')
+      // } //CLOSE ME
+      // throw new AuthenticationError("You need to be logged in!")
     }
 
   }
-};
+}
+
 
 module.exports = resolvers;
