@@ -156,7 +156,7 @@ const resolvers = {
     deleteUser: async (__, { userId }, context) => {
       if (context.user) {
         const user = await User.findOneAndDelete({ _id: userId });
-        return user;
+        return "Done";
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -173,7 +173,7 @@ const resolvers = {
           { $pull: { dogReference: dog._id } }
         );
 
-        return dog;
+        return "Done";
       }
       throw new AuthenticationError("You need to be logged in!");
     },

@@ -58,8 +58,8 @@ mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String,
 }
 `
 export const UPDATE_MEDIA = gql`
-mutation UpdateMedia($updateMediaId: ID!, $content: String, $isBanner: Boolean, $isProfile: Boolean) {
-  updateMedia(id: $updateMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
+mutation Mutation($input: AddMediaInput!) {
+  addMedia(input: $input) {
     _id
     content
     isBanner
@@ -67,30 +67,6 @@ mutation UpdateMedia($updateMediaId: ID!, $content: String, $isBanner: Boolean, 
   }
 }
 `
-
-export const UPDATE_USER = gql`
-mutation UpdateUser($updateUserId: ID!, $username: String, $password: String, $location: String) {
-  updateUser(id: $updateUserId, username: $username, password: $password, location: $location) {
-    _id
-  }
-}
-`
-export const REMOVE_DOG = gql`
-mutation DeleteDog($dogId: ID!) {
-  deleteDog(dogId: $dogId) {
-    _id
-  }
-}
-`
-
-export const REMOVE_USER = gql`
-mutation DeleteUser($deleteUserId: ID!) {
-  deleteUser(id: $deleteUserId) {
-    _id
-  }
-}
-`
-
 export const UPDATE_ENDORSEMENT = gql`
 mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
   updateEndorsementCounter(dogId: $dogId, playStyle: $playStyle, increment: $increment) {
@@ -104,12 +80,23 @@ mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
 }
 `
 
-
-export const REMOVE_MEDIA = gql`
-  mutation removeMedia($content: String!) {
-    removeMedia(content: $content) {
-    success
-    }
+export const UPDATE_USER = gql`
+mutation Mutation($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    _id
   }
+}
 `
+export const REMOVE_DOG = gql`
+mutation DeleteDog($input: UpdateDogInput!) {
+  deleteDog(input: $input)
+}
+`
+
+export const REMOVE_USER = gql`
+mutation Mutation($input: UpdateUserInput!) {
+  deleteUser(input: $input)
+}
+`
+
 

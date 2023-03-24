@@ -51,11 +51,6 @@ const typeDefs = gql`
     password: String!
   }
 
-  input EndorsementDataInput {
-    playStyle: String
-    counter: Int
-  }
-
   input AddUserInput {
     firstName: String!
     lastName: String!
@@ -81,7 +76,7 @@ const typeDefs = gql`
     playStyle: String
     breed: String
     media: ID
-    endorsements: EndorsementDataInput
+    endorsements: AddEndorsementInput
   }
 
   input AddDogInput {
@@ -106,8 +101,8 @@ const typeDefs = gql`
   }
 
   input AddEndorsementInput {
+    playStyle: String!
     dogId: ID!
-    playStyle: EndorsementDataInput
   }
 
   type Media {
@@ -132,16 +127,15 @@ const typeDefs = gql`
     login(input: loginInput!): Auth
     addUser(input: AddUserInput!): Auth!
     updateUser(input: UpdateUserInput!): User
-    deleteUser(input: UpdateUserInput!): User
+    deleteUser(input: UpdateUserInput!): String
 
     addDog(input: AddDogInput!): Dog
     updateDog(input: UpdateDogInput!): Dog
-    deleteDog(input: UpdateDogInput!): Dog
+    deleteDog(input: UpdateDogInput!): String
 
     addMedia(input: AddMediaInput!): Media
     updateMedia(input: UpdateMediaInput!): Media
 
-    updateEndorsementCounter(dogId: ID!, playStyle: String!, increment: Int!): Dog
     addEndorsement(input: AddEndorsementInput!): Endorsement
 
     sendChat(chatId: ID, message: String): String
