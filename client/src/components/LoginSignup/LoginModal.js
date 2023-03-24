@@ -14,24 +14,21 @@ function LoginModal() {
   const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState("")
   const userContext = useContext(UserContext);
-  
-  console.log("===", loggedInUser)
+
 
   const handleFormSubmit  = async (e) => {
     e.preventDefault();
 
     try {
       const loginInput = {input:{email: email, password: password}}
-
       const mutationResponse = await login({variables: loginInput});
-
       const token = mutationResponse.data.login.token;
-      const userID = mutationResponse.data.login.user.git;
-      // console.log("token",token)
-      // console.log("userID",userID)
+      const userID = mutationResponse.data.login.user._id;
+
       Auth.login(token);
       userContext.setLoggedInUser(userID);
       navigate(`/dashboard/${userID}`);
+
     } catch (err) {
       console.error(err);
       Swal('Oops!', 'Something went wrong!', 'error');
@@ -39,14 +36,12 @@ function LoginModal() {
     }
   };
 
-
-
   return (
     <div>
       <h2>Login</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
-        <label htmlFor="username">User Name⦂</label>
+        <label htmlFor="username">Email⦂</label>
         <input type="text" name="email" value={email} onChange={(e) => setUsername(e.target.value)} />
       </div>
 

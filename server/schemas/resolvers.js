@@ -54,13 +54,14 @@ const resolvers = {
   },
   Mutation: {
     addUser: async (__, { input }) => { //tested :)
+      ('--------------------------------------------------------------------------------')
       const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },
 
     login: async (__, { input }) => { //tested :)
-      console.log('--------------------------------------------------------------------------------')
+      console.log
       console.log(input)
       const { email, password } = input
       const user = await User.findOne({ email });

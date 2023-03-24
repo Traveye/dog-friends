@@ -42,13 +42,14 @@ console.error(error)
     e.preventDefault();
     try {
       console.log(dogForm)
+      const addDogInput = {
+        name: dogForm.name,
+        bio: dogForm.bio,
+        playStyle: dogForm.playStyle,
+        breed: dogForm.breed,
+      }
       await addDog({
-        variables: {
-          name: dogForm.name,
-          bio: dogForm.bio,
-          playStyle: dogForm.playStyle,
-          breed: dogForm.breed,
-        },
+        variables: { addDogInput },
 
       });
       setDog({ name: "", bio: "", breed: "", playStyle: "" });

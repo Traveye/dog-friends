@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
 
 function SignupModal() {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
@@ -15,21 +17,23 @@ function SignupModal() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const userContext = useContext(UserContext);
 
-  console.log("error", error);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log("j", e);
     try {
-      console.log("in try");
+      console.log("in try")
+      const AddUserInput = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        location: location,
+        password: password,
+      }
+      console.log("AddUserInput", AddUserInput);
       const { data } = await addUser({
-        variables: {
-          username: username,
-          location: location,
-          password: password,
-        },
+        variables: { AddUserInput },
       });
-      console.log("data", data);
       const userID = data.addUser.user._id;
 
       Auth.login(data.addUser.token);
@@ -44,7 +48,7 @@ function SignupModal() {
       console.log("catch err", err);
       Swal({
         title: "Error!",
-        text: err.message,
+        text: "Something went wrong, please try again!",
         icon: "error",
       });
     }
@@ -56,13 +60,36 @@ function SignupModal() {
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
           <label htmlFor="username">
-            User Name⦂
+            First name⦂
           </label>
           <input
             type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="First"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="lastName">
+            Last name⦂
+          </label>
+          <input
+            type="text"
+            name="Last"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="email">
+            email⦂
+          </label>
+          <input
+            type="text"
+            name="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -88,11 +115,11 @@ function SignupModal() {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}    
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="ourButton">Signup</button>
+        <button type="submit" className="ourButton">Sign Up</button>
       </form>
     </div>
   );
