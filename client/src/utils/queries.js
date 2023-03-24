@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 //! Queries
 // me === getUserByID username/media/all dogs that belong to that user
 
-export const GET_USERS = gql `
+export const GET_USERS = gql`
 query Query {
   users {
     _id
@@ -25,27 +25,29 @@ query Query {
 }`
 
 export const GET_USER = gql`
-    query User($userId: ID!) {
-      user(userId: $userId) {
-        _id
-        username
-        password
-        location
-        dogReference {
-          name
-          breed
-          bio
-          playStyle
-          _id
-          media {
-            _id
-            content
-            isBanner
-            isProfile
-          }
-        }
+query Query($userId: ID!) {
+  user(userId: $userId) {
+    _id
+    firstName
+    lastName
+    dogReference {
+      _id
+      bio
+      breed
+      endorsements {
+        playStyle
+        counter
       }
+      location
+      media {
+        _id
+      }
+      name
+      playStyle
     }
+    location
+  }
+}
 `;
 
 //! Queries

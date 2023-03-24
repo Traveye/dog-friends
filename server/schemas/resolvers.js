@@ -54,7 +54,6 @@ const resolvers = {
   },
   Mutation: {
     addUser: async (__, { input } ) => { //tested :)
-      console.log(input)
       const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
@@ -74,7 +73,8 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (__, { input }, context) => { //TESTED
+    addDog: async (__, { input }, context) => {
+      console.log('walalalwalwa guey') //TESTED
       if (context.user) {
         const dog = await Dog.create(input);
 

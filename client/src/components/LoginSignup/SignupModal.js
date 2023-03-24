@@ -20,9 +20,7 @@ function SignupModal() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try {
-      console.log(ADD_USER)
-      
+    try {      
       const AddUserInput = {
         firstName: firstName,
         lastName: lastName,
@@ -30,7 +28,7 @@ function SignupModal() {
         location: location,
         password: password,
       }
-      console.log({AddUserInput})
+      console.log(AddUserInput)
       const { data } = await addUser({ variables: { input: AddUserInput } });
 
 

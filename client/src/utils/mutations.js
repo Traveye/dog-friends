@@ -14,13 +14,13 @@ mutation Mutation($input: AddUserInput!) {
 
 //User Add Dog
 export const ADD_DOG = gql`
-mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: String!) {
-  addDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed) {
+mutation Mutation($input: AddDogInput!) {
+  addDog(input: $input) {
+    _id
     name
     bio
-    playStyle
     breed
-
+    playStyle
   }
 }
 `
