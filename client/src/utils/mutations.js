@@ -37,8 +37,8 @@ mutation Mutation($content: String!, $dogId: ID) {
 `
 
 export const LOGIN_USER = gql`
-mutation Mutation($username: String!, $password: String!) {
-  login(username: $username, password: $password) {
+mutation Mutation($input: loginInput!) {
+  login(input: $input) {
     token
     user {
       _id

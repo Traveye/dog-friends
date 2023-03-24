@@ -8,7 +8,7 @@ import {UserContext} from '../../utils/UserContext'
 
 function LoginModal() {
   
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { error }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
@@ -21,12 +21,12 @@ function LoginModal() {
     e.preventDefault();
 
     try {
-      const mutationResponse = await login({
-        variables: { username: username, password: password },
-      });
+      const loginInput = {input:{email: email, password: password}}
+
+      const mutationResponse = await login({variables: loginInput});
 
       const token = mutationResponse.data.login.token;
-      const userID = mutationResponse.data.login.user._id;
+      const userID = mutationResponse.data.login.user.git;
       // console.log("token",token)
       // console.log("userID",userID)
       Auth.login(token);
@@ -47,7 +47,7 @@ function LoginModal() {
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
         <label htmlFor="username">User Name⦂</label>
-        <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" name="email" value={email} onChange={(e) => setUsername(e.target.value)} />
       </div>
 
       <div className="formItemGroup ourGrid">

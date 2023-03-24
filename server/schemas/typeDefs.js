@@ -91,8 +91,8 @@ const typeDefs = gql`
   }
 
   input AddMediaInput {
+    dogId: ID!
     content: String!
-    dogId: ID
     isBanner: Boolean
     isProfile: Boolean
   }

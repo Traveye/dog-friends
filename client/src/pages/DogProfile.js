@@ -20,7 +20,7 @@ import DogMedia from '../components/DogComponents/DogMedia';
 import Auth from '../utils/auth';
 import './DogProfile.css'
 
-``
+
 function DogProfile() {
   const { dogID } = useParams();
   const [currentDog, setCurrentDog] = useState(null); // Initialize to null

@@ -25,7 +25,7 @@ const resolvers = {
     dogs: async () => {
       return Dog.find().populate("userReference").populate("media");
     },
-    chats: async (__, __, context) => {
+    chats: async (__, args, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
           path: "chats",
@@ -60,6 +60,8 @@ const resolvers = {
     },
 
     login: async (__, { input }) => { //tested :)
+      console.log('--------------------------------------------------------------------------------')
+      console.log(input)
       const { email, password } = input
       const user = await User.findOne({ email });
       if (!user) {
