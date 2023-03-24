@@ -1,11 +1,6 @@
-const { Schema, model, mongoose } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-/*
-const isPassword = function (password) {
-  regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(?)])[\da-zA-Z!@#$%^&*(?)]{6,}$/
-  return regex.test(password)
-}
-*/
+
 const userSchema = new Schema({
   firstName: {
     type: String,
@@ -72,6 +67,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;

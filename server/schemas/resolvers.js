@@ -1,4 +1,4 @@
-const { User, Dog, Media, endorsementsSchema } = require("../models");
+const { User, Dog, Media } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const fetch = require("node-fetch");
@@ -53,16 +53,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    addUser: async (__, { input }) => { //tested :)
-      ('--------------------------------------------------------------------------------')
+    addUser: async (__, { input } ) => { //tested :)
+      console.log(input)
       const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },
 
-    login: async (__, { input }) => { //tested :)
-      console.log
-      console.log(input)
+    login: async (__, { input }) => { //Working
       const { email, password } = input
       const user = await User.findOne({ email });
       if (!user) {

@@ -20,9 +20,9 @@ function SignupModal() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("j", e);
     try {
-      console.log("in try")
+      console.log(ADD_USER)
+      
       const AddUserInput = {
         firstName: firstName,
         lastName: lastName,
@@ -30,12 +30,11 @@ function SignupModal() {
         location: location,
         password: password,
       }
-      console.log("AddUserInput", AddUserInput);
-      const { data } = await addUser({
-        variables: { AddUserInput },
-      });
-      const userID = data.addUser.user._id;
+      console.log({AddUserInput})
+      const { data } = await addUser({ variables: { input: AddUserInput } });
 
+
+      const userID = data.addUser.user._id;
       Auth.login(data.addUser.token);
       userContext.setLoggedInUser(userID);
 
@@ -55,15 +54,17 @@ function SignupModal() {
   };
 
   return (
+
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
-          <label htmlFor="username">
+          <label htmlFor="firstName">
             First name⦂
           </label>
           <input
             type="text"
+            id='first'
             name="First"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}

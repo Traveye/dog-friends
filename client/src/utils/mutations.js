@@ -7,8 +7,6 @@ mutation Mutation($input: AddUserInput!) {
     token
     user {
       _id
-      firstName
-      lastName
     }
   }
 }
