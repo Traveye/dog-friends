@@ -7,19 +7,26 @@ export const GET_USERS = gql`
 query Query {
   users {
     _id
+    firstName
+    lastName
     location
-    password
+    email
     dogReference {
       _id
       bio
       breed
-      name
-      playStyle
       location
       endorsements {
-        playStyle
         counter
+        playStyle
       }
+      media {
+        _id
+        content
+        isProfile
+      }
+      name
+      playStyle
     }
   }
 }`
@@ -30,6 +37,7 @@ query Query($userId: ID!) {
     _id
     firstName
     lastName
+    email
     dogReference {
       _id
       bio
@@ -46,6 +54,16 @@ query Query($userId: ID!) {
       playStyle
     }
     location
+    chats {
+      _id
+      messages {
+        message
+        sender {
+          _id
+        }
+        timestamp
+      }
+    }
   }
 }
 `;
@@ -54,26 +72,32 @@ query Query($userId: ID!) {
 //git single dog return all fields
 // get single dog the user nd all dogs associated with that dog
 export const GET_DOG = gql`
-query Query($dogId: ID!) {
+query Dog($dogId: ID!) {
   dog(dogId: $dogId) {
-    name
-    playStyle
+    _id
     bio
     breed
-    _id
-    userReference {
-      _id
-      username
-    }
+    name
+    playStyle
+    location
     endorsements {
-      counter
       playStyle
+      counter
     }
     media {
       _id
       content
       isBanner
       isProfile
+    }
+    userReference {
+      _id
+      firstName
+      lastName
+      email
+      dogReference {
+        _id
+      }
     }
   }
 }
@@ -83,24 +107,19 @@ query Query($dogId: ID!) {
 // get all dogs by location or all-
 
 export const GET_DOGS = gql`
-query Dogs {
+query Query {
   dogs {
     _id
+    name
     bio
     breed
+    playStyle
     location
-    endorsements {
-      counter
-      playStyle
-    }
-    name
-    userReference {
-      location
-    }
     media {
       _id
       content
-    }
+      isProfile
+    }  
   }
 }
 `;

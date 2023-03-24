@@ -73,8 +73,7 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (__, { input }, context) => {
-      console.log('walalalwalwa guey') //TESTED
+    addDog: async (__, { input }, context) => {//TESTED
       if (context.user) {
         const dog = await Dog.create(input);
 
