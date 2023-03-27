@@ -12,6 +12,7 @@ function SignupModal() {
   const [lastName, setLastName] = useState("");
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
@@ -19,11 +20,17 @@ function SignupModal() {
 
   console.log("error", error);
 
+  const validatePassword = () => {
+    if (password !== verifyPassword) {
+      throw new Error("Passwords do not match");
+    }
+  }
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log("j", e);
     try {
-      console.log(email, firstName, lastName, location, password )
+      validatePassword();
       const { data } = await addUser({
         
         variables: {
@@ -119,6 +126,19 @@ function SignupModal() {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}    
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="verifyPassword">
+            Confirm Password⦂
+          </label>
+          <input
+            type="password"
+            id="verifyPassword"
+            name="password"
+            value={verifyPassword}
+            onChange={(e) => setVerifyPassword(e.target.value)}    
           />
         </div>
 
