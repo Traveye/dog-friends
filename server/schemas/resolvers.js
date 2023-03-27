@@ -7,6 +7,7 @@ const MAPBOX_TOKEN =
 const bcrypt = require("bcrypt");
 
 const resolvers = {
+  
   Query: {
     users: async () => { // Tested
       return User.find().populate("dogReference");
@@ -119,7 +120,7 @@ const resolvers = {
         }
         const updatedUser = await User.findByIdAndUpdate(
           id,
-          { username, password, location, dogReference },
+          { email, firstName, lastName, password, location, dogReference },
           { new: true }
         );
         return updatedUser;

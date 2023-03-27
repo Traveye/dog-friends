@@ -14,9 +14,7 @@ function SignupModal() {
   const [password, setPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState("");
   const userContext = useContext(UserContext);
-
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +28,6 @@ function SignupModal() {
       }
       console.log(AddUserInput)
       const { data } = await addUser({ variables: { input: AddUserInput } });
-
 
       const userID = data.addUser.user._id;
       Auth.login(data.addUser.token);
@@ -56,6 +53,31 @@ function SignupModal() {
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="email">
+            Email⦂
+          </label>
+          <input
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="firstName">
+            First Name⦂
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+
         <div className="formItemGroup ourGrid">
           <label htmlFor="firstName">
             First name⦂

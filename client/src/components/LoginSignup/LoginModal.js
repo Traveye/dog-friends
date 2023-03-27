@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import {UserContext} from '../../utils/UserContext'
 
 function LoginModal() {
-  
+
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { error }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState("")
   const userContext = useContext(UserContext);
+
 
 
   const handleFormSubmit  = async (e) => {
