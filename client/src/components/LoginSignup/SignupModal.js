@@ -37,7 +37,8 @@ function SignupModal() {
       console.log("data", data);
       const userID = data.addUser.user._id;
 
-      Auth.login(data.addUser.token);
+      userContext.login(data.addUser.token);
+      userContext.handleLogin(data.addUser.token);
       userContext.setLoggedInUser(userID);
 
       Swal({
