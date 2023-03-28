@@ -14,12 +14,19 @@ function Navigation() {
   return (
     <div id="navContainer">
     <img id="howlr" src={howlr} alt="Howler with the R as a dog cartoon"/>
-    <div id="btnsContainer">
-    <button className="btns" onClick={ () => navigate('/')}> Landing</button>
-    <button className="btns" onClick={ () => navigate(`/dashboard/${loggedInUser}`)}> Dashboard</button>
-    <button  className="btns" onClick={ () => navigate('/dogSearch')}> Search</button>
-    <button  className="btns"onClick={handleLogout}>Log Out</button>
-    </div>
+    {loggedIn ? (
+      <div id="btnsContainer">
+      <button className="btns" onClick={ () => navigate('/')}> Landing</button>
+      <button className="btns" onClick={ () => navigate(`/dashboard/${loggedInUser}`)}> Dashboard</button>
+      <button  className="btns" onClick={ () => navigate('/dogSearch')}> Search</button>
+      <button  className="btns"onClick={handleLogout}>Log Out</button>
+      </div>
+    ) : (
+      <div id="btnsContainer">
+      <button className="btns" onClick={ () => navigate('/')}> Login</button>
+      </div>
+    )}
+    
     </div>
   )
 }

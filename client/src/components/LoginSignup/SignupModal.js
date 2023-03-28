@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import Swal from "sweetalert";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
-import Auth from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
 
@@ -43,9 +42,8 @@ function SignupModal() {
       console.log("data", data);
       const userID = data.addUser.user._id;
 
-
-      const userID = data.addUser.user._id;
-      Auth.login(data.addUser.token);
+      userContext.login(data.addUser.token);
+      userContext.handleLogin(data.addUser.token);
       userContext.setLoggedInUser(userID);
 
       Swal({

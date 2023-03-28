@@ -2,7 +2,6 @@ import React, { useState, useContext  } from 'react';
 import Swal from 'sweetalert'
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
-import Auth from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import {UserContext} from '../../utils/UserContext'
 
@@ -25,7 +24,7 @@ function LoginModal() {
       const token = mutationResponse.data.login.token;
       const userID = mutationResponse.data.login.user._id;
 
-      Auth.login(token);
+      userContext.handleLogin(token);
       userContext.setLoggedInUser(userID);
       navigate(`/dashboard/${userID}`);
 
