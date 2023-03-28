@@ -13,7 +13,10 @@ const resolvers = {
       return User.find().populate("dogReference");
     },
     user: async (__, { userId }) => {
-      return User.findOne({ _id: userId }).populate("dogReference");
+      return User.findOne({ _id: userId }).populate({
+        path:"dogReference",
+        populate: "media"
+      });
     },
     // me: async () => {
     // },
