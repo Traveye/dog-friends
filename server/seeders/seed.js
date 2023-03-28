@@ -1,6 +1,6 @@
 const db = require("../config/connection");
 const User = require("../models/User");
-const Dog = require("../models/Dog");
+const { Dog } = require("../models/Dog");
 const Media = require("../models/Media");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
@@ -11,8 +11,8 @@ const userData = require("./userData.json");
 const mediaData = require("./mediaData.json");
 
 db.once("open", async () => {
-  await Dog.deleteMany({});
   await User.deleteMany({});
+  await Dog.deleteMany({});
   await Media.deleteMany({});
 
   // const saltRounds = 10;

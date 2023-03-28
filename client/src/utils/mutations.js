@@ -2,15 +2,11 @@ import { gql } from '@apollo/client';
 
 //User SignUp
 export const ADD_USER = gql`
-mutation AddUser($email: String!, $firstName: String!, $lastName: String!, $password: String!, $location: String!) {
-  addUser(email: $email, firstName: $firstName, lastName: $lastName, password: $password, location: $location) {
+mutation Mutation($input: AddUserInput!) {
+  addUser(input: $input) {
+    token
     user {
       _id
-      email
-      firstName
-      lastName
-      password
-      location
     }
     token
   }
@@ -19,13 +15,13 @@ mutation AddUser($email: String!, $firstName: String!, $lastName: String!, $pass
 
 //User Add Dog
 export const ADD_DOG = gql`
-mutation AddDog($name: String!, $bio: String!, $playStyle: String!, $breed: String!) {
-  addDog(name: $name, bio: $bio, playStyle: $playStyle, breed: $breed) {
+mutation Mutation($input: AddDogInput!) {
+  addDog(input: $input) {
+    _id
     name
     bio
-    playStyle
     breed
-
+    playStyle
   }
 }
 `
@@ -39,8 +35,8 @@ mutation Mutation($content: String!, $dogId: ID) {
 `
 
 export const LOGIN_USER = gql`
-mutation Mutation($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
+mutation Mutation($input: loginInput!) {
+  login(input: $input) {
     token
     user {
       _id
@@ -62,39 +58,12 @@ mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String,
 }
 `
 export const UPDATE_MEDIA = gql`
-mutation UpdateMedia($updateMediaId: ID!, $content: String, $isBanner: Boolean, $isProfile: Boolean) {
-  updateMedia(id: $updateMediaId, content: $content, isBanner: $isBanner, isProfile: $isProfile) {
+mutation Mutation($input: AddMediaInput!) {
+  addMedia(input: $input) {
     _id
     content
     isBanner
     isProfile
-  }
-}
-`
-
-export const UPDATE_USER = gql`
-mutation UpdateUser($email: String!, $firstName: String!, $lastName: String!, $password: String, $location: String, $updateUserId: ID!) {
-  updateUser(email: $email, firstName: $firstName, lastName: $lastName, password: $password, location: $location, id: $updateUserId) {
-    email
-    firstName
-    lastName
-    password
-    location
-  }
-}
-`
-export const REMOVE_DOG = gql`
-mutation DeleteDog($dogId: ID!) {
-  deleteDog(dogId: $dogId) {
-    _id
-  }
-}
-`
-
-export const REMOVE_USER = gql`
-mutation DeleteUser($deleteUserId: ID!) {
-  deleteUser(id: $deleteUserId) {
-    _id
   }
 }
 `
@@ -112,12 +81,23 @@ mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
 }
 `
 
-
-export const REMOVE_MEDIA = gql`
-  mutation removeMedia($content: String!) {
-    removeMedia(content: $content) {
-    success
-    }
+export const UPDATE_USER = gql`
+mutation Mutation($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    _id
   }
+}
 `
+export const REMOVE_DOG = gql`
+mutation DeleteDog($input: UpdateDogInput!) {
+  deleteDog(input: $input)
+}
+`
+
+export const REMOVE_USER = gql`
+mutation Mutation($input: UpdateUserInput!) {
+  deleteUser(input: $input)
+}
+`
+
 

@@ -89,8 +89,7 @@ function DogProfile() {
           </div>
           <div className='main card'>
             <h3 id='dog-name'>{currentDog ? currentDog.name : <div>Loading...</div>}</h3>
-          {/* <Endorsements endorsy={currentDog?.endorsements
-} handleEndorsement={handleEndorsement} /> */}
+
           </div>
           <div className='info card'>
             <div className='mini card'>
@@ -131,7 +130,6 @@ function DogProfile() {
 
           </div>
           <div>
-            {/* <OtherDogs owner={currentDog?.userReference} /> */}
           </div>
         </div>
       ) : (

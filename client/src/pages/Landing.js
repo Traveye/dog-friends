@@ -50,7 +50,7 @@ function Landing() {
 
 
 
-    <button className="landingbtn" onClick={handleLogin}>LogIn</button>
+    <button className="landingbtn" onClick={handleLogin}>Log in</button>
     {showLogin && (<> <div className="our-modal-backdrop" ref={backdropRef}>
     <div className="our-modal-content" ref={modalRef}>
       <LoginModal onClose={handleCloseLogin}/>
@@ -59,7 +59,7 @@ function Landing() {
         </>)}
 
 
-    <button className="landingbtn" onClick={handleSignup}>Signup</button>
+    <button className="landingbtn" onClick={handleSignup}>Sign up</button>
     {showSignup && (<> <div className="our-modal-backdrop" ref={backdropRef}>
     <div className="our-modal-content" ref={modalRef}>
       <SignupModal onClose={handleCloseSignup}/>
