@@ -67,7 +67,8 @@ const CloudinaryUploadWidget = ({ dogId }) => {
       console.log("this is line 11 " + dogId + " " + secureUrl);
 
       try {
-        await addMedia({ variables: { dogId: dogId, content: secureUrl } });
+        const addMediaInput = {input:{ dogId: dogId, content: secureUrl }}
+        await addMedia({ variables: addMediaInput });
         setSecureUrl(secureUrl);
       } catch (error) {
         console.error(error);
@@ -92,10 +93,10 @@ const CloudinaryUploadWidget = ({ dogId }) => {
   console.log(`this is URL ${secureUrl}`);
 
   return (
-    <button 
-    id={dogId} 
-    className="dashboardButton">
-    Upload Photos</button>
+    <button
+      id={dogId}
+      className="dashboardButton">
+      Upload Photos</button>
   );
 };
 

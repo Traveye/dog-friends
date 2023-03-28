@@ -1,5 +1,5 @@
 
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 const User = require('./User');
 
 const messageSchema = new Schema({
@@ -22,6 +22,6 @@ const chatSchema = new Schema({
    }]
 });
 
-const Chat = model('Chat', chatSchema);
+const Chat = mongoose.model('Chat', chatSchema);
 
 module.exports = Chat;
