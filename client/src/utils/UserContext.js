@@ -11,7 +11,6 @@ console.log("+CurrentUser+", currentUser)
   function handleLogin(idToken) {
     AuthService.login(idToken);
     setLoggedIn(true);
-    console.log('loggedInValue: ', loggedIn)
   }
 
   function handleLogout() {
