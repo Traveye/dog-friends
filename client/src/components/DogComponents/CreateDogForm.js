@@ -20,7 +20,6 @@ const CreateDogForm = ({ userID, closeModal, updateCurrentUser }) => {
         const {User}  = cache.readQuery({query: GET_USER, variables: {
           userId: userID
         }});
-        console.log('this is before the writequery')
         cache.writeQuery({
           query:GET_USER,
           variables: {
@@ -37,14 +36,15 @@ console.error(error)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(dogForm)
+      const addDogInput = {
+        name: dogForm.name,
+        bio: dogForm.bio,
+        playStyle: dogForm.playStyle,
+        breed: dogForm.breed,
+      }
+      console.log({addDogInput})
       await addDog({
-        variables: {
-          name: dogForm.name,
-          bio: dogForm.bio,
-          playStyle: dogForm.playStyle,
-          breed: dogForm.breed,
-        },
+        variables: { input: addDogInput },
 
       });
       setDog({ name: "", bio: "", breed: "", playStyle: "" });

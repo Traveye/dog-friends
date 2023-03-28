@@ -44,31 +44,16 @@ const dogSchema = new Schema({
       ref: "Media",
     },
   ],
-  endorsements: [] 
+  endorsements: [endorsementsSchema]
 },
-  
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
   });
 
-
-// dogSchema.virtual('endorsements'
-// {
-//   ref: 'Endorsement',
-//   localField: '_id',
-//   foreignField: 'dog',
-//   justOne: false,
-//   options: { select: 'playStyle' },
-//   count: true,
-// }
-// ).get(function(){
-//   return this.endorsements.length
-// }).set(function(data){
-//   this.set({counter: data})
-// });
-
-
+dogSchema.virtual('endorsementsCount').get(function () {
+  return this.endorsements.length;
+});
 
 
 const Dog = model("Dog", dogSchema);

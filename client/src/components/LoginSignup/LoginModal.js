@@ -7,28 +7,28 @@ import { useNavigate } from 'react-router-dom';
 import {UserContext} from '../../utils/UserContext'
 
 function LoginModal() {
-  
-  const [email, setEmail] = useState('');
+
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { error }] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
-  
+
+
 
   const handleFormSubmit  = async (e) => {
     e.preventDefault();
 
     try {
-      const mutationResponse = await login({
-        variables: { email: email, password: password },
-      });
-
+      const loginInput = {input:{email: email, password: password}}
+      const mutationResponse = await login({variables: loginInput});
       const token = mutationResponse.data.login.token;
       const userID = mutationResponse.data.login.user._id;
 
       Auth.login(token);
       userContext.setLoggedInUser(userID);
       navigate(`/dashboard/${userID}`);
+
     } catch (err) {
       console.error(err);
       Swal('Oops!', 'Something went wrong!', 'error');
@@ -36,15 +36,13 @@ function LoginModal() {
     }
   };
 
-
-
   return (
     <div>
       <h2>Login</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
-        <label htmlFor="email">Email⦂</label>
-        <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <label htmlFor="username">Email⦂</label>
+        <input type="text" name="email" value={email} onChange={(e) => setUsername(e.target.value)} />
       </div>
 
       <div className="formItemGroup ourGrid">

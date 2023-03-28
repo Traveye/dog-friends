@@ -3,80 +3,101 @@ import { gql } from "@apollo/client";
 //! Queries
 // me === getUserByID username/media/all dogs that belong to that user
 
-export const GET_USERS = gql `
+export const GET_USERS = gql`
 query Query {
   users {
     _id
     firstName
     lastName
     location
-    password
+    email
     dogReference {
       _id
       bio
       breed
-      name
-      playStyle
       location
       endorsements {
-        playStyle
         counter
+        playStyle
       }
+      media {
+        _id
+        content
+        isProfile
+      }
+      name
+      playStyle
     }
   }
 }`
 
 export const GET_USER = gql`
-    query User($userId: ID!) {
-      user(userId: $userId) {
+query Query($userId: ID!) {
+  user(userId: $userId) {
+    _id
+    firstName
+    lastName
+    email
+    dogReference {
+      _id
+      bio
+      breed
+      endorsements {
+        playStyle
+        counter
+      }
+      location
+      media {
         _id
-        email
-        firstName
-        lastName
-        password
-        location
-        dogReference {
-          name
-          breed
-          bio
-          playStyle
+      }
+      name
+      playStyle
+    }
+    location
+    chats {
+      _id
+      messages {
+        message
+        sender {
           _id
-          media {
-            _id
-            content
-            isBanner
-            isProfile
-          }
         }
+        timestamp
       }
     }
+  }
+}
 `;
 
 //! Queries
 //git single dog return all fields
 // get single dog the user nd all dogs associated with that dog
 export const GET_DOG = gql`
-query Query($dogId: ID!) {
+query Dog($dogId: ID!) {
   dog(dogId: $dogId) {
-    name
-    playStyle
+    _id
     bio
     breed
-    _id
-    userReference {
-      _id
-      firstName
-      email
-    }
+    name
+    playStyle
+    location
     endorsements {
-      counter
       playStyle
+      counter
     }
     media {
       _id
       content
       isBanner
       isProfile
+    }
+    userReference {
+      _id
+      firstName
+      lastName
+      email
+      dogReference {
+        _id
+      }
     }
   }
 }
@@ -86,24 +107,19 @@ query Query($dogId: ID!) {
 // get all dogs by location or all-
 
 export const GET_DOGS = gql`
-query Dogs {
+query Query {
   dogs {
     _id
+    name
     bio
     breed
+    playStyle
     location
-    endorsements {
-      counter
-      playStyle
-    }
-    name
-    userReference {
-      location
-    }
     media {
       _id
       content
-    }
+      isProfile
+    }  
   }
 }
 `;

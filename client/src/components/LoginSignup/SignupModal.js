@@ -7,16 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
 
 function SignupModal() {
-  const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
-
 
   console.log("error", error);
 
@@ -44,6 +43,8 @@ function SignupModal() {
       console.log("data", data);
       const userID = data.addUser.user._id;
 
+
+      const userID = data.addUser.user._id;
       Auth.login(data.addUser.token);
       userContext.setLoggedInUser(userID);
 
@@ -56,13 +57,14 @@ function SignupModal() {
       console.log("catch err", err);
       Swal({
         title: "Error!",
-        text: err.message,
+        text: "Something went wrong, please try again!",
         icon: "error",
       });
     }
   };
 
   return (
+
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
@@ -92,14 +94,38 @@ function SignupModal() {
         </div>
 
         <div className="formItemGroup ourGrid">
-          <label htmlFor="lastName">
-            Last Name⦂
+          <label htmlFor="firstName">
+            First name⦂
           </label>
           <input
             type="text"
-            name="lastName"
+            id='first'
+            name="First"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="lastName">
+            Last name⦂
+          </label>
+          <input
+            type="text"
+            name="Last"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="email">
+            email⦂
+          </label>
+          <input
+            type="text"
+            name="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -125,7 +151,7 @@ function SignupModal() {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}    
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
