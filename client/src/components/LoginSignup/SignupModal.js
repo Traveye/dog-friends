@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import Swal from "sweetalert";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
-import Auth from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../utils/UserContext";
 
