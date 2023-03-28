@@ -40,7 +40,7 @@ function LoginModal() {
       <h2>Login</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
         <div className="formItemGroup ourGrid">
-        <label htmlFor="username">Email⦂</label>
+        <label htmlFor="Email">Email⦂</label>
         <input type="text" name="email" value={email} onChange={(e) => setUsername(e.target.value)} />
       </div>
 

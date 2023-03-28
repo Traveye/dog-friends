@@ -19,31 +19,41 @@ function SignupModal() {
   console.log("error", error);
 
   const validatePassword = () => {
-    if (password !== verifyPassword) {
-      throw new Error("Passwords do not match");
-    }
-  }
+    return new Promise((resolve, reject) => {
+      if (password !== verifyPassword) {
+        reject(
+          Swal({
+            title: "Error!",
+            text: "Please verify your passwords match!",
+            icon: "error",
+          })
+        );
+      } else {
+        resolve();
+      }
+    });
+  };
+  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("j", e);
+    await validatePassword();
     try {
-      validatePassword();
-      const { data } = await addUser({
-        
-        variables: {
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          location: location,
-          password: password,
-        },
-      });
+      const AddUserInput = 
+      { 
+        input: { //declare input
+        firstName: firstName, //Variables we are inputting* see typedefs for what is required/not
+        lastName: lastName,
+        email: email,
+        location: location,
+        password: password,
+      }}
+      const { data } = await addUser({ variables: AddUserInput });
       console.log("data", data);
       const userID = data.addUser.user._id;
-
       userContext.login(data.addUser.token);
       userContext.handleLogin(data.addUser.token);
+
       userContext.setLoggedInUser(userID);
 
       Swal({
@@ -66,19 +76,6 @@ function SignupModal() {
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
-
-        <div className="formItemGroup ourGrid">
-          <label htmlFor="email">
-            Email⦂
-          </label>
-          <input
-            type="text"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
         <div className="formItemGroup ourGrid">
           <label htmlFor="firstName">
             First Name⦂
@@ -91,18 +88,6 @@ function SignupModal() {
           />
         </div>
 
-        <div className="formItemGroup ourGrid">
-          <label htmlFor="firstName">
-            First name⦂
-          </label>
-          <input
-            type="text"
-            id='first'
-            name="First"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
         <div className="formItemGroup ourGrid">
           <label htmlFor="lastName">
             Last name⦂
