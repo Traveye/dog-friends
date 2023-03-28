@@ -3,7 +3,7 @@ import AuthService from './auth';
 
 export const UserContext = createContext();
 
-export function UserProvider(props) {
+export const UserProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(AuthService.loggedIn());
   const [loggedInUser, setLoggedInUser] = useState("")
   const [currentUser, setCurrentUser] = useState({});
@@ -20,7 +20,7 @@ console.log("+CurrentUser+", currentUser)
 
   return (
     <UserContext.Provider value={{ loggedIn, handleLogin, handleLogout, loggedInUser, setLoggedInUser, currentUser, setCurrentUser }}>
-      {props.children}
+      {children}
     </UserContext.Provider>
   );
 }
