@@ -10,6 +10,10 @@ import UpdateUserForm from "../components/UserComponents/UpdateUserForm";
 import CloudinaryUploadWidget from "../components/CloudinaryUploadWidget";
 import "./Dashboard.css";
 import { UserContext } from "../utils/UserContext";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 function Dashboard() {
   const { userID } = useParams();
@@ -26,7 +30,7 @@ function Dashboard() {
   const backdropRef = useRef();
 
 
-  const [removeDog] = useMutation(REMOVE_DOG);
+  const [removeDog] = useMutation(REMOVE_DOG, {refetchQueries: [{query: GET_USER, variables: { userId: userID}}]});
 
   const { loading, data, refetch } = useQuery(GET_USER, {
     variables: { userId: userID },
@@ -34,12 +38,13 @@ function Dashboard() {
 
   useEffect(() => {
     if (data && data.user) {
+      console.log(data.user)
       userContext.setCurrentUser(data.user);
     }
-  }, [data, userID]);
+  }, [data, userID, userContext]);
 
   const user = userContext.currentUser || {};
-  const dog = userContext.currentUser.dogReference || [];
+  const dog = user.dogReference || [];
 
   useEffect(() => {
     const newDogAdded = user?.dogReference?.length > dog?.length;
@@ -67,20 +72,37 @@ function Dashboard() {
     };
   }, [showCreateDogForm]);
 
+  function deleteDogModal (dogId){
+    MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove dog!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteDog(dogId)
+        MySwal.fire(
+          'Deleted!',
+          'Your dog has been removed.',
+          'success'
+        )
+      }
+    })
+  }
+
   const deleteDog = async (dogId) => {
-    console.log("we clicking baby");
-    console.log(dogId);
+    console.log(`this is delete dog ${dogId}`);
     try {
-      console.log("this is the try hard");
       await removeDog({ variables: { dogId } });
-      console.log("returned from server");
       const updatedUser = {
         ...userContext.currentUser,
         dogReference: user.dogReference.filter((dog) => dog._id !== dogId),
       };
       userContext.setCurrentUser(updatedUser);
     } catch (error) {
-      console.log("this is the catch block");
       console.error(error);
     }
   };
@@ -91,7 +113,6 @@ function Dashboard() {
     
   };
 
-  console.log(user);
   const handleCloseForm = () => {
     setShowCreateDogForm(false);
   
@@ -103,7 +124,7 @@ function Dashboard() {
   return (
     <div id="dashboardParentContainer">
       <div id="dashboardContainer">
-        <h1 id="userNameHeader">Hi, {user?.username}!</h1>
+        <h1 id="userNameHeader">Hi, {user?.firstName}!</h1>
         {Auth.loggedIn() ? (
           <>
             <button className="dashboardButton" onClick={() => setShowUpdateForm(true)}>
@@ -130,7 +151,7 @@ function Dashboard() {
                 className="dashboardIcon"
                 onClick={() => setShowCreateDogForm(true)}
               >
-                🐶
+                Add Dog
               </button>
             </div>
             <>
@@ -167,13 +188,12 @@ function Dashboard() {
                       </div>
                       <CloudinaryUploadWidget dogId={dog?._id} />
                       <div className="dashboardIconContainer">
-                        <p>Delete a dog profile Σ>―დ→</p>
                         <button
                           className="dashboardIcon"
                           value={dog._id}
-                          onClick={() => deleteDog(dog._id)}
+                          onClick={() => deleteDogModal(dog?._id)}
                         >
-                          🥺
+                          Remove Dog
                         </button>
                       </div>
                     </div>

@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.ourButton {
+  box-shadow: 0 2px 4px gray;
+  transition: all 0.2s ease;
+}
+
+.ourButton:active {
+  box-shadow: 0 0 2px gray;
+  transform: translateY(2px);
+}

@@ -8,6 +8,7 @@ mutation Mutation($input: AddUserInput!) {
     user {
       _id
     }
+    token
   }
 }
 `
@@ -41,8 +42,7 @@ mutation Mutation($input: loginInput!) {
       _id
     }
   }
-}
-`;
+}`
 
 export const UPDATE_DOG = gql`
 mutation UpdateDog($name: String, $dogId: ID!, $bio: String, $playStyle: String, $breed: String, $media: ID!) {
@@ -67,6 +67,7 @@ mutation Mutation($input: AddMediaInput!) {
   }
 }
 `
+
 export const UPDATE_ENDORSEMENT = gql`
 mutation Mutation($dogId: ID!, $playStyle: String!, $increment: Int!) {
   updateEndorsementCounter(dogId: $dogId, playStyle: $playStyle, increment: $increment) {

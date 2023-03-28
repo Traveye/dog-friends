@@ -7,7 +7,7 @@ export function UserProvider(props) {
   const [loggedIn, setLoggedIn] = useState(AuthService.loggedIn());
   const [loggedInUser, setLoggedInUser] = useState("")
   const [currentUser, setCurrentUser] = useState({});
-
+console.log("+CurrentUser+", currentUser)
   function handleLogin(idToken) {
     AuthService.login(idToken);
     setLoggedIn(true);

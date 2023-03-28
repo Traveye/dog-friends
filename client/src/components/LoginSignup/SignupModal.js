@@ -12,24 +12,36 @@ function SignupModal() {
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
   const [addUser, { error }] = useMutation(ADD_USER);
   const navigate = useNavigate();
-  const [loggedInUser, setLoggedInUser] = useState("");
   const userContext = useContext(UserContext);
 
+  console.log("error", error);
+
+  const validatePassword = () => {
+    if (password !== verifyPassword) {
+      throw new Error("Passwords do not match");
+    }
+  }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try {      
-      const AddUserInput = {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        location: location,
-        password: password,
-      }
-      console.log(AddUserInput)
-      const { data } = await addUser({ variables: { input: AddUserInput } });
+    console.log("j", e);
+    try {
+      validatePassword();
+      const { data } = await addUser({
+        
+        variables: {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          location: location,
+          password: password,
+        },
+      });
+      console.log("data", data);
+      const userID = data.addUser.user._id;
 
 
       const userID = data.addUser.user._id;
@@ -56,6 +68,31 @@ function SignupModal() {
     <div>
       <h2>Signup</h2>
       <form className="ourForms" onSubmit={handleFormSubmit}>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="email">
+            Email⦂
+          </label>
+          <input
+            type="text"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="firstName">
+            First Name⦂
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+
         <div className="formItemGroup ourGrid">
           <label htmlFor="firstName">
             First name⦂
@@ -118,7 +155,20 @@ function SignupModal() {
           />
         </div>
 
-        <button type="submit" className="ourButton">Sign Up</button>
+        <div className="formItemGroup ourGrid">
+          <label htmlFor="verifyPassword">
+            Confirm Password⦂
+          </label>
+          <input
+            type="password"
+            id="verifyPassword"
+            name="password"
+            value={verifyPassword}
+            onChange={(e) => setVerifyPassword(e.target.value)}    
+          />
+        </div>
+
+        <button type="submit" className="ourButton">Signup</button>
       </form>
     </div>
   );
