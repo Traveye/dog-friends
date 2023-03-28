@@ -1,9 +1,8 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 
 const mediaSchema = new Schema({
    content: {
       type: String,   
-
    },
    isBanner: {
       type: Boolean,
@@ -19,6 +18,6 @@ const mediaSchema = new Schema({
    } // Changed from array to object. only 1 dog owner
 });
 
-const Media = model('Media', mediaSchema);
+const Media = mongoose.model('Media', mediaSchema);
 
 module.exports = Media;

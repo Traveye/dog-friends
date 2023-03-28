@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 const fetch = require("node-fetch");
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoidHJhdmV5ZSIsImEiOiJjbGY2aXRhdmgxbWYwM3FycW53eHVnOW1lIn0.VvfYmU6HQEsz17zN4ly0EA";
@@ -28,12 +28,11 @@ const dogSchema = new Schema({
     type: String,
     required: [true, "Play style is required"],
   },
-  userReference: [
+  userReference: 
     {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-  ],
   location: {
     type: [Number], // array of numbers (longitude, latitude)
     index: "2dsphere", // create a geospatial index for location field
@@ -56,7 +55,7 @@ dogSchema.virtual('endorsementsCount').get(function () {
 });
 
 
-const Dog = model("Dog", dogSchema);
+const Dog = mongoose.model("Dog", dogSchema);
 
 module.exports = { Dog, endorsementsSchema };
 

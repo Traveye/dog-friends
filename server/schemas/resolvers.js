@@ -21,10 +21,7 @@ const resolvers = {
     // me: async () => {
     // },
     dog: async (__, { dogId }) => { //Tested
-      return Dog.findOne({ _id: dogId })
-        .populate("userReference")
-        .populate("media")
-        .populate("endorsements");
+      return Dog.findOne({ _id: dogId }).populate("userReference");
     },
     dogs: async () => {
       return Dog.find().populate("userReference").populate("media");
@@ -77,17 +74,26 @@ const resolvers = {
       return { token, user };
     },
 
-    addDog: async (__, { input }, context) => {//TESTED
+    addDog: async (__, { input }, context) => {
+      console.log(input)
       if (context.user) {
-        const dog = await Dog.create(input);
-
+        const dog = await Dog.create({
+          name:input.name,
+          bio:input.bio,
+          playStyle:input.playStyle,
+          breed:input.breed,
+          userReference:context.user._id
+        });
+    
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { dogReference: dog._id } }
+          { $addToSet: { dogReference: dog } }
         );
-        const user = await User.findById(context.user._id);
-
-        const userLocation = user.location
+    
+        const user = await User.findById(context.user._id)
+          .populate('dogReference');
+    
+        const userLocation = user.location;
         const response = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${userLocation}.json?access_token=${MAPBOX_TOKEN}`
         );
@@ -95,7 +101,7 @@ const resolvers = {
         const [longitude, latitude] = data.features[0].center;
         dog.location = [longitude, latitude];
         await dog.save();
-
+    
         return dog;
       }
       throw new AuthenticationError("You need to be logged in!");

@@ -40,7 +40,7 @@ const typeDefs = gql`
     location: [Float]
     media: [Media]
     endorsements: [Endorsement]
-    userReference: [User]
+    userReference: User
   }
 
   type Endorsement{
