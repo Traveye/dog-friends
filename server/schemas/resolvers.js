@@ -132,7 +132,7 @@ const resolvers = {
           { email, firstName, lastName, password, location, dogReference },
           { new: true }
         );
-        return updatedUser
+        return updatedUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
