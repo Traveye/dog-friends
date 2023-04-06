@@ -9,7 +9,7 @@ import { Button } from '@react-email/button';
 // function EmailForm({email}) {
 //   const userContext = useContext(UserContext);
 //   const [text, setText] = useState('');
-//   sgMail.setApiKey('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');
+//   sgMail.setApiKey('');
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
 //     const msg = {
